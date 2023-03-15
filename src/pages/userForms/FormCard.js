@@ -75,7 +75,7 @@ const FormCard = ({ forms, isLoading }) => {
       </div>
       {isLoading && <SpinnerImg />}
       <div className='--flex-start userform'>
-        {!isLoading && forms.length === 0 ? (
+        {forms.length === 0 ? (
           <p>-- No form found, please add a form...</p>
         ) : (
           <>
