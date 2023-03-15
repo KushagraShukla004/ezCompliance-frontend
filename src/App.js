@@ -29,6 +29,7 @@ import {
 import UserForms from './pages/userForms';
 import ResponseTab from './pages/Response/ResponseTab';
 import AllForms from './pages/allForms/AllForms';
+import Dashboard from './pages/Dashboard/Dashboard';
 
 axios.defaults.withCredentials = true;
 
@@ -54,6 +55,14 @@ function App() {
             element={
               <Layout>
                 <Home />
+              </Layout>
+            }
+          />
+          <Route
+            path='/dashboard'
+            element={
+              <Layout>
+                <Dashboard />
               </Layout>
             }
           />

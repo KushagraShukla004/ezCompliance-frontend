@@ -36,6 +36,20 @@ export const AdminLink = ({ children }) => {
   }
   return null;
 };
+//Access to Users page only to auditor
+export const AuditorLink = ({ children }) => {
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const userRole = useSelector(selectUser);
+
+  if (
+    isLoggedIn &&
+    //if want to allow auditor to see users as well ,,, then add '|| userRole?.role === 'auditor' ' after 'admin' below
+    userRole?.role === 'auditor'
+  ) {
+    return <> {children}</>;
+  }
+  return null;
+};
 
 //Access to Users page only to admin and auditor
 export const AdminAuditorForms = ({ children }) => {

@@ -6,12 +6,16 @@ import { useDispatch } from 'react-redux';
 import { logout, RESET } from '../../redux/features/auth/authSlice';
 // import { ShowOnLogin, ShowOnLogout } from '../protect/HiddenLink';
 import { FaUserCircle } from 'react-icons/fa';
-import { ShowOnLogin, ShowOnLogout } from '../protect/hiddenLink';
+import {
+  //eslint-disable-next-line
+  AdminLink,
+  AuditorLink,
+  ShowOnLogin,
+  ShowOnLogout,
+} from '../protect/hiddenLink';
 import { UserName } from '../../pages/profile/Profile';
 // import { UserName } from '../../pages/profile/Profile';
 // import { googleLogout } from '@react-oauth/google';
-//eslint-disable-next-line
-import { AdminAuditorForms, AdminLink } from '../protect/hiddenLink';
 
 const activeLink = ({ isActive }) => (isActive ? `${'active'}` : '');
 
@@ -58,15 +62,18 @@ const Header = () => {
 
           <ShowOnLogin>
             <li>
+              <NavLink to='/dashboard'>Dashboard</NavLink>
+            </li>
+            <li>
               <NavLink to='/profile' className={activeLink}>
                 Profile
               </NavLink>
             </li>
-            <AdminAuditorForms>
+            <AuditorLink>
               <li>
                 <NavLink to='/forms'>Forms</NavLink>
               </li>
-            </AdminAuditorForms>
+            </AuditorLink>
             <li>
               <button onClick={logoutUser} className='--btn --btn-secondary'>
                 Logout
