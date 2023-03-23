@@ -7,9 +7,9 @@ import { logout, RESET } from '../../redux/features/auth/authSlice';
 // import { ShowOnLogin, ShowOnLogout } from '../protect/HiddenLink';
 import { FaUserCircle } from 'react-icons/fa';
 import {
-  //eslint-disable-next-line
-  AdminLink,
-  AuditorLink,
+  // AuditorLink,
+  // AdminLink,
+  AdminAuditorForms,
   ShowOnLogin,
   ShowOnLogout,
 } from '../protect/hiddenLink';
@@ -69,11 +69,11 @@ const Header = () => {
                 Profile
               </NavLink>
             </li>
-            <AuditorLink>
+            <AdminAuditorForms>
               <li>
                 <NavLink to='/forms'>Forms</NavLink>
               </li>
-            </AuditorLink>
+            </AdminAuditorForms>
             <li>
               <button onClick={logoutUser} className='--btn --btn-secondary'>
                 Logout

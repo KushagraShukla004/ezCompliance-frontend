@@ -44,9 +44,12 @@ const FormBuilder = () => {
   // console.log('user: ', user);
 
   //State
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  // const [title, setTitle] = useState('');
+  // const [description, setDescription] = useState('');
   const [data, setData] = useState([]);
+  // const [categories, setCategories] = useState([]);
+  const [category, setCategory] = useState('');
+  // console.log('category: ', category);
   const [option, setOption] = useState('radio');
   const [optionText, setOptionText] = useState('');
   // const [FormCreatedByData, setFormCreatedByData] = useState(initialState);
@@ -214,8 +217,9 @@ const FormBuilder = () => {
           email: user?.email,
           role: user?.role,
         },
-        title: title,
-        description: description,
+        // title: title,
+        // description: description,
+        category: category,
         questions: data,
       })
     );
@@ -259,10 +263,10 @@ const FormBuilder = () => {
         >
           <Grid item md={10} lg={4.5} sx={{ ml: 7 }}>
             <Header
-              title={data.title}
-              setTitle={setTitle}
-              description={description}
-              setDescription={setDescription}
+              category={category}
+              setCategory={setCategory}
+              // description={description}
+              // setDescription={setDescription}
             />
             <Nestable
               items={items}

@@ -32,7 +32,7 @@ const UserForms = () => {
 
   return (
     <section>
-      {userRole?.role === 'auditor' ? (
+      {userRole?.role === 'admin' || 'auditor' ? (
         <FormCard forms={forms} isLoading={isLoading} />
       ) : (
         <section>
@@ -46,7 +46,11 @@ const UserForms = () => {
       )}
       <CreateFormDial
         onClick={() => {
-          navigate('/createForm');
+          if (userRole?.role === 'admin') {
+            navigate('/createForm');
+          } else {
+            return alert('select a category');
+          }
         }}
       />
     </section>

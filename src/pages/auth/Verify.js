@@ -8,6 +8,8 @@ const Verify = () => {
   const dispatch = useDispatch();
   const { verificationToken } = useParams();
 
+  console.log(`verificationToken :`, verificationToken);
+
   const { isLoading } = useSelector((state) => state.auth);
 
   const verifyAccount = async () => {

@@ -13,6 +13,7 @@ const filterSlice = createSlice({
       const tempUsers = users.filter(
         (user) =>
           user.name.toLowerCase().includes(search.toLowerCase()) ||
+          user.designation.toLowerCase().includes(search.toLowerCase()) ||
           user.email.toLowerCase().includes(search.toLowerCase())
       );
 

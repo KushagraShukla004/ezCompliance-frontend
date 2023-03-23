@@ -17,8 +17,11 @@ import {
 import Loader from '../../components/loader/Loader';
 
 const initialState = {
+  emp_Id: '',
   name: '',
+  designation: '',
   email: '',
+  phone: '',
   password: '',
   confirmPassword: '',
 };
@@ -28,8 +31,11 @@ const Register = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState(initialState);
+  // console.log('formData: ', formData);
   //Destructuring variable from formData which is ultimately pointing to initialState values
-  const { name, email, password, confirmPassword } = formData;
+  const { emp_Id, name, designation, email, phone, password, confirmPassword } =
+    formData;
+  // console.log('formData: ', formData);
 
   const { isLoading, isLoggedIn, isSuccess, message } = useSelector(
     (state) => state.auth
@@ -59,7 +65,7 @@ const Register = () => {
   const registerUser = async (e) => {
     e.preventDefault();
 
-    if (!name || !email || !password) {
+    if (!emp_Id || !name || !designation || !email || !phone || !password) {
       return toast.error('All fields are required');
     }
     if (password.length < 6) {
@@ -72,8 +78,11 @@ const Register = () => {
       return toast.error('Passwords do not match');
     }
     const userData = {
+      emp_Id,
       name,
+      designation,
       email,
+      phone,
       password,
     };
     // console.log(userData);
@@ -127,12 +136,31 @@ const Register = () => {
           </div>
           <h2>Register</h2>
           <form onSubmit={registerUser}>
+            <div className='--flex-between'>
+              <input
+                type='text'
+                placeholder='Emp Id'
+                required
+                name='emp_Id'
+                value={emp_Id}
+                onChange={handleInputChange}
+                style={{ marginRight: '10px', width: '35%' }}
+              />
+              <input
+                type='text'
+                placeholder='Name'
+                required
+                name='name'
+                value={name}
+                onChange={handleInputChange}
+              />
+            </div>
             <input
               type='text'
-              placeholder='Name'
+              placeholder='Designation'
               required
-              name='name'
-              value={name}
+              name='designation'
+              value={designation}
               onChange={handleInputChange}
             />
             <input
@@ -143,6 +171,22 @@ const Register = () => {
               value={email}
               onChange={handleInputChange}
             />
+            <input
+              type='tel'
+              placeholder='Phone No.'
+              required
+              name='phone'
+              value={phone}
+              onChange={handleInputChange}
+            />
+            {/* <input
+              type='text'
+              placeholder='Address'
+              required
+              name='Address'
+              value={email}
+              onChange={handleInputChange}
+            /> */}
             <PasswordInput
               placeholder='Password'
               name='password'
@@ -160,13 +204,6 @@ const Register = () => {
                 return false;
               }}
             />
-            {/* <input
-              type='password'
-              placeholder='Password'
-              name='password'
-              value={password}
-              onChange={handleInputChange}
-            /> */}
             {/* Password Strength Indicator */}
             <Card cardClass={styles.group}>
               {/* List  */}

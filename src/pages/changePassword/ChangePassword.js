@@ -13,7 +13,7 @@ import {
 } from '../../redux/features/auth/authSlice';
 import { SpinnerImg } from '../../components/loader/Loader';
 import useRedirectLoggedOutUser from '../../customHook/useRedirectLoggedOutUser';
-import { sendAutomatedEmail } from '../../redux/features/email/emailSlice';
+// import { sendAutomatedEmail } from '../../redux/features/email/emailSlice';
 
 const initialState = {
   oldPassword: '',
@@ -47,16 +47,16 @@ const ChangePassword = () => {
       password,
     };
 
-    const emailData = {
-      subject: 'Password Changed - ezCompliance',
-      send_to: user.email,
-      reply_to: 'noreply@ezcompliance.com',
-      template: 'changePassword',
-      url: '/forgot',
-    };
+    // const emailData = {
+    //   subject: 'Password Changed - ezCompliance',
+    //   send_to: user.email,
+    //   reply_to: 'noreply@ezcompliance.com',
+    //   template: 'changePassword',
+    //   url: '/forgot',
+    // };
 
     await dispatch(changePassword(userData));
-    await dispatch(sendAutomatedEmail(emailData));
+    // await dispatch(sendAutomatedEmail(emailData));
     await dispatch(logout());
     dispatch(RESET());
     navigate('/login');

@@ -174,14 +174,14 @@ const OpenForm = () => {
                               fontWeight: 600,
                             }}
                           >
-                            {form.title}
+                            {form.category}
                           </Typography>
-                          <Typography
+                          {/* <Typography
                             variant='h6'
                             style={{ fontSize: 15, fontWeight: 300 }}
                           >
                             {form.description}
-                          </Typography>
+                          </Typography> */}
                         </Grid>
                       </Grid>
                     </Paper>
@@ -209,7 +209,7 @@ const OpenForm = () => {
                               <Typography variant='h4' sx={{ ml: '10px' }}>
                                 {i + 1}. {ques.questionText}
                               </Typography>
-
+                              <br />
                               <div>
                                 <RadioGroup
                                   name='selectedOption'

@@ -11,7 +11,9 @@ import Loader from '../../components/loader/Loader';
 import Notification from '../../components/notification/Notification';
 
 export const shortenText = (text, n) => {
-  if (text.length > n) {
+  // console.log('text: ', text);
+  // console.log('n: ', n);
+  if (text?.length > n) {
     const shortenedText = text.substring(0, n).concat('...');
     return shortenedText;
   }
@@ -27,6 +29,7 @@ const Profile = () => {
 
   const initialState = {
     name: user?.name,
+    designation: user?.designation,
     email: user?.email,
     phone: user?.phone,
     bio: user?.bio,
@@ -102,6 +105,7 @@ const Profile = () => {
       setProfile({
         ...profile,
         name: user.name,
+        designation: user.designation,
         email: user.email,
         phone: user.phone,
         bio: user.bio,
@@ -151,6 +155,15 @@ const Profile = () => {
                         type='text'
                         name='name'
                         value={profile?.name}
+                        onChange={handleInputChange}
+                      />
+                    </p>
+                    <p>
+                      <label>Designation:</label>
+                      <input
+                        type='text'
+                        name='designation'
+                        value={profile?.designation}
                         onChange={handleInputChange}
                       />
                     </p>

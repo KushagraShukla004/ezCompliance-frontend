@@ -63,12 +63,10 @@ const sendVerificationEmail = async () => {
 
 // Verify User
 const verifyUser = async (verificationToken) => {
-  const response = await axios.patch(
-    `${API_URL}verifyUser/${verificationToken}`
-  );
+  const response = await axios.patch(API_URL, verificationToken);
+  console.log(`response(in verifyUser authService) :`, response);
   return response.data.message;
 };
-
 // Update User
 const updateUser = async (userData) => {
   const response = await axios.patch(API_URL + 'updateUser', userData);
@@ -116,13 +114,6 @@ const loginWithCode = async (code, email) => {
   const response = await axios.post(API_URL + `/loginWithCode/${email}`, code);
   return response.data;
 };
-
-// // loginWithGoogle
-// const loginWithGoogle = async (userToken) => {
-//   const response = await axios.post(API_URL + 'google/callback', userToken);
-//   return response.data;
-// };
-
 const authService = {
   register,
   login,
@@ -141,7 +132,6 @@ const authService = {
   sendAutomatedEmail,
   sendLoginCode,
   loginWithCode,
-  //   loginWithGoogle,
 };
 
 export default authService;

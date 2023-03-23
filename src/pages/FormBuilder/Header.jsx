@@ -2,7 +2,8 @@ import { Fragment } from 'react';
 import { Box, Paper, TextField } from '@mui/material';
 // import Card from '../../components/card/Card';
 
-const Header = ({ title, description, setTitle, setDescription }) => {
+// prev props for Form description, setDescription;
+const Header = ({ category, setCategory }) => {
   return (
     <Fragment>
       <Box sx={{ mb: 2 }}>
@@ -12,17 +13,17 @@ const Header = ({ title, description, setTitle, setDescription }) => {
         >
           <TextField
             className='container'
-            defaultValue={title}
-            onBlur={(e) => setTitle(e.target.value)}
+            defaultValue={category}
+            onBlur={(e) => setCategory(e.target.value)}
             variant='filled'
-            placeholder='Form Title'
-            name='title'
+            placeholder='Category'
+            name='category'
             size='small'
             sx={{ mb: 3 }}
             inputProps={{ style: { fontSize: 25, fontWeight: 600 } }} // font size of input text
             fullWidth
           />
-          <TextField
+          {/* <TextField
             name='description'
             defaultValue={description}
             onBlur={(e) => setDescription(e.target.value)}
@@ -34,7 +35,7 @@ const Header = ({ title, description, setTitle, setDescription }) => {
             sx={{ mb: 1 }}
             multiline
             rows={2}
-          />
+          /> */}
         </Paper>
       </Box>
     </Fragment>

@@ -1,6 +1,4 @@
 import { useEffect } from 'react';
-// import { CssBaseline, ThemeProvider } from '@mui/material';
-// import { ColorModeContext, useMode } from './theme';
 import FormBuilder from './pages/FormBuilder';
 import 'react-nestable/dist/styles/index.css';
 import axios from 'axios';
@@ -11,7 +9,6 @@ import Forgot from './pages/auth/Forgot';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import Reset from './pages/auth/Reset';
-import Verify from './pages/auth/Verify';
 import ChangePassword from './pages/changePassword/ChangePassword';
 import Home from './pages/Home/Home';
 import Profile from './pages/profile/Profile';
@@ -72,14 +69,6 @@ function App() {
           <Route path='/resetPassword/:resetToken' element={<Reset />} />
           <Route path='/loginWithCode/:email' element={<LoginWithCode />} />
 
-          <Route
-            path='/verify/:verificationToken'
-            element={
-              <Layout>
-                <Verify />
-              </Layout>
-            }
-          />
           <Route
             path='/profile'
             element={

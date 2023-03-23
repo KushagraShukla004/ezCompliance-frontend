@@ -3,10 +3,10 @@ import { FaCheck } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { getUsers, upgradeUser } from '../../redux/features/auth/authSlice';
-import {
-  EMAIL_RESET,
-  sendAutomatedEmail,
-} from '../../redux/features/email/emailSlice';
+// import {
+//   EMAIL_RESET,
+//   sendAutomatedEmail,
+// } from '../../redux/features/email/emailSlice';
 
 const ChangeRole = ({ _id, email }) => {
   const [userRole, setUserRole] = useState('');
@@ -24,18 +24,18 @@ const ChangeRole = ({ _id, email }) => {
       id: _id,
     };
 
-    const emailData = {
-      subject: 'Account Role Changed - ezCompliance',
-      send_to: email,
-      reply_to: 'noreply@ezcompliance.com',
-      template: 'changeRole',
-      url: '/login',
-    };
+    // const emailData = {
+    //   subject: 'Account Role Changed - ezCompliance',
+    //   send_to: email,
+    //   reply_to: 'noreply@ezcompliance.com',
+    //   template: 'changeRole',
+    //   url: '/login',
+    // };
 
     await dispatch(upgradeUser(userData));
-    await dispatch(sendAutomatedEmail(emailData));
+    // await dispatch(sendAutomatedEmail(emailData));
     await dispatch(getUsers());
-    dispatch(EMAIL_RESET());
+    // dispatch(EMAIL_RESET());
   };
 
   return (

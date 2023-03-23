@@ -30,25 +30,6 @@ const ResponseTab = () => {
   const { response, isLoading, isError, message } = useSelector(
     (state) => state.form
   );
-  // console.log('response(in state.form): ', response);
-
-  // response?.map((res, index) => {
-  //   // console.log('res:', res);
-  //   const _id = res._id;
-  //   const userName = res.user?.name;
-  //   const questionText = res.response[index]?.questionText;
-  //   console.log('questionText: ', questionText)
-  // });
-
-  // const [chartData, setChartData] = useState({
-  //   labels: response?.map((res, index) => res.response[index]?.optionText),
-  // });
-  // const [formData, setFormData] = useState({});
-  // console.log('formData: ', formData);
-  // const [responseData, setResponseData] = useState([]);
-  // console.log('response: ', responseData);
-  // const [questions, setQuestions] = useState([]);
-  // console.log('questions: ', questions);
 
   useEffect(() => {
     if (isLoggedIn && formId !== undefined && formId !== '') {

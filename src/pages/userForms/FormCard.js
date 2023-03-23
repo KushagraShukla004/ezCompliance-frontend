@@ -80,7 +80,7 @@ const FormCard = ({ forms, isLoading }) => {
         ) : (
           <>
             {forms.map((form, index) => {
-              const { _id, title, createdBy, updatedAt } = form;
+              const { _id, category, createdBy, updatedAt } = form;
               const openForm = () => {
                 navigate(`/forms/form/${_id}`);
               };
@@ -99,7 +99,7 @@ const FormCard = ({ forms, isLoading }) => {
                     }}
                   >
                     <Typography noWrap variant='h4'>
-                      {title}
+                      {category}
                     </Typography>
                     <Typography noWrap variant='h5' color='text.secondary'>
                       Created By - <b>{createdBy?.name}</b>
@@ -114,7 +114,7 @@ const FormCard = ({ forms, isLoading }) => {
                       openForm={openForm}
                       showResponse={showResponse}
                       copyToClipboard={() => copyToClipboard(_id)}
-                      deleteForm={() => confirmDelete(_id, title)}
+                      deleteForm={() => confirmDelete(_id, category)}
                     />
                   </div>
                 </Card>

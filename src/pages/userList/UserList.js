@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PageMenu from '../../components/pageMenu/PageMenu';
 import Search from '../../components/search/Search';
 import UserStats from '../../components/userStats/UserStats';
-import { FaTrashAlt } from 'react-icons/fa';
+import { FaCheck, FaTrashAlt } from 'react-icons/fa';
 import './UserList.scss';
 import ChangeRole from '../../components/changeRole/ChangeRole';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,6 +11,7 @@ import {
   deleteUser,
   getUsers,
   RESET,
+  verifyUser,
 } from '../../redux/features/auth/authSlice';
 import { toast } from 'react-toastify';
 import { SpinnerImg } from '../../components/loader/Loader';
@@ -31,14 +32,38 @@ const UserList = () => {
   const { users, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
+  // console.log('users: ', users);
 
   const filteredUsers = useSelector(selectFilteredUsers);
 
   const delUser = async (id) => {
-    // console.log(id);
     // Await works, don't mind VSCode
     await dispatch(deleteUser(id));
     dispatch(getUsers());
+  };
+
+  const verifytheUser = async (id) => {
+    // console.log(`id (verifyAccount button) :`, id);
+    await dispatch(verifyUser({ verificationToken: id }));
+    await dispatch(RESET());
+    dispatch(getUsers());
+  };
+
+  const verifyAccount = (id) => {
+    confirmAlert({
+      title: 'Verify This User',
+      message: 'Are you sure you want to verify this user.',
+      buttons: [
+        {
+          label: 'Verify',
+          onClick: () => verifytheUser(id),
+        },
+        {
+          label: 'Cancel',
+          // onClick: () => alert('Click No')
+        },
+      ],
+    });
   };
 
   const confirmDelete = (id) => {
@@ -116,7 +141,7 @@ const UserList = () => {
               </span>
             </div>
             {/* Table */}
-            {!isLoading && users.length === 0 ? (
+            {!isLoading && users?.length === 0 ? (
               <p>No user found....</p>
             ) : (
               <table>
@@ -124,6 +149,7 @@ const UserList = () => {
                   <tr>
                     <th>s/n</th>
                     <th>Name</th>
+                    <th>Designation</th>
                     <th>Email</th>
                     <th>Role</th>
                     <th>Change Role</th>
@@ -132,12 +158,14 @@ const UserList = () => {
                 </thead>
                 <tbody>
                   {currentItems.map((user, index) => {
-                    const { _id, name, email, role } = user;
+                    const { _id, name, designation, email, role, isVerified } =
+                      user;
 
                     return (
                       <tr key={_id}>
                         <td>{index + 1}</td>
-                        <td>{shortenText(name, 16)}</td>
+                        <td>{shortenText(name, 10)}</td>
+                        <td>{shortenText(designation, 16)}</td>
                         <td>{email}</td>
                         <td>{role}</td>
                         <td>
@@ -146,9 +174,24 @@ const UserList = () => {
                         </td>
                         <td className='icons'>
                           <span>
+                            {isVerified ? (
+                              <FaCheck
+                                size={15}
+                                color={'green'}
+                                onClick={() => verifyAccount(_id)}
+                              />
+                            ) : (
+                              <FaCheck
+                                size={15}
+                                color={'red'}
+                                onClick={() => verifyAccount(_id)}
+                              />
+                            )}
+
                             <FaTrashAlt
                               size={20}
                               color={'red'}
+                              style={{ marginLeft: 6 }}
                               onClick={() => confirmDelete(_id)}
                             />
                           </span>
