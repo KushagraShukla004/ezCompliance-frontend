@@ -7,14 +7,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--color-grey);
+  // background-color: var(--color-grey);
   min-height: 80vh;
 }
 
 .hero-text {
   width: 50%;
   & > * {
-    color: #333;
+    // color: #333;
     margin-bottom: 2rem;
   }
   & > h2 span {
