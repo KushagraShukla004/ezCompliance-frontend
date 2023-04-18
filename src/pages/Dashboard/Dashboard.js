@@ -19,6 +19,7 @@ import { useSelector } from 'react-redux';
 import { selectUser } from '../../redux/features/auth/authSlice';
 import { NavLink } from 'react-router-dom';
 import useRedirectLoggedOutUser from '../../customHook/useRedirectLoggedOutUser';
+import ResourcesTable from './stats/ResourcesTable';
 
 const Dashboard = () => {
   const theme = useTheme();
@@ -114,6 +115,7 @@ const Dashboard = () => {
           gridRow='span 4'
           backgroundColor={colors.primary[400]}
           boxShadow={5}
+          overflow='auto'
         >
           <Box
             mt='15px'
@@ -140,6 +142,9 @@ const Dashboard = () => {
                 <DownloadIcon color='secondary' sx={{ fontSize: '2.3em' }} />
               </IconButton>
             </Box>
+          </Box>
+          <Box>
+            <ResourcesTable />
           </Box>
         </Box>
         {/* Row 3*/}

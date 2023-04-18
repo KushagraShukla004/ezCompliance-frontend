@@ -13,6 +13,9 @@ const PageMenu = () => {
           <li>
             <NavLink to='/change-password'>Change Password</NavLink>
           </li>
+          <li>
+            <NavLink to='/addResource'>Add Resource</NavLink>
+          </li>
           <AdminLink>
             <li>
               <NavLink to='/users'>Users</NavLink>

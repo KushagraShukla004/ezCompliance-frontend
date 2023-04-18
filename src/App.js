@@ -31,6 +31,7 @@ import UserResponses from './pages/userResponses/UserResponses';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { ColorModeContext, useMode } from './theme';
 import ErrorPage from './pages/ErrorPage';
+import Resources from './pages/Resources/Resources';
 
 axios.defaults.withCredentials = true;
 
@@ -146,6 +147,14 @@ function App() {
               element={
                 <Layout>
                   <UserResponses />
+                </Layout>
+              }
+            />
+            <Route
+              path='/addResource'
+              element={
+                <Layout>
+                  <Resources />
                 </Layout>
               }
             />
