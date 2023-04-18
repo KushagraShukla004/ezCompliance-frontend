@@ -9,6 +9,7 @@ import {
 import { tokens } from '../../../theme';
 //icons
 import FileOpenIcon from '@mui/icons-material/FileOpen';
+import { SpinnerImg } from '../../../components/loader/Loader';
 
 const RecentFormsTable = ({ isRole }) => {
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ const RecentFormsTable = ({ isRole }) => {
   const colors = tokens(theme.palette.mode);
 
   //eslint-disable-next-line
-  const { forms, responses, isError, message } = useSelector(
+  const { forms, responses, isError, message, isLoading } = useSelector(
     (state) => state.form
   );
 
@@ -212,7 +213,12 @@ const RecentFormsTable = ({ isRole }) => {
     //eslint-disable-next-line
   }, [isRole, responses, colors]);
 
-  return <>{FormTable()}</>;
+  return (
+    <>
+      {isLoading && <SpinnerImg />}
+      {FormTable()}
+    </>
+  );
 };
 
 export default RecentFormsTable;

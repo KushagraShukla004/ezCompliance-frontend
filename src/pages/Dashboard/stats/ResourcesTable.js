@@ -13,6 +13,7 @@ import { tokens } from '../../../theme';
 import FileOpenIcon from '@mui/icons-material/FileOpen';
 import { Box, IconButton, Tooltip, Typography } from '@mui/material';
 import { shortenText } from '../../profile/Profile';
+import { SpinnerImg } from '../../../components/loader/Loader';
 
 const ResourcesTable = () => {
   useRedirectLoggedOutUser('/login');
@@ -24,7 +25,9 @@ const ResourcesTable = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const resources = useSelector(selectResources);
   //eslint-disable-next-line
-  const { isError, message } = useSelector((state) => state.resource);
+  const { isLoading, isError, message } = useSelector(
+    (state) => state.resource
+  );
 
   useEffect(() => {
     if (isLoggedIn === true) {
@@ -37,6 +40,7 @@ const ResourcesTable = () => {
 
   return (
     <>
+      {isLoading && <SpinnerImg />}
       {resources !== undefined ? (
         <>
           {resources?.length === 0 ? (
