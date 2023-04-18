@@ -9,6 +9,7 @@ import {
 import { tokens } from '../../../theme';
 //icons
 import FileOpenIcon from '@mui/icons-material/FileOpen';
+import DescriptionIcon from '@mui/icons-material/Description';
 import { SpinnerImg } from '../../../components/loader/Loader';
 
 const RecentFormsTable = ({ isRole }) => {
@@ -35,8 +36,6 @@ const RecentFormsTable = ({ isRole }) => {
   }, [dispatch, isError, message, isRole]);
 
   const FormTable = useCallback(() => {
-    // console.log(`isRole :`, isRole);
-    // console.log('responses: ', responses);
     switch (isRole) {
       case 'auditor':
         return (
@@ -49,14 +48,13 @@ const RecentFormsTable = ({ isRole }) => {
               <>
                 {responses?.map((response, index) => {
                   const { formId, resForm, createdAt } = response;
-                  // console.log(`response :`, response);
 
                   const openForm = () => {
                     navigate(`/forms/form/${formId}`);
                   };
-                  // const showResponse = () => {
-                  //   navigate(`/getResponse/${formId}`);
-                  // };
+                  const showResponse = () => {
+                    navigate(`/getResponse/${formId}`);
+                  };
 
                   return (
                     <Box
@@ -107,12 +105,24 @@ const RecentFormsTable = ({ isRole }) => {
                             />
                           </IconButton>
                         </Tooltip>
-
-                        {/* <IconButton
-                          onClick={openForm}
+                        <Tooltip
+                          title={
+                            <p style={{ color: 'white', fontSize: '1.5em' }}>
+                              Open Response
+                            </p>
+                          }
+                          aria-label='open-Response'
                         >
-                          <FileOpenIcon size={15} color={colors.grey[100]} />
-                        </IconButton> */}
+                          <IconButton
+                            aria-label='open-Response'
+                            onClick={showResponse}
+                          >
+                            <DescriptionIcon
+                              sx={{ fontSize: '2em' }}
+                              color='secondary'
+                            />
+                          </IconButton>
+                        </Tooltip>
                       </Box>
                     </Box>
                   );
@@ -132,7 +142,6 @@ const RecentFormsTable = ({ isRole }) => {
               <>
                 {forms?.map((form, index) => {
                   const { _id, category, createdBy, createdAt } = form;
-                  // console.log(`form :`, form);
 
                   const showResponse = () => {
                     navigate(`/getResponse/${_id}`);
@@ -189,12 +198,6 @@ const RecentFormsTable = ({ isRole }) => {
                             />
                           </IconButton>
                         </Tooltip>
-
-                        {/* <IconButton
-                          onClick={openForm}
-                        >
-                          <FileOpenIcon size={15} color={colors.grey[100]} />
-                        </IconButton> */}
                       </Box>
                     </Box>
                   );
