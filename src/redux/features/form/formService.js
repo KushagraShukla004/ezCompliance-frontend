@@ -43,6 +43,11 @@ const submitResponse = async (responseData) => {
   return response.data;
 };
 
+const getAllResponseForms = async () => {
+  const response = await axios.get(API_URL + 'Responses');
+  return response.data;
+};
+
 const getResponse = async (formId) => {
   const response = await axios.get(API_URL + 'getResponse/' + formId);
   return response.data;
@@ -57,6 +62,7 @@ const formService = {
   deleteForm,
   submitResponse,
   getResponse,
+  getAllResponseForms,
 };
 
 export default formService;

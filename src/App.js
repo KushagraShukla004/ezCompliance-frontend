@@ -27,6 +27,10 @@ import UserForms from './pages/userForms';
 import ResponseTab from './pages/Response/ResponseTab';
 import AllForms from './pages/allForms/AllForms';
 import Dashboard from './pages/Dashboard/Dashboard';
+import UserResponses from './pages/userResponses/UserResponses';
+import { CssBaseline, ThemeProvider } from '@mui/material';
+import { ColorModeContext, useMode } from './theme';
+import ErrorPage from './pages/ErrorPage';
 
 axios.defaults.withCredentials = true;
 
@@ -34,6 +38,7 @@ function App() {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const user = useSelector(selectUser);
+  const [theme, colorMode] = useMode();
 
   useEffect(() => {
     dispatch(getLoginStatus());
@@ -43,99 +48,111 @@ function App() {
   }, [dispatch, isLoggedIn, user]);
 
   return (
-    <>
-      <BrowserRouter>
-        <ToastContainer style={{ width: '45rem', fontSize: '1.5rem' }} />
-        <Routes>
-          <Route
-            path='/'
-            element={
-              <Layout>
-                <Home />
-              </Layout>
-            }
-          />
-          <Route
-            path='/dashboard'
-            element={
-              <Layout>
-                <Dashboard />
-              </Layout>
-            }
-          />
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/forgot' element={<Forgot />} />
-          <Route path='/resetPassword/:resetToken' element={<Reset />} />
-          <Route path='/loginWithCode/:email' element={<LoginWithCode />} />
+    <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <BrowserRouter>
+          <ToastContainer style={{ width: '45rem', fontSize: '1.5rem' }} />
+          <Routes>
+            <Route
+              path='/'
+              element={
+                <Layout>
+                  <Home />
+                </Layout>
+              }
+            />
+            <Route
+              path='/dashboard'
+              element={
+                <Layout>
+                  <Dashboard />
+                </Layout>
+              }
+            />
+            <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<Register />} />
+            <Route path='/forgot' element={<Forgot />} />
+            <Route path='/resetPassword/:resetToken' element={<Reset />} />
+            <Route path='/loginWithCode/:email' element={<LoginWithCode />} />
+            <Route path='/error' element={<ErrorPage />} />
 
-          <Route
-            path='/profile'
-            element={
-              <Layout>
-                <Profile />
-              </Layout>
-            }
-          />
-          <Route
-            path='/change-password'
-            element={
-              <Layout>
-                <ChangePassword />
-              </Layout>
-            }
-          />
-          <Route
-            path='/users'
-            element={
-              <Layout>
-                <UserList />
-              </Layout>
-            }
-          />
-          <Route
-            path='/createForm'
-            element={
-              <Layout>
-                <FormBuilder />
-              </Layout>
-            }
-          />
-          <Route
-            path='/forms'
-            element={
-              <Layout>
-                <UserForms />
-              </Layout>
-            }
-          />
-          <Route
-            path='/allForms'
-            element={
-              <Layout>
-                <AllForms />
-              </Layout>
-            }
-          />
-          <Route
-            path='/forms/form/:formId'
-            element={
-              <Layout>
-                <OpenForm />
-              </Layout>
-            }
-          />
-          <Route
-            path='/responses/getResponse/:formId'
-            element={
-              <Layout>
-                <ResponseTab />
-              </Layout>
-            }
-          />
-        </Routes>
-      </BrowserRouter>
-    </>
+            <Route
+              path='/profile'
+              element={
+                <Layout>
+                  <Profile />
+                </Layout>
+              }
+            />
+            <Route
+              path='/change-password'
+              element={
+                <Layout>
+                  <ChangePassword />
+                </Layout>
+              }
+            />
+            <Route
+              path='/users'
+              element={
+                <Layout>
+                  <UserList />
+                </Layout>
+              }
+            />
+            <Route
+              path='/createForm'
+              element={
+                <Layout>
+                  <FormBuilder />
+                </Layout>
+              }
+            />
+            <Route
+              path='/forms'
+              element={
+                <Layout>
+                  <UserForms />
+                </Layout>
+              }
+            />
+            <Route
+              path='/allForms'
+              element={
+                <Layout>
+                  <AllForms />
+                </Layout>
+              }
+            />
+            <Route
+              path='/forms/form/:formId'
+              element={
+                <Layout>
+                  <OpenForm />
+                </Layout>
+              }
+            />
+            <Route
+              path='/getResponse/:formId'
+              element={
+                <Layout>
+                  <ResponseTab />
+                </Layout>
+              }
+            />
+            <Route
+              path='/Responses'
+              element={
+                <Layout>
+                  <UserResponses />
+                </Layout>
+              }
+            />
+          </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
+    </ColorModeContext.Provider>
   );
 }
 

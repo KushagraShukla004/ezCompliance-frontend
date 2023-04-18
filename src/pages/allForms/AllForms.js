@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useTheme } from '@mui/material';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SpinnerImg } from '../../components/loader/Loader';
 import {
@@ -6,14 +7,17 @@ import {
   selectUser,
 } from '../../redux/features/auth/authSlice';
 import { getAllForms } from '../../redux/features/form/formSlice';
+import { tokens } from '../../theme';
 import FormCard from '../userForms/FormCard';
 
 const AllForms = () => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const userRole = useSelector(selectUser);
-  const [alltheForms, setAlltheForms] = useState([]);
-  console.log('alltheforms: ', alltheForms);
+  // const [alltheForms, setAlltheForms] = useState([]);
+  // console.log('alltheforms: ', alltheForms);
   const { forms, isLoading, isError, message } = useSelector(
     (state) => state.form
   );
@@ -22,7 +26,7 @@ const AllForms = () => {
     if (isLoggedIn === true) {
       dispatch(getAllForms());
     }
-    setAlltheForms(forms);
+    // setAlltheForms(forms);
     if (isError) {
       console.log(message);
     }
@@ -30,8 +34,15 @@ const AllForms = () => {
   }, [isLoggedIn, isError, message, dispatch]);
 
   return (
-    <div className='container'>
+    <section
+      style={{
+        marginLeft: '10vw',
+        maxWidth: '80vw',
+        // border: '2px solid black',
+      }}
+    >
       {isLoading && <SpinnerImg />}
+      <h2 style={{ color: `${colors.grey[100]}` }}>All Forms</h2>
       {userRole?.role === 'admin' || userRole?.role === 'auditor' ? (
         <FormCard forms={forms} isLoading={isLoading} />
       ) : (
@@ -44,7 +55,7 @@ const AllForms = () => {
           </div>
         </section>
       )}
-    </div>
+    </section>
   );
 };
 

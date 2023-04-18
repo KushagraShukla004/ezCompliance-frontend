@@ -9,6 +9,8 @@ import { getUser, updateUser } from '../../redux/features/auth/authSlice';
 import { toast } from 'react-toastify';
 import Loader from '../../components/loader/Loader';
 import Notification from '../../components/notification/Notification';
+import { useTheme } from '@mui/material';
+import { tokens } from '../../theme';
 
 export const shortenText = (text, n) => {
   // console.log('text: ', text);
@@ -21,6 +23,8 @@ export const shortenText = (text, n) => {
 };
 
 const Profile = () => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   useRedirectLoggedOutUser('/login');
   const dispatch = useDispatch();
   // const navigate = useNavigate();
@@ -123,7 +127,12 @@ const Profile = () => {
       <section>
         <div className='container'>
           <PageMenu />
-          <h2 className='--flex-center'>Profile</h2>
+          <h2
+            className='--flex-center'
+            style={{ color: `${colors.grey[100]}` }}
+          >
+            Profile
+          </h2>
           <div className='--flex-center profile'>
             <Card cardClass={'card'}>
               {isLoading && <Loader />}

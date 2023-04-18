@@ -145,6 +145,25 @@ export const submitResponse = createAsyncThunk(
   }
 );
 
+//get all Responses of the user
+export const getAllResponseForms = createAsyncThunk(
+  'responses/getAllResponseForms',
+  async (_, thunkAPI) => {
+    try {
+      return await formService.getAllResponseForms();
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      // console.log(message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 //getResponse
 export const getResponse = createAsyncThunk(
   'responses/getResponse',
@@ -309,6 +328,27 @@ const formSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
+        toast.error(action.payload);
+      })
+      //getallResponses
+      .addCase(getAllResponseForms.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAllResponseForms.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.isError = false;
+        state.responses = action.payload;
+        // console.log(
+        //   `responses action.payload (in getAllResponseForms formSlice) :`,
+        //   action.payload
+        // );
+      })
+      .addCase(getAllResponseForms.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        // console.log(`message (in getAllResponseForms):`, state.message);
         toast.error(action.payload);
       })
       //Get a Form by that form's ID

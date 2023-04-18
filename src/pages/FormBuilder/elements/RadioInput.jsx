@@ -18,10 +18,12 @@ import {
   FormControl,
   Button,
   Typography,
+  useTheme,
 } from '@mui/material';
 //Icons
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import DeleteIcon from '@mui/icons-material/Delete';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
+import { tokens } from '../../../theme';
 
 //Form Elements
 // import { formEl } from '../constants';
@@ -42,6 +44,8 @@ const RadioInput = ({
   deleteOption,
   duplicateElement,
 }) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   //Create new option
   const createNewOption = (id) => {
     console.log(id, typeof id, 'this is id');
@@ -54,7 +58,7 @@ const RadioInput = ({
 
   return (
     <Fragment>
-      <Paper elevation={3}>
+      <Paper elevation={2} sx={{ backgroundColor: colors.primary[400] }}>
         {/* <Box sx={{ textAlign: 'center' }}>
           <DragIndicatorIcon
             sx={{
@@ -74,9 +78,16 @@ const RadioInput = ({
                 fullWidth
                 required={item.required}
                 placeholder='Question'
-                sx={{ mb: 2 }}
+                sx={{
+                  mb: 2,
+                  '& input': {
+                    color: colors.grey[50],
+                  },
+                }}
                 size='small'
-                inputProps={{ style: { fontSize: 16 } }}
+                inputProps={{
+                  style: { fontSize: 16, backgroundColor: colors.primary[500] },
+                }}
               />
               {item.options &&
                 item.options.length > 0 &&
@@ -88,11 +99,21 @@ const RadioInput = ({
                       placeholder={`Option ${key + 1}`}
                       defaultValue={opt?.optionText}
                       key={opt?.id}
-                      sx={{ mb: 1 }}
+                      sx={{
+                        mb: 1,
+                        '& input': {
+                          color: colors.grey[50],
+                        },
+                      }}
                       onBlur={(e) =>
                         handleOptionValues(item?.id, opt?.id, e.target.value)
                       }
-                      inputProps={{ style: { fontSize: 16 } }}
+                      inputProps={{
+                        style: {
+                          fontSize: 16,
+                          backgroundColor: colors.primary[500],
+                        },
+                      }}
                     />
                     <Tooltip
                       title={
@@ -107,7 +128,7 @@ const RadioInput = ({
                         onClick={() => deleteOption(item.id, opt?.id)}
                         sx={{ ml: 2 }}
                       >
-                        <DeleteOutlineOutlinedIcon
+                        <DeleteIcon
                           sx={{ fontSize: '2em' }}
                           color='secondary'
                         />
@@ -115,7 +136,11 @@ const RadioInput = ({
                     </Tooltip>
                   </Box>
                 ))}
-              <Button variant='text' onClick={() => createNewOption(item.id)}>
+              <Button
+                variant='text'
+                sx={{ fontSize: '1.2rem', color: colors.grey[100] }}
+                onClick={() => createNewOption(item.id)}
+              >
                 Add Option
               </Button>
             </Grid>
@@ -164,10 +189,7 @@ const RadioInput = ({
               onClick={() => deleteEl(item.id)}
               sx={{ ml: 2 }}
             >
-              <DeleteOutlineOutlinedIcon
-                sx={{ fontSize: '2em' }}
-                color='secondary'
-              />
+              <DeleteIcon sx={{ fontSize: '2em' }} color='secondary' />
             </IconButton>
           </Tooltip>
           <Tooltip

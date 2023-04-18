@@ -72,7 +72,11 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    font-size: 13px;
+
+    p {
+      font-size: 13px;
+      color: '#000000';
+    }
   }
 
   @keyframes slide-up {

@@ -19,7 +19,7 @@ const PasswordInput = ({ placeholder, value, onChange, name, onPaste }) => {
         onChange={onChange}
         onPaste={onPaste}
       />
-      <div className='icon' onClick={togglePassword}>
+      <div className='icon' style={{ color: 'black' }} onClick={togglePassword}>
         {showPassword ? (
           <AiOutlineEyeInvisible size={20} />
         ) : (

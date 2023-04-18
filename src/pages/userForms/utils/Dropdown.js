@@ -1,10 +1,11 @@
-import { MenuItem, Menu, Typography } from '@mui/material';
+import { MenuItem, Menu, Typography, useTheme } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 
 import React, { useState } from 'react';
 
 //Icons
 import { BsThreeDotsVertical } from 'react-icons/bs';
+import { tokens } from '../../../theme';
 
 export const Dropdown = ({
   openForm,
@@ -13,6 +14,8 @@ export const Dropdown = ({
   showResponse,
   deleteForm,
 }) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -64,14 +67,14 @@ export const Dropdown = ({
         }}
         PaperProps={{
           style: {
-            width: '16em',
+            width: '19em',
             borderRadius: 10,
           },
         }}
       >
         {dropdownMenu.map((el, index) => (
           <MenuItem key={index} value={el} onClick={() => el.onClick()}>
-            <Typography variant='h5' className='--color-dark'>
+            <Typography variant='h5' color={colors.grey[100]}>
               <b>{el.text}</b>
             </Typography>
           </MenuItem>

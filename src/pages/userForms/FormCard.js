@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 import './UserForms.scss';
 //MUI
-import { Card, Box, Typography } from '@mui/material';
+import { Card, Box, Typography, useTheme } from '@mui/material';
 
 //backend
 
@@ -13,19 +13,22 @@ import {
   deleteForm,
   // getAllFormsofUser,
 } from '../../redux/features/form/formSlice';
-import { SpinnerImg } from '../../components/loader/Loader';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { useNavigate } from 'react-router-dom';
 import { Dropdown } from './utils/Dropdown';
+import { tokens } from '../../theme';
 
-const FormCard = ({ forms, isLoading }) => {
+const FormCard = ({ forms, responses, user }) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // console.log('forms: ', forms);
-  const delProduct = async (formId) => {
-    console.log(formId);
+  // console.log(`form :`, forms);
+  // console.log(`reponses :`, responses);
+  // console.log(`user :`, user);
 
+  const delProduct = async (formId) => {
     await dispatch(deleteForm(formId));
     window.location.reload(true);
   };
@@ -55,74 +58,147 @@ const FormCard = ({ forms, isLoading }) => {
         },
         {
           label: 'Cancel',
-          // onClick: () => alert('Click No')
         },
       ],
     });
   };
   return (
-    <section
-      key={3}
-      style={{
-        marginLeft: '10vw',
-        maxWidth: '80vw',
-      }}
-    >
-      <div className='--flex-between --flex-dir-column'>
-        <span>
-          <h3>Forms</h3>
-        </span>
-      </div>
-      {isLoading && <SpinnerImg />}
-      <div className='--flex-start userform'>
-        {forms.length === 0 ? (
-          <p>-- No form found, please add a form...</p>
-        ) : (
-          <>
-            {forms.map((form, index) => {
-              const { _id, category, createdBy, updatedAt } = form;
-              const openForm = () => {
-                navigate(`/forms/form/${_id}`);
-              };
-              const showResponse = () => {
-                navigate(`/responses/getResponse/${_id}`);
-              };
+    <section>
+      {forms !== undefined ? (
+        <div className='--flex-start userform'>
+          {forms.length === 0 ? (
+            <p style={{ color: `${colors.grey[100]}` }}>
+              -- No form found, please add a form...
+            </p>
+          ) : (
+            <>
+              {forms.map((form, index) => {
+                const { _id, category, createdBy, updatedAt } = form;
+                // console.log(`form :`, form);
 
-              return (
-                <Card key={_id} className='userform_card'>
-                  <Box
+                const openForm = () => {
+                  navigate(`/forms/form/${_id}`);
+                };
+                const showResponse = () => {
+                  navigate(`/getResponse/${_id}`);
+                };
+
+                return (
+                  <Card
+                    key={_id}
+                    className='userform_card'
                     sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      // border: 2,
-                      width: '90%',
+                      backgroundColor: `${colors.primary[400]}`,
+                      boxShadow: '5',
                     }}
                   >
-                    <Typography noWrap variant='h4'>
-                      {category}
-                    </Typography>
-                    <Typography noWrap variant='h5' color='text.secondary'>
-                      Created By - <b>{createdBy?.name}</b>
-                    </Typography>
-                    <Typography noWrap variant='h5' color='text.secondary'>
-                      Updated - {updatedAt}
-                    </Typography>
-                  </Box>
-                  <div>
-                    <Dropdown
-                      id={_id}
-                      openForm={openForm}
-                      showResponse={showResponse}
-                      copyToClipboard={() => copyToClipboard(_id)}
-                      deleteForm={() => confirmDelete(_id, category)}
-                    />
-                  </div>
-                </Card>
-              );
-            })}
-          </>
-        )}
-      </div>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        // border: 2,
+                        width: '90%',
+                      }}
+                      // backgroundColor={colors.primary[400]}
+                    >
+                      <Typography noWrap variant='h4' color={colors.grey[100]}>
+                        {category}
+                      </Typography>
+                      <Typography noWrap variant='h5' color='text.secondary'>
+                        Created By - <b>{createdBy?.name}</b>
+                      </Typography>
+                      <Typography noWrap variant='h5' color='text.secondary'>
+                        Updated - {updatedAt.slice(0, 10)}
+                      </Typography>
+                    </Box>
+                    <div>
+                      <Dropdown
+                        id={_id}
+                        openForm={openForm}
+                        showResponse={showResponse}
+                        copyToClipboard={() => copyToClipboard(_id)}
+                        deleteForm={() => confirmDelete(_id, category)}
+                      />
+                    </div>
+                  </Card>
+                );
+              })}
+            </>
+          )}
+        </div>
+      ) : (
+        <>
+          <div className='--flex-start userform'>
+            {responses.length === 0 ? (
+              <p style={{ color: `${colors.grey[100]}` }}>
+                -- No Response found, please add a Response...
+              </p>
+            ) : (
+              <>
+                {responses.map((response, index) => {
+                  const { _id, formId, resForm, createdAt } = response;
+                  // console.log(`response :`, response);
+
+                  const openForm = () => {
+                    navigate(`/forms/form/${formId}`);
+                  };
+                  const showResponse = () => {
+                    navigate(`/getResponse/${formId}`);
+                  };
+
+                  return (
+                    <Card
+                      key={_id}
+                      className='userform_card'
+                      sx={{
+                        backgroundColor: `${colors.primary[400]}`,
+                        boxShadow: '5',
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          // border: 2,
+                          width: '90%',
+                        }}
+                      >
+                        <Typography
+                          noWrap
+                          variant='h4'
+                          color={colors.grey[100]}
+                        >
+                          {resForm?.category}
+                        </Typography>
+                        <Typography noWrap variant='h5'>
+                          Created By - <b>{resForm?.createdBy.name}</b>
+                        </Typography>
+                        <Typography noWrap variant='h5' color='text.secondary'>
+                          Filled By - <b>{user}</b>
+                        </Typography>
+                        <Typography noWrap variant='h5' color='text.secondary'>
+                          Created At - {createdAt.slice(0, 10)}
+                        </Typography>
+                      </Box>
+                      <div>
+                        <Dropdown
+                          id={_id}
+                          openForm={openForm}
+                          showResponse={showResponse}
+                          copyToClipboard={() => copyToClipboard(_id)}
+                          deleteForm={() =>
+                            confirmDelete(_id, resForm?.category)
+                          }
+                        />
+                      </div>
+                    </Card>
+                  );
+                })}
+              </>
+            )}
+          </div>
+        </>
+      )}
     </section>
   );
 };

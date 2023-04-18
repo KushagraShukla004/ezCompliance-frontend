@@ -19,10 +19,7 @@ const Notification = () => {
         <p>
           <b>Message: </b> &nbsp;
         </p>
-        <p>
-          To verify your account, check your email for a verification link.
-          &nbsp;
-        </p>
+        <p>Admin will shortly verify your account. &nbsp;</p>
         <p className='v-link' onClick={sendVerEmail}>
           <b> Resend Link</b>
         </p>

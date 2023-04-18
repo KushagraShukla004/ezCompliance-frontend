@@ -1,15 +1,23 @@
 import { Fragment } from 'react';
-import { Box, Paper, TextField } from '@mui/material';
+import { Box, Paper, TextField, useTheme } from '@mui/material';
+import { tokens } from '../../theme';
 // import Card from '../../components/card/Card';
 
 // prev props for Form description, setDescription;
 const Header = ({ category, setCategory }) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   return (
     <Fragment>
       <Box sx={{ mb: 2 }}>
         <Paper
-          elevation={3}
-          sx={{ p: 2, borderTop: '8px solid #9C27B0', borderRadius: 2 }}
+          elevation={2}
+          sx={{
+            p: 2,
+            borderTop: `8px solid ${colors.secondary[500]}`,
+            borderRadius: 2,
+            backgroundColor: colors.primary[400],
+          }}
         >
           <TextField
             className='container'
@@ -19,8 +27,20 @@ const Header = ({ category, setCategory }) => {
             placeholder='Category'
             name='category'
             size='small'
-            sx={{ mb: 3 }}
-            inputProps={{ style: { fontSize: 25, fontWeight: 600 } }} // font size of input text
+            sx={{
+              mb: 3,
+              '& input': {
+                color: colors.grey[50],
+              },
+            }}
+            // font size of input text
+            inputProps={{
+              style: {
+                backgroundColor: colors.primary[500],
+                fontSize: 25,
+                fontWeight: 600,
+              },
+            }}
             fullWidth
           />
           {/* <TextField

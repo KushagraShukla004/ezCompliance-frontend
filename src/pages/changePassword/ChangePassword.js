@@ -13,6 +13,8 @@ import {
 } from '../../redux/features/auth/authSlice';
 import { SpinnerImg } from '../../components/loader/Loader';
 import useRedirectLoggedOutUser from '../../customHook/useRedirectLoggedOutUser';
+import { useTheme } from '@mui/material';
+import { tokens } from '../../theme';
 // import { sendAutomatedEmail } from '../../redux/features/email/emailSlice';
 
 const initialState = {
@@ -23,12 +25,14 @@ const initialState = {
 
 const ChangePassword = () => {
   useRedirectLoggedOutUser('/login');
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [formData, setformData] = useState(initialState);
   const { oldPassword, password, password2 } = formData;
 
-  const { isLoading, user } = useSelector((state) => state.auth);
+  const { isLoading } = useSelector((state) => state.auth);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -47,14 +51,6 @@ const ChangePassword = () => {
       password,
     };
 
-    // const emailData = {
-    //   subject: 'Password Changed - ezCompliance',
-    //   send_to: user.email,
-    //   reply_to: 'noreply@ezcompliance.com',
-    //   template: 'changePassword',
-    //   url: '/forgot',
-    // };
-
     await dispatch(changePassword(userData));
     // await dispatch(sendAutomatedEmail(emailData));
     await dispatch(logout());
@@ -67,42 +63,41 @@ const ChangePassword = () => {
       <section>
         <div className='container'>
           <PageMenu />
-          <h2 className='--flex-center --mt2'>Change Password</h2>
+          <h2
+            className='--flex-center --mt2'
+            style={{ color: `${colors.grey[100]}` }}
+          >
+            Change Password
+          </h2>
           <div className='--flex-center --mt2 change-password'>
             <Card cardClass={'card'}>
               <form onSubmit={updatePassword}>
-                <p>
-                  <label>Current Password:</label>
-                  <PasswordInput
-                    placeholder='Current Password'
-                    name='oldPassword'
-                    value={oldPassword}
-                    onChange={handleInputChange}
-                  />
-                </p>
-                <p>
-                  <label>New Password:</label>
-                  <PasswordInput
-                    placeholder='New Password'
-                    name='password'
-                    value={password}
-                    onChange={handleInputChange}
-                  />
-                </p>
-                <p>
-                  <label>New Password:</label>
-                  <PasswordInput
-                    placeholder='Confirm New Password'
-                    name='password2'
-                    value={password2}
-                    onChange={handleInputChange}
-                    onPaste={(e) => {
-                      e.preventDefault();
-                      toast.error('Cannot paste into input field.');
-                      return false;
-                    }}
-                  />
-                </p>
+                <label>Current Password:</label>
+                <PasswordInput
+                  placeholder='Current Password'
+                  name='oldPassword'
+                  value={oldPassword}
+                  onChange={handleInputChange}
+                />
+                <label>New Password:</label>
+                <PasswordInput
+                  placeholder='New Password'
+                  name='password'
+                  value={password}
+                  onChange={handleInputChange}
+                />
+                <label>New Password:</label>
+                <PasswordInput
+                  placeholder='Confirm New Password'
+                  name='password2'
+                  value={password2}
+                  onChange={handleInputChange}
+                  onPaste={(e) => {
+                    e.preventDefault();
+                    toast.error('Cannot paste into input field.');
+                    return false;
+                  }}
+                />
                 {isLoading ? (
                   <SpinnerImg />
                 ) : (

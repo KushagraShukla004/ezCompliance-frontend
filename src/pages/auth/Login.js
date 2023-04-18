@@ -57,7 +57,7 @@ const Login = () => {
 
   useEffect(() => {
     if (isLoggedIn && isSuccess) {
-      navigate('/profile');
+      navigate('/dashboard');
     }
     if (isError && twoFactor) {
       dispatch(sendLoginCode(email));

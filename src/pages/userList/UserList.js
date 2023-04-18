@@ -3,6 +3,8 @@ import PageMenu from '../../components/pageMenu/PageMenu';
 import Search from '../../components/search/Search';
 import UserStats from '../../components/userStats/UserStats';
 import { FaCheck, FaTrashAlt } from 'react-icons/fa';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import { GrFormPrevious } from 'react-icons/gr';
 import './UserList.scss';
 import ChangeRole from '../../components/changeRole/ChangeRole';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,6 +13,7 @@ import {
   deleteUser,
   getUsers,
   RESET,
+  // selectUser,
   verifyUser,
 } from '../../redux/features/auth/authSlice';
 import { toast } from 'react-toastify';
@@ -23,11 +26,21 @@ import {
   selectFilteredUsers,
 } from '../../redux/features/auth/filterSlice';
 import ReactPaginate from 'react-paginate';
+import { useTheme } from '@mui/material';
+import { tokens } from '../../theme';
+import { useNavigate } from 'react-router-dom';
 
 const UserList = () => {
   useRedirectLoggedOutUser('/login');
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const [search, setSearch] = useState('');
+
+  // const user = useSelector(selectUser);
+
+  // console.log('user: ', user);
 
   const { users, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
@@ -35,6 +48,12 @@ const UserList = () => {
   // console.log('users: ', users);
 
   const filteredUsers = useSelector(selectFilteredUsers);
+
+  useEffect(() => {
+    if (isError) {
+      navigate('/register');
+    }
+  });
 
   const delUser = async (id) => {
     // Await works, don't mind VSCode
@@ -132,7 +151,7 @@ const UserList = () => {
           {isLoading && <SpinnerImg />}
           <div className='table'>
             <div className='--flex-between'>
-              <h3>All Users</h3>
+              <h3 style={{ color: `${colors.grey[100]}` }}>All Users</h3>
               <span>
                 <Search
                   value={search}
@@ -142,9 +161,14 @@ const UserList = () => {
             </div>
             {/* Table */}
             {!isLoading && users?.length === 0 ? (
-              <p>No user found....</p>
+              <p style={{ color: `${colors.grey[100]}` }}>No user found....</p>
             ) : (
-              <table>
+              <table
+                style={{
+                  backgroundColor: `${colors.primary[400]}`,
+                  color: `${colors.grey[100]}`,
+                }}
+              >
                 <thead>
                   <tr>
                     <th>s/n</th>
@@ -205,11 +229,13 @@ const UserList = () => {
           </div>
           <ReactPaginate
             breakLabel='...'
-            nextLabel='Next'
+            nextLabel={<NavigateNextIcon size={30} color='white' />}
             onPageChange={handlePageClick}
             pageRangeDisplayed={3}
             pageCount={pageCount}
-            previousLabel='Prev'
+            previousLabel={
+              <GrFormPrevious style={{ color: `${colors.grey[100]}` }} />
+            }
             renderOnZeroPageCount={null}
             containerClassName='pagination'
             pageLinkClassName='page-num'

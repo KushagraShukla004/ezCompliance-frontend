@@ -3,7 +3,14 @@ import uuid from 'react-uuid';
 import Nestable from 'react-nestable';
 import { useNavigate } from 'react-router-dom';
 //Material UI Components
-import { Grid, IconButton, Tooltip, Button, Box } from '@mui/material';
+import {
+  Grid,
+  IconButton,
+  Tooltip,
+  Button,
+  useTheme,
+  Box,
+} from '@mui/material';
 //Icons
 import { MdAddCircle } from 'react-icons/md';
 //Form Elements
@@ -20,6 +27,7 @@ import {
 import { useEffect } from 'react';
 import { SpinnerImg } from '../../components/loader/Loader';
 import { selectUser } from '../../redux/features/auth/authSlice';
+import { tokens } from '../../theme';
 
 export const formEl = [
   {
@@ -27,34 +35,23 @@ export const formEl = [
     value: 'radio',
   },
 ];
-// const initialState = {
-//   userId: null,
-//   name: '',
-//   email: '',
-//   role: '',
-// };
 
 const FormBuilder = () => {
   const initVal = formEl[0]?.value;
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
   const isLoading = useSelector(selectIsLoading);
   const user = useSelector(selectUser);
-  // console.log('user: ', user);
 
   //State
-  // const [title, setTitle] = useState('');
-  // const [description, setDescription] = useState('');
   const [data, setData] = useState([]);
-  // const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState('');
-  // console.log('category: ', category);
   const [option, setOption] = useState('radio');
   const [optionText, setOptionText] = useState('');
-  // const [FormCreatedByData, setFormCreatedByData] = useState(initialState);
 
-  // console.log('FormCreatedByData: ', FormCreatedByData);
   const items = data;
 
   //Function to add new element
@@ -191,34 +188,16 @@ const FormBuilder = () => {
     setData(newArr);
   };
 
-  // useEffect(() => {
-  //   setFormCreatedByData({
-  //     userId: user?._id,
-  //     name: user?.name,
-  //     email: user?.email,
-  //     role: user?.role,
-  //   });
-  // }, [user]);
-
   //Function to append values to the backend
   const saveForm = () => {
-    // setFormCreatedByData({
-    //   userId: user?._id,
-    //   name: user?.name,
-    //   email: user?.email,
-    //   role: user?.role,
-    // });
     dispatch(
       createForm({
-        // createdBy: FormCreatedByData,
         createdBy: {
           userId: user?._id,
           name: user?.name,
           email: user?.email,
           role: user?.role,
         },
-        // title: title,
-        // description: description,
         category: category,
         questions: data,
       })
@@ -261,19 +240,42 @@ const FormBuilder = () => {
           justifyContent='center'
           sx={{ fontSize: '4em' }}
         >
-          <Grid item md={10} lg={4.5} sx={{ ml: 7 }}>
-            <Header
-              category={category}
-              setCategory={setCategory}
-              // description={description}
-              // setDescription={setDescription}
-            />
+          <Grid item lg={4.5} md={10} sx={{ ml: 7 }}>
+            <Header category={category} setCategory={setCategory} />
             <Nestable
               items={items}
               renderItem={renderElements}
               maxDepth={1}
               onChange={handleOnChangeSort}
             />
+            <Grid>
+              <Box
+                mt={2}
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <Button
+                  onClick={saveForm}
+                  variant='contained'
+                  sx={{
+                    color: 'white',
+                    backgroundColor: `${colors.blueAccent[500]}`,
+                    fontSize: 15,
+                    transition: 'all 0.3s',
+                    '&:hover': {
+                      transform: 'translateY(-2px)',
+                      backgroundColor: `${colors.blueAccent[700]}`,
+                    },
+                    padding: '7.5px 17px',
+                  }}
+                >
+                  Save
+                </Button>
+              </Box>
+            </Grid>
           </Grid>
           <Grid item md={1}>
             <Tooltip
@@ -287,29 +289,11 @@ const FormBuilder = () => {
                 onClick={addElement}
                 sx={{ position: 'sticky', top: 40 }}
               >
-                <MdAddCircle size={35} color='#142cac' />
+                <MdAddCircle size={35} color={colors.blueAccent[500]} />
               </IconButton>
             </Tooltip>
           </Grid>
         </Grid>
-        <Box
-          sx={{
-            mt: 2,
-            mr: 1,
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <Button
-            aria-label='createForm'
-            // onClick={() => duplicateElement(item.id, item.type)}
-            variant='contained'
-            onClick={saveForm}
-          >
-            Save
-          </Button>
-        </Box>
       </section>
     </Fragment>
   );

@@ -9,6 +9,8 @@ import {
   CALC_SUSPENDED_USER,
   CALC_VERIFIED_USER,
 } from '../../redux/features/auth/authSlice';
+import { tokens } from '../../theme';
+import { useTheme } from '@mui/material';
 
 // Icons
 const icon1 = <FaUsers size={40} color='#fff' />;
@@ -23,6 +25,8 @@ export const formatNumbers = (x) => {
 
 const UserStats = () => {
   const dispatch = useDispatch();
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const { users, verifiedUsers, suspendedUsers } = useSelector(
     (state) => state.auth
   );
@@ -35,7 +39,9 @@ const UserStats = () => {
 
   return (
     <div className='user-summary'>
-      <h3 className='--mt'>User Stats</h3>
+      <h3 className='--mt' style={{ color: `${colors.grey[100]}` }}>
+        User Stats
+      </h3>
       <div className='info-summary'>
         <InfoBox
           icon={icon1}

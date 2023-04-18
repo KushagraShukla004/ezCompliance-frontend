@@ -10,7 +10,6 @@ import {
   getFormById,
   submitResponse,
 } from '../../redux/features/form/formSlice';
-// import Header from '../FormBuilder/Header';
 //MUI
 import {
   Button,
@@ -19,20 +18,19 @@ import {
   Paper,
   Radio,
   RadioGroup,
-  // Tab,
-  // Tabs,
   Typography,
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  useTheme,
 } from '@mui/material';
-// import { TabPanel } from '@mui/lab';
 import { MdExpandMore } from 'react-icons/md';
-// import ResponseTab from '../Response/ResponseTab';
+import { tokens } from '../../theme';
 
 const OpenForm = () => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const dispatch = useDispatch();
-  // eslint-disable-next-line
   const navigate = useNavigate();
   const { formId } = useParams();
   const isLoggedIn = useSelector(selectIsLoggedIn);
@@ -43,9 +41,6 @@ const OpenForm = () => {
   const [userId, setUserId] = useState('');
   const [responseData, setResponseData] = useState([]);
   const [createdByData, setCreatedByData] = useState([]);
-  // console.log('createdByData: ', createdByData);
-  // console.log('responseData(global useState): ', responseData);
-  // const [value, setValue] = React.useState(0);
 
   const [questions, setQuestions] = useState([]);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -57,16 +52,6 @@ const OpenForm = () => {
       }, 1000);
     }
   }, [isSubmitted, navigate]);
-
-  // useEffect(() => {
-  //   setCreatedByData({
-  //     _id: userId,
-  //     name: user?.name,
-  //     email: user?.email,
-  //     role: user?.role,
-  //   });
-  // }, [userId, user?._id, user?.name, user?.email, user?.role]);
-  // console.log('createdByData: ', createdByData);
 
   useEffect(() => {
     setQuestions(form?.questions);
@@ -82,13 +67,8 @@ const OpenForm = () => {
     if (isError) {
       console.log(message);
     }
-
     //eslint-disable-next-line
   }, [isLoggedIn, isError, message, dispatch]);
-
-  // const handleChange = (event, newValue) => {
-  //   setValue(newValue);
-  // };
 
   const handleOptionChange = (event, i) => {
     const questionId = questions[i]._id;
@@ -125,7 +105,6 @@ const OpenForm = () => {
   return (
     <section>
       <br />
-
       {isLoading && <SpinnerImg />}
       {form && (
         <div
@@ -141,11 +120,20 @@ const OpenForm = () => {
           >
             <Grid item xs={12} sm={5} md={12} sx={{ width: '60vw' }}>
               <Grid
-                style={{ borderTop: '8px solid #1D5DEC', borderRadius: 10 }}
+                style={{
+                  borderTop: `8px solid ${colors.secondary[500]}`,
+                  borderRadius: 10,
+                }}
               >
                 <div>
                   <div>
-                    <Paper elevation={2}>
+                    <Paper
+                      elevation={5}
+                      sx={{
+                        backgroundColor: `${colors.primary[400]}`,
+                        // boxShadow: '5',
+                      }}
+                    >
                       <Grid
                         container
                         sx={{
@@ -172,16 +160,11 @@ const OpenForm = () => {
                               marginBottom: '2rem',
                               fontSize: 25,
                               fontWeight: 600,
+                              color: `${colors.grey[100]}`,
                             }}
                           >
                             {form.category}
                           </Typography>
-                          {/* <Typography
-                            variant='h6'
-                            style={{ fontSize: 15, fontWeight: 300 }}
-                          >
-                            {form.description}
-                          </Typography> */}
                         </Grid>
                       </Grid>
                     </Paper>
@@ -194,7 +177,13 @@ const OpenForm = () => {
                     {questions?.map((ques, i) => (
                       <div key={i}>
                         <br />
-                        <Paper>
+                        <Paper
+                          elevation={5}
+                          sx={{
+                            backgroundColor: `${colors.primary[400]}`,
+                            // boxShadow: '5',
+                          }}
+                        >
                           <div>
                             <div
                               style={{
@@ -206,7 +195,11 @@ const OpenForm = () => {
                                 paddingBottom: '15px',
                               }}
                             >
-                              <Typography variant='h4' sx={{ ml: '10px' }}>
+                              <Typography
+                                color={colors.grey[100]}
+                                variant='h4'
+                                sx={{ ml: '10px' }}
+                              >
                                 {i + 1}. {ques.questionText}
                               </Typography>
                               <br />
@@ -229,9 +222,24 @@ const OpenForm = () => {
                                         <FormControlLabel
                                           value={j}
                                           name={opt.optionId}
-                                          control={<Radio />}
+                                          control={
+                                            <Radio
+                                              sx={{
+                                                color: `${colors.grey[100]}`,
+                                                '& .MuiSvgIcon-root': {
+                                                  fontSize: 17,
+                                                },
+                                                '&.Mui-checked': {
+                                                  color: `${colors.grey[100]}`,
+                                                },
+                                              }}
+                                            />
+                                          }
                                           label={
-                                            <Typography variant='h4'>
+                                            <Typography
+                                              color={colors.grey[100]}
+                                              variant='h4'
+                                            >
                                               {opt.optionText}
                                             </Typography>
                                           }
@@ -262,10 +270,18 @@ const OpenForm = () => {
                 <br />
                 <div className='--flex-center'>
                   <Button
-                    variant='contained'
-                    color='primary'
-                    sx={{ fontSize: 13 }}
                     onClick={onSubmitResponse}
+                    variant='contained'
+                    sx={{
+                      backgroundColor: `${colors.blueAccent[500]}`,
+                      fontSize: 15,
+                      transition: 'all 0.3s',
+                      '&:hover': {
+                        transform: 'translateY(-2px)',
+                        backgroundColor: `${colors.blueAccent[700]}`,
+                      },
+                      padding: '7px 17px',
+                    }}
                   >
                     Submit
                   </Button>
@@ -277,49 +293,49 @@ const OpenForm = () => {
             className='--flex-end'
             style={{
               marginTop: '15px',
-              // paddingTop: '20px',
-              // paddingBottom: '20px',
             }}
           >
-            <Paper>
+            <Paper elevation={10}>
               <Accordion>
                 <AccordionSummary
                   expandIcon={<MdExpandMore />}
-                  style={{
+                  sx={{
                     fontFamily: 'Poppins',
                     fontSize: 15,
                     fontWeight: 600,
+                    backgroundColor: `${colors.primary[400]}`,
+                    borderRadius: '5px 5px 0 0',
                   }}
                 >
                   Created By:
                 </AccordionSummary>
-                <AccordionDetails>
+                <AccordionDetails
+                  sx={{
+                    backgroundColor: `${colors.primary[400]}`,
+                    borderRadius: '0 0 5px 5px',
+                  }}
+                >
                   <Typography
                     noWrap
-                    style={{
-                      fontFamily: 'sans-serif Roboto',
-                      marginBottom: '2em',
-                      fontSize: 15,
-                    }}
+                    marginBottom='2em'
+                    fontSize={15}
+                    color={colors.grey[100]}
                   >
                     Name: <b>{createdByData?.name}</b>
                   </Typography>
                   <Typography
-                    style={{
-                      fontFamily: 'sans-serif Roboto',
-                      marginBottom: '2em',
-                      fontSize: 15,
-                    }}
+                    noWrap
+                    marginBottom='2em'
+                    fontSize={15}
+                    color={colors.grey[100]}
                   >
                     Email: <b>{createdByData?.email}</b>
                   </Typography>
                   <Typography
                     noWrap
-                    style={{
-                      fontFamily: 'sans-serif Roboto',
-                      marginBottom: '2rem',
-                      fontSize: 15,
-                    }}
+                    marginBottom='2em'
+                    fontSize={15}
+                    color={colors.grey[100]}
                   >
                     Role: <b>{createdByData?.role}</b>
                   </Typography>

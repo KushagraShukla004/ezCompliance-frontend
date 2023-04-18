@@ -14,13 +14,18 @@ import { SpinnerImg } from '../../components/loader/Loader';
 import { shortenText } from '../profile/Profile';
 // import PieChart from './PieChart';
 // eslint-disable-next-line
-import { Box, Grid, Paper, Typography } from '@mui/material';
+import { Box, Grid, Paper, Typography, useTheme } from '@mui/material';
 import ResponseList from './ResponseList';
+import { tokens } from '../../theme';
 
 const ResponseTab = () => {
   const dispatch = useDispatch();
   // eslint-disable-next-line
   const navigate = useNavigate();
+
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   const { formId } = useParams();
 
   const isLoggedIn = useSelector(selectIsLoggedIn);
@@ -48,7 +53,9 @@ const ResponseTab = () => {
           {/* style={{ border: '2px solid red' }} */}
           <div className='--flex-center --mb2'>
             <span>
-              <h3> Responses </h3>
+              <Typography variant='h3' color={colors.grey[100]}>
+                Responses
+              </Typography>
             </span>
           </div>
           {isLoading && <SpinnerImg />}

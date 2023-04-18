@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { AdminAuditorForms, AdminLink } from '../protect/hiddenLink';
+import { AdminLink } from '../protect/hiddenLink';
 
 const PageMenu = () => {
   return (
@@ -18,11 +18,11 @@ const PageMenu = () => {
               <NavLink to='/users'>Users</NavLink>
             </li>
           </AdminLink>
-          <AdminAuditorForms>
+          <AdminLink>
             <li>
               <NavLink to='/allForms'>All Forms</NavLink>
             </li>
-          </AdminAuditorForms>
+          </AdminLink>
         </ul>
       </nav>
     </div>

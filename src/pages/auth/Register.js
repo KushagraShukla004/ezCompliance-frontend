@@ -46,8 +46,8 @@ const Register = () => {
   const [sChar, setSChar] = useState(false);
   const [passLength, setPassLength] = useState(false);
 
-  const crossIcon = <GiCrossMark color='red' size={10} />;
-  const checkIcon = <TiTick color='green' size={10} />;
+  const crossIcon = <GiCrossMark color='red' size={15} />;
+  const checkIcon = <TiTick color='green' size={15} />;
   const switchIcon = (condition) => {
     if (condition) {
       return checkIcon;
@@ -211,25 +211,25 @@ const Register = () => {
                 <li>
                   <span className={styles.indicator}>
                     {switchIcon(uCase)}
-                    &nbsp; Lowercase & Uppercase
+                    &nbsp; <p>Lowercase & Uppercase</p>
                   </span>
                 </li>
                 <li>
                   <span className={styles.indicator}>
                     {switchIcon(num)}
-                    &nbsp; Number (0-9)
+                    &nbsp; <p>Number (0-9)</p>
                   </span>
                 </li>
                 <li>
                   <span className={styles.indicator}>
                     {switchIcon(sChar)}
-                    &nbsp; Special Character (!@#$%^&*)
+                    &nbsp; <p>Special Character (!@#$%^&*)</p>
                   </span>
                 </li>
                 <li>
                   <span className={styles.indicator}>
                     {switchIcon(passLength)}
-                    &nbsp; At least 6 Character
+                    &nbsp; <p>At least 6 Character</p>
                   </span>
                 </li>
               </ul>

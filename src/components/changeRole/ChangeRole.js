@@ -3,10 +3,6 @@ import { FaCheck } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { getUsers, upgradeUser } from '../../redux/features/auth/authSlice';
-// import {
-//   EMAIL_RESET,
-//   sendAutomatedEmail,
-// } from '../../redux/features/email/emailSlice';
 
 const ChangeRole = ({ _id, email }) => {
   const [userRole, setUserRole] = useState('');
@@ -24,18 +20,8 @@ const ChangeRole = ({ _id, email }) => {
       id: _id,
     };
 
-    // const emailData = {
-    //   subject: 'Account Role Changed - ezCompliance',
-    //   send_to: email,
-    //   reply_to: 'noreply@ezcompliance.com',
-    //   template: 'changeRole',
-    //   url: '/login',
-    // };
-
     await dispatch(upgradeUser(userData));
-    // await dispatch(sendAutomatedEmail(emailData));
     await dispatch(getUsers());
-    // dispatch(EMAIL_RESET());
   };
 
   return (
@@ -45,7 +31,7 @@ const ChangeRole = ({ _id, email }) => {
         onSubmit={(e) => changeUserRole(e, _id, userRole)}
       >
         <select value={userRole} onChange={(e) => setUserRole(e.target.value)}>
-          <option value=''>-- select --</option>
+          <option value=''> -- select --</option>
           <option value='employee'>Employee</option>
           <option value='auditor'>Auditor</option>
           <option value='admin'>Admin</option>
