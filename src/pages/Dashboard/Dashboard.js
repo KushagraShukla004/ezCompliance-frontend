@@ -17,18 +17,23 @@ import { BiSearch } from 'react-icons/bi';
 import RecentFormsTable from './stats/RecentFormsTable';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../redux/features/auth/authSlice';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import useRedirectLoggedOutUser from '../../customHook/useRedirectLoggedOutUser';
 import ResourcesTable from './stats/ResourcesTable';
+import RowStats from './stats/RowStats';
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const userRole = useSelector(selectUser);
+  const user = useSelector(selectUser);
   useRedirectLoggedOutUser('/login');
 
-  const downloadReport = () => {
-    alert('Download');
+  const createResponse = () => {
+    navigate('/creatingForm');
+  };
+  const createForm = () => {
+    navigate('/forms');
   };
 
   return (
@@ -36,27 +41,47 @@ const Dashboard = () => {
       {/* HEADER */}
       <Box display='flex' justifyContent='space-between' alignItems='center'>
         <h2 style={{ color: `${colors.grey[100]}` }}>Dashboard</h2>
-
-        <Box>
-          <Button
-            onClick={downloadReport}
-            variant='contained'
-            color='secondary'
-            sx={{
-              // backgroundColor: `${colors.blueAccent[500]}`,
-              fontSize: 13,
-              color: 'white',
-              transition: 'all 0.3s',
-              '&:hover': {
-                transform: 'translateY(-2px)',
+        {user?.role === 'auditor' ? (
+          <Box>
+            <Button
+              onClick={createResponse}
+              variant='contained'
+              sx={{
                 backgroundColor: `${colors.secondary[700]}`,
-              },
-              padding: '10px 20px',
-            }}
-          >
-            Download Reports
-          </Button>
-        </Box>
+                fontSize: 13,
+                color: 'white',
+                transition: 'all 0.3s',
+                '&:hover': {
+                  transform: 'translateY(-2px)',
+                  backgroundColor: `${colors.secondary[900]}`,
+                },
+                padding: '10px 20px',
+              }}
+            >
+              Create an Audit
+            </Button>
+          </Box>
+        ) : (
+          <Box>
+            <Button
+              onClick={createForm}
+              variant='contained'
+              sx={{
+                backgroundColor: `${colors.secondary[700]}`,
+                fontSize: 13,
+                color: 'white',
+                transition: 'all 0.3s',
+                '&:hover': {
+                  transform: 'translateY(-2px)',
+                  backgroundColor: `${colors.secondary[900]}`,
+                },
+                padding: '10px 20px',
+              }}
+            >
+              Create a Form
+            </Button>
+          </Box>
+        )}
       </Box>
       {/*Grids */}
       <Box
@@ -76,8 +101,9 @@ const Dashboard = () => {
           alignItems='center'
           justifyContent='center'
           boxShadow={5}
+          border={2}
         >
-          <h2 style={{ color: `${colors.grey[100]}` }}>Row 1</h2>
+          <RowStats role={user?.role} />
         </Box>
         <Box
           gridColumn='span 3'
@@ -164,7 +190,7 @@ const Dashboard = () => {
             colors={colors.grey[100]}
             p='15px'
           >
-            {userRole?.role === 'admin' ? (
+            {user?.role === 'admin' ? (
               <Box component={NavLink} to='/forms'>
                 <Typography
                   variant='h5'
@@ -211,7 +237,7 @@ const Dashboard = () => {
             </Box>
           </Box>
           <Box>
-            <RecentFormsTable isRole={userRole?.role} />
+            <RecentFormsTable isRole={user?.role} />
           </Box>
         </Box>
       </Box>

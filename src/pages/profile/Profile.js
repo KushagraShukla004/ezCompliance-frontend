@@ -11,6 +11,7 @@ import Loader from '../../components/loader/Loader';
 import Notification from '../../components/notification/Notification';
 import { useTheme } from '@mui/material';
 import { tokens } from '../../theme';
+import { validatePhone } from '../../redux/features/auth/authService';
 
 export const shortenText = (text, n) => {
   // console.log('text: ', text);
@@ -85,7 +86,9 @@ const Profile = () => {
         console.log('Img Data: ', imgData);
         imageURL = imgData.url;
       }
-
+      if (!validatePhone(profile?.phone)) {
+        return toast.error('Please enter a valid Phone Number');
+      }
       // Save Profile To DB
       const userData = {
         name: profile.name,
