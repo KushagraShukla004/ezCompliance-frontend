@@ -9,6 +9,12 @@ export const validateEmail = (email) => {
   );
 };
 
+export const validatePhone = (phone) => {
+  return phone.match(
+    /^((\+*)((0[ -]*)*|((91 )*))((\d{12})+|(\d{10})+))|\d{5}([- ]*)\d{6}$/
+  );
+};
+
 // Register User
 const register = async (userData) => {
   const response = await axios.post(API_URL + 'register', userData);
