@@ -535,6 +535,8 @@ export const { RESET } = formSlice.actions;
 
 export const selectIsLoading = (state) => state.form.isLoading;
 export const selectForm = (state) => state.form.form;
+export const selectForms = (state) => state.form.forms;
 export const selectResponse = (state) => state.form.response;
+export const selectResponses = (state) => state.form.responses;
 
 export default formSlice.reducer;

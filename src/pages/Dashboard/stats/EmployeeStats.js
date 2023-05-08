@@ -5,14 +5,17 @@ import PeopleIcon from "@mui/icons-material/People";
 import StatBox from "./StatBox";
 import { useDispatch, useSelector } from "react-redux";
 import { getUsers } from "../../../redux/features/auth/authSlice";
+import { selectForms } from "../../../redux/features/form/formSlice";
 
 const EmployeeStats = ({ role }) => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const { users } = useSelector((state) => state.auth);
+  const forms = useSelector(selectForms);
 
   const totalUsers = users?.length;
+  const totalForms = forms?.length;
 
   useEffect(() => {
     dispatch(getUsers());
@@ -51,9 +54,9 @@ const EmployeeStats = ({ role }) => {
             // border={2}
           >
             <StatBox
-              title={totalUsers}
-              subtitle="Total Employees"
-              progress={totalUsers / 10}
+              title={totalForms}
+              subtitle="Total Forms"
+              progress={totalForms / 10}
               icon={
                 <PeopleIcon
                   style={{ color: colors.greenAccent[600], fontSize: "26px" }}
