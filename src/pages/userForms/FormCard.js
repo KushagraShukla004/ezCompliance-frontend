@@ -1,23 +1,23 @@
 // eslint-disable-next-line
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import './UserForms.scss';
+import "./UserForms.scss";
 //MUI
-import { Card, Box, Typography, useTheme } from '@mui/material';
+import { Card, Box, Typography, useTheme } from "@mui/material";
 
 //backend
 
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 // eslint-disable-next-line
 import {
   deleteForm,
   // getAllFormsofUser,
-} from '../../redux/features/form/formSlice';
-import { confirmAlert } from 'react-confirm-alert';
-import 'react-confirm-alert/src/react-confirm-alert.css';
-import { useNavigate } from 'react-router-dom';
-import { Dropdown } from './utils/Dropdown';
-import { tokens } from '../../theme';
+} from "../../redux/features/form/formSlice";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
+import { useNavigate } from "react-router-dom";
+import { Dropdown } from "./utils/Dropdown";
+import { tokens } from "../../theme";
 
 const FormCard = ({ forms, responses, user }) => {
   const theme = useTheme();
@@ -36,28 +36,28 @@ const FormCard = ({ forms, responses, user }) => {
   const copyToClipboard = (formId) => {
     navigator.clipboard
       .writeText(window.location.href + `/form/${formId}`)
-      .then(() => alert('URL has been copied'))
+      .then(() => alert("URL has been copied"))
       .catch((e) => alert(e));
   };
   const confirmDelete = (formId, formTitle) => {
     confirmAlert({
-      title: 'Delete the Form',
+      title: "Delete the Form",
       message: (
         <h3>
-          Are you sure you want to delete{' '}
+          Are you sure you want to delete{" "}
           <b>
             <i>({formTitle})</i>
-          </b>{' '}
+          </b>{" "}
           form.
         </h3>
       ),
       buttons: [
         {
-          label: 'Delete',
+          label: "Delete",
           onClick: () => delProduct(formId),
         },
         {
-          label: 'Cancel',
+          label: "Cancel",
         },
       ],
     });
@@ -65,7 +65,7 @@ const FormCard = ({ forms, responses, user }) => {
   return (
     <section>
       {forms !== undefined ? (
-        <div className='--flex-start userform'>
+        <div className="--flex-start userform">
           {forms.length === 0 ? (
             <p style={{ color: `${colors.grey[100]}` }}>
               -- No form found, please add a form...
@@ -73,7 +73,7 @@ const FormCard = ({ forms, responses, user }) => {
           ) : (
             <>
               {forms.map((form, index) => {
-                const { _id, category, createdBy, updatedAt } = form;
+                const { _id, category, createdBy, createdAt, updatedAt } = form;
                 // console.log(`form :`, form);
 
                 const openForm = () => {
@@ -82,39 +82,46 @@ const FormCard = ({ forms, responses, user }) => {
                 const showResponse = () => {
                   navigate(`/getResponse/${_id}`);
                 };
+                const editForm = () => {
+                  navigate(`/forms/editForm/${_id}`);
+                };
 
                 return (
                   <Card
                     key={_id}
-                    className='userform_card'
+                    className="userform_card"
                     sx={{
                       backgroundColor: `${colors.primary[400]}`,
-                      boxShadow: '5',
+                      boxShadow: "5",
                     }}
                   >
                     <Box
                       sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
+                        display: "flex",
+                        flexDirection: "column",
                         // border: 2,
-                        width: '90%',
+                        width: "90%",
                       }}
                       // backgroundColor={colors.primary[400]}
                     >
-                      <Typography noWrap variant='h4' color={colors.grey[100]}>
+                      <Typography noWrap variant="h4" color={colors.grey[100]}>
                         {category}
                       </Typography>
-                      <Typography noWrap variant='h5' color='text.secondary'>
+                      <Typography noWrap variant="h5" color="text.secondary">
                         Created By - <b>{createdBy?.name}</b>
                       </Typography>
-                      <Typography noWrap variant='h5' color='text.secondary'>
-                        Updated - {updatedAt.slice(0, 10)}
+                      <Typography noWrap variant="h5" color="text.secondary">
+                        Created At - {createdAt?.slice(0, 10)}
+                      </Typography>
+                      <Typography noWrap variant="h5" color="text.secondary">
+                        Updated - {updatedAt?.slice(0, 10)}
                       </Typography>
                     </Box>
                     <div>
                       <Dropdown
                         id={_id}
                         openForm={openForm}
+                        editForm={editForm}
                         showResponse={showResponse}
                         copyToClipboard={() => copyToClipboard(_id)}
                         deleteForm={() => confirmDelete(_id, category)}
@@ -128,7 +135,7 @@ const FormCard = ({ forms, responses, user }) => {
         </div>
       ) : (
         <>
-          <div className='--flex-start userform'>
+          <div className="--flex-start userform">
             {responses.length === 0 ? (
               <p style={{ color: `${colors.grey[100]}` }}>
                 -- No Response found, please add a Response...
@@ -149,34 +156,34 @@ const FormCard = ({ forms, responses, user }) => {
                   return (
                     <Card
                       key={_id}
-                      className='userform_card'
+                      className="userform_card"
                       sx={{
                         backgroundColor: `${colors.primary[400]}`,
-                        boxShadow: '5',
+                        boxShadow: "5",
                       }}
                     >
                       <Box
                         sx={{
-                          display: 'flex',
-                          flexDirection: 'column',
+                          display: "flex",
+                          flexDirection: "column",
                           // border: 2,
-                          width: '90%',
+                          width: "90%",
                         }}
                       >
                         <Typography
                           noWrap
-                          variant='h4'
+                          variant="h4"
                           color={colors.grey[100]}
                         >
                           {resForm?.category}
                         </Typography>
-                        <Typography noWrap variant='h5'>
+                        <Typography noWrap variant="h5">
                           Created By - <b>{resForm?.createdBy.name}</b>
                         </Typography>
-                        <Typography noWrap variant='h5' color='text.secondary'>
+                        <Typography noWrap variant="h5" color="text.secondary">
                           Filled By - <b>{user}</b>
                         </Typography>
-                        <Typography noWrap variant='h5' color='text.secondary'>
+                        <Typography noWrap variant="h5" color="text.secondary">
                           Created At - {createdAt.slice(0, 10)}
                         </Typography>
                       </Box>

@@ -1,5 +1,5 @@
-import { Fragment } from "react";
-import uuid from "react-uuid";
+import { Fragment } from 'react';
+import uuid from 'react-uuid';
 //Material UI Components
 import {
   Grid,
@@ -9,6 +9,9 @@ import {
   Paper,
   TextField,
   FormGroup,
+  // FormControlLabel,
+  // Switch,
+  // Typography,
   Divider,
   MenuItem,
   Select,
@@ -16,26 +19,25 @@ import {
   FormControl,
   Button,
   useTheme,
-} from "@mui/material";
+} from '@mui/material';
 //Icons
-import DeleteIcon from "@mui/icons-material/Delete";
-import FileCopyIcon from "@mui/icons-material/FileCopy";
-import { tokens } from "../../../theme";
+import DeleteIcon from '@mui/icons-material/Delete';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
+import { tokens } from '../../../theme';
 
 //Form Elements
 // import { formEl } from '../constants';
 export const formEl = [
   {
-    label: "Options",
-    value: "radio",
+    label: 'Options',
+    value: 'radio',
   },
 ];
 const RadioInput = ({
   item,
-  questions,
   handleValue,
   deleteEl,
-  // handleRequired,
+  handleRequired,
   handleElType,
   addOption,
   handleOptionValues,
@@ -46,16 +48,13 @@ const RadioInput = ({
   const colors = tokens(theme.palette.mode);
   //Create new option
   const createNewOption = (id) => {
-    // console.log(id, typeof id, 'this is id');
+    console.log(id, typeof id, 'this is id');
     const data = {
       id: uuid(),
-      optionText: "",
+      optionText: '',
     };
     addOption(id, data);
   };
-
-  // console.log({ questions });
-  // console.log("item.id (in RadioInput): ", item.id);
 
   return (
     <Fragment>
@@ -65,38 +64,34 @@ const RadioInput = ({
             <Grid item xs={8.5}>
               <TextField
                 defaultValue={item.value}
-                variant="filled"
+                variant='filled'
                 onBlur={(e) => handleValue(item.id, e)}
                 fullWidth
-                // required={item.required}
-                placeholder="Question"
+                required={item.required}
                 sx={{
                   mb: 2,
-                  "& input": {
+                  '& input': {
                     color: colors.grey[50],
                   },
                 }}
-                size="small"
+                size='small'
                 inputProps={{
-                  style: {
-                    fontSize: 16,
-                    backgroundColor: colors.primary[500],
-                  },
+                  style: { fontSize: 16, backgroundColor: colors.primary[500] },
                 }}
               />
               {item.options &&
                 item.options.length > 0 &&
                 item.options.map((opt, key) => (
-                  <Box key={key} sx={{ display: "flex" }}>
+                  <Box key={key} sx={{ display: 'flex' }}>
                     <TextField
-                      variant="outlined"
+                      variant='outlined'
                       fullWidth
                       placeholder={`Option ${key + 1}`}
                       defaultValue={opt?.optionText}
                       key={opt?.id}
                       sx={{
                         mb: 1,
-                        "& input": {
+                        '& input': {
                           color: colors.grey[50],
                         },
                       }}
@@ -112,28 +107,28 @@ const RadioInput = ({
                     />
                     <Tooltip
                       title={
-                        <p style={{ color: "white", fontSize: "1rem" }}>
+                        <p style={{ color: 'white', fontSize: '1rem' }}>
                           Delete Option
                         </p>
                       }
-                      aria-label="delete-option"
+                      aria-label='delete-option'
                     >
                       <IconButton
-                        aria-label="delete-option"
+                        aria-label='delete-option'
                         onClick={() => deleteOption(item.id, opt?.id)}
                         sx={{ ml: 2 }}
                       >
                         <DeleteIcon
-                          sx={{ fontSize: "2em" }}
-                          color="secondary"
+                          sx={{ fontSize: '2em' }}
+                          color='secondary'
                         />
                       </IconButton>
                     </Tooltip>
                   </Box>
                 ))}
               <Button
-                variant="text"
-                sx={{ fontSize: "1.2rem", color: colors.grey[100] }}
+                variant='text'
+                sx={{ fontSize: '1.2rem', color: colors.grey[100] }}
                 onClick={() => createNewOption(item.id)}
               >
                 Add Option
@@ -142,10 +137,10 @@ const RadioInput = ({
             <Grid item xs={3.5}>
               <FormControl fullWidth>
                 <InputLabel
-                  id="el-type-label"
+                  id='el-type-label'
                   sx={{
                     color: `${colors.grey[100]}`,
-                    "&.Mui-focused": {
+                    '&.Mui-focused': {
                       color: `${colors.grey[100]}`,
                     },
                   }} // font size of input label
@@ -153,27 +148,27 @@ const RadioInput = ({
                   Type
                 </InputLabel>
                 <Select
-                  labelId="el-type-label"
-                  id="el-type"
-                  label="Type"
+                  labelId='el-type-label'
+                  id='el-type'
+                  label='Type'
                   value={item.type}
                   sx={{
                     fontSize: 12,
-                    ".MuiOutlinedInput-notchedOutline": {
+                    '.MuiOutlinedInput-notchedOutline': {
                       fontSize: 19,
                       borderColor: `${colors.grey[100]}`,
                     },
-                    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
                       borderColor: `${colors.grey[100]}`,
                     },
-                    "&:hover .MuiOutlinedInput-notchedOutline": {
+                    '&:hover .MuiOutlinedInput-notchedOutline': {
                       borderColor: `${colors.grey[100]}`,
                     },
-                    ".MuiSvgIcon-root ": {
+                    '.MuiSvgIcon-root ': {
                       fill: `${colors.grey[100]} !important`,
                     },
                   }}
-                  size="medium"
+                  size='medium'
                   onChange={(e) => handleElType(item.id, e.target.value)}
                 >
                   {formEl &&
@@ -192,35 +187,35 @@ const RadioInput = ({
           </Grid>
         </Box>
         <Divider light />
-        <FormGroup row sx={{ alignItems: "center" }}>
+        <FormGroup row sx={{ alignItems: 'center' }}>
           <Tooltip
             title={
-              <p style={{ color: "white", fontSize: "1rem" }}>Delete Element</p>
+              <p style={{ color: 'white', fontSize: '1rem' }}>Delete Element</p>
             }
-            aria-label="delete-element"
+            aria-label='delete-element'
           >
             <IconButton
-              aria-label="delete-element"
+              aria-label='delete-element'
               onClick={() => deleteEl(item.id)}
               sx={{ ml: 2 }}
             >
-              <DeleteIcon sx={{ fontSize: "2em" }} color="secondary" />
+              <DeleteIcon sx={{ fontSize: '2em' }} color='secondary' />
             </IconButton>
           </Tooltip>
           <Tooltip
             title={
-              <p style={{ color: "white", fontSize: "1rem" }}>
+              <p style={{ color: 'white', fontSize: '1rem' }}>
                 Duplicate Element
               </p>
             }
-            aria-label="duplicate-element"
+            aria-label='duplicate-element'
           >
             <IconButton
-              aria-label="duplicate-element"
+              aria-label='duplicate-element'
               onClick={() => duplicateElement(item.id, item.type)}
               sx={{ ml: 2 }}
             >
-              <FileCopyIcon sx={{ fontSize: "1.5em" }} color="secondary" />
+              <FileCopyIcon sx={{ fontSize: '1.5em' }} color='secondary' />
             </IconButton>
           </Tooltip>
         </FormGroup>

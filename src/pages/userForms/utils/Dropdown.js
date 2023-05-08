@@ -9,7 +9,7 @@ import { tokens } from '../../../theme';
 
 export const Dropdown = ({
   openForm,
-  //   editForm,
+  editForm,
   copyToClipboard,
   showResponse,
   deleteForm,
@@ -29,10 +29,10 @@ export const Dropdown = ({
       text: 'Open',
       onClick: openForm,
     },
-    // {
-    //   text: 'Edit',
-    //   onClick: editForm,
-    // },
+    {
+      text: 'Edit',
+      onClick: editForm,
+    },
     {
       text: 'Copy Link URL',
       onClick: copyToClipboard,

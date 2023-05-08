@@ -1,42 +1,42 @@
-import React, { useEffect, useState } from 'react';
-import PageMenu from '../../components/pageMenu/PageMenu';
-import Search from '../../components/search/Search';
-import UserStats from '../../components/userStats/UserStats';
-import { FaCheck, FaTrashAlt } from 'react-icons/fa';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import { GrFormPrevious } from 'react-icons/gr';
-import './UserList.scss';
-import ChangeRole from '../../components/changeRole/ChangeRole';
-import { useDispatch, useSelector } from 'react-redux';
-import useRedirectLoggedOutUser from '../../customHook/useRedirectLoggedOutUser';
+import React, { useEffect, useState } from "react";
+import PageMenu from "../../components/pageMenu/PageMenu";
+import Search from "../../components/search/Search";
+import UserStats from "../../components/userStats/UserStats";
+import { FaCheck, FaTrashAlt } from "react-icons/fa";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import { GrFormPrevious } from "react-icons/gr";
+import "./UserList.scss";
+import ChangeRole from "../../components/changeRole/ChangeRole";
+import { useDispatch, useSelector } from "react-redux";
+import useRedirectLoggedOutUser from "../../customHook/useRedirectLoggedOutUser";
 import {
   deleteUser,
   getUsers,
   RESET,
   // selectUser,
   verifyUser,
-} from '../../redux/features/auth/authSlice';
-import { toast } from 'react-toastify';
-import { SpinnerImg } from '../../components/loader/Loader';
-import { shortenText } from '../profile/Profile';
-import { confirmAlert } from 'react-confirm-alert'; // Import
-import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+} from "../../redux/features/auth/authSlice";
+import { toast } from "react-toastify";
+import { SpinnerImg } from "../../components/loader/Loader";
+import { shortenText } from "../profile/Profile";
+import { confirmAlert } from "react-confirm-alert"; // Import
+import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import {
   FILTER_USERS,
   selectFilteredUsers,
-} from '../../redux/features/auth/filterSlice';
-import ReactPaginate from 'react-paginate';
-import { useTheme } from '@mui/material';
-import { tokens } from '../../theme';
-import { useNavigate } from 'react-router-dom';
+} from "../../redux/features/auth/filterSlice";
+import ReactPaginate from "react-paginate";
+import { useTheme } from "@mui/material";
+import { tokens } from "../../theme";
+import { useNavigate } from "react-router-dom";
 
 const UserList = () => {
-  useRedirectLoggedOutUser('/login');
+  useRedirectLoggedOutUser("/login");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
 
   // const user = useSelector(selectUser);
 
@@ -51,7 +51,7 @@ const UserList = () => {
 
   useEffect(() => {
     if (isError) {
-      navigate('/register');
+      navigate("/register");
     }
   });
 
@@ -70,15 +70,15 @@ const UserList = () => {
 
   const verifyAccount = (id) => {
     confirmAlert({
-      title: 'Verify This User',
-      message: 'Are you sure you want to verify this user.',
+      title: "Verify This User",
+      message: "Are you sure you want to verify this user.",
       buttons: [
         {
-          label: 'Verify',
+          label: "Verify",
           onClick: () => verifytheUser(id),
         },
         {
-          label: 'Cancel',
+          label: "Cancel",
           // onClick: () => alert('Click No')
         },
       ],
@@ -87,15 +87,15 @@ const UserList = () => {
 
   const confirmDelete = (id) => {
     confirmAlert({
-      title: 'Delete This User',
-      message: 'Are you sure you want to delete this user.',
+      title: "Delete This User",
+      message: "Are you sure you want to delete this user.",
       buttons: [
         {
-          label: 'Delete',
+          label: "Delete",
           onClick: () => delUser(id),
         },
         {
-          label: 'Cancel',
+          label: "Cancel",
           // onClick: () => alert('Click No')
         },
       ],
@@ -144,13 +144,13 @@ const UserList = () => {
 
   return (
     <section>
-      <div className='container'>
+      <div className="container">
         <PageMenu />
         <UserStats />
-        <div className='user-list'>
+        <div className="user-list">
           {isLoading && <SpinnerImg />}
-          <div className='table'>
-            <div className='--flex-between'>
+          <div className="table">
+            <div className="--flex-between">
               <h3 style={{ color: `${colors.grey[100]}` }}>All Users</h3>
               <span>
                 <Search
@@ -188,7 +188,7 @@ const UserList = () => {
                     return (
                       <tr key={_id}>
                         <td>{index + 1}</td>
-                        <td>{shortenText(name, 10)}</td>
+                        <td>{shortenText(name, 20)}</td>
                         <td>{shortenText(designation, 16)}</td>
                         <td>{email}</td>
                         <td>{role}</td>
@@ -196,25 +196,25 @@ const UserList = () => {
                           {/* {"Change Role"} */}
                           <ChangeRole _id={_id} email={email} />
                         </td>
-                        <td className='icons'>
+                        <td className="icons">
                           <span>
                             {isVerified ? (
                               <FaCheck
                                 size={15}
-                                color={'green'}
+                                color={"green"}
                                 onClick={() => verifyAccount(_id)}
                               />
                             ) : (
                               <FaCheck
                                 size={15}
-                                color={'red'}
+                                color={"red"}
                                 onClick={() => verifyAccount(_id)}
                               />
                             )}
 
                             <FaTrashAlt
                               size={20}
-                              color={'red'}
+                              color={"red"}
                               style={{ marginLeft: 6 }}
                               onClick={() => confirmDelete(_id)}
                             />
@@ -228,8 +228,8 @@ const UserList = () => {
             )}
           </div>
           <ReactPaginate
-            breakLabel='...'
-            nextLabel={<NavigateNextIcon size={30} color='white' />}
+            breakLabel="..."
+            nextLabel={<NavigateNextIcon size={30} color="white" />}
             onPageChange={handlePageClick}
             pageRangeDisplayed={3}
             pageCount={pageCount}
@@ -237,11 +237,11 @@ const UserList = () => {
               <GrFormPrevious style={{ color: `${colors.grey[100]}` }} />
             }
             renderOnZeroPageCount={null}
-            containerClassName='pagination'
-            pageLinkClassName='page-num'
-            previousLinkClassName='page-num'
-            nextLinkClassName='page-num'
-            activeLinkClassName='activePage'
+            containerClassName="pagination"
+            pageLinkClassName="page-num"
+            previousLinkClassName="page-num"
+            nextLinkClassName="page-num"
+            activeLinkClassName="activePage"
           />
         </div>
       </div>

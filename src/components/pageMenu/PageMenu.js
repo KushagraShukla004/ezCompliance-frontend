@@ -26,6 +26,11 @@ const PageMenu = () => {
               <NavLink to='/allForms'>All Forms</NavLink>
             </li>
           </AdminLink>
+          <AdminLink>
+            <li>
+              <NavLink to='/categories'>Categories</NavLink>
+            </li>
+          </AdminLink>
         </ul>
       </nav>
     </div>

@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { SpinnerImg } from '../../components/loader/Loader';
+import PageMenu from '../../components/pageMenu/PageMenu';
 import { createResource } from '../../redux/features/resources/resourceSlice';
 import { selectIsLoading } from '../../redux/features/resources/resourceSlice';
 import { tokens } from '../../theme';
@@ -32,8 +33,8 @@ const Resources = () => {
   const colors = tokens(theme.palette.mode);
 
   const [resource, setResource] = useState(Res_initialState);
-  const [employee, setEmployee] = useState(Emp_initialState);
   const { res_name, IP, amount, category, modelnum } = resource;
+  const [employee, setEmployee] = useState(Emp_initialState);
   const { empId, emp_name, email, designation } = employee;
   const isLoading = useSelector(selectIsLoading);
 
@@ -70,6 +71,7 @@ const Resources = () => {
     <>
       {isLoading && <SpinnerImg />}
       <section>
+        <PageMenu />
         <Grid
           container
           spacing={1}

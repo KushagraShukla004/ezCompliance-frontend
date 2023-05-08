@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import FormBuilder from './pages/FormBuilder';
 import 'react-nestable/dist/styles/index.css';
 import axios from 'axios';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -32,6 +31,10 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import { ColorModeContext, useMode } from './theme';
 import ErrorPage from './pages/ErrorPage';
 import Resources from './pages/Resources/Resources';
+import FormBuilder from './pages/FormBuilder';
+import EditForm from './pages/EditForm';
+import FormStepper from './pages/CreatingFormStep/FormStepper';
+import CategoryList from './pages/Category/CategoryList';
 
 axios.defaults.withCredentials = true;
 
@@ -77,7 +80,6 @@ function App() {
             <Route path='/resetPassword/:resetToken' element={<Reset />} />
             <Route path='/loginWithCode/:email' element={<LoginWithCode />} />
             <Route path='/error' element={<ErrorPage />} />
-
             <Route
               path='/profile'
               element={
@@ -99,6 +101,22 @@ function App() {
               element={
                 <Layout>
                   <UserList />
+                </Layout>
+              }
+            />
+            <Route
+              path='/categories'
+              element={
+                <Layout>
+                  <CategoryList />
+                </Layout>
+              }
+            />
+            <Route
+              path='/creatingForm'
+              element={
+                <Layout>
+                  <FormStepper />
                 </Layout>
               }
             />
@@ -131,6 +149,14 @@ function App() {
               element={
                 <Layout>
                   <OpenForm />
+                </Layout>
+              }
+            />
+            <Route
+              path='/forms/editForm/:formId'
+              element={
+                <Layout>
+                  <EditForm />
                 </Layout>
               }
             />

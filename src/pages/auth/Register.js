@@ -7,7 +7,10 @@ import { ImUserPlus } from 'react-icons/im';
 import { GiCrossMark } from 'react-icons/gi';
 import { TiTick } from 'react-icons/ti';
 import { Link, useNavigate } from 'react-router-dom';
-import { validateEmail } from '../../redux/features/auth/authService';
+import {
+  validateEmail,
+  validatePhone,
+} from '../../redux/features/auth/authService';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   register,
@@ -45,6 +48,8 @@ const Register = () => {
   const [num, setNum] = useState(false);
   const [sChar, setSChar] = useState(false);
   const [passLength, setPassLength] = useState(false);
+  // const phoneRegex =
+  //   '(+91)?(-)?s*?(91)?s*?([6-9]{1}d{2})-?s*?(d{3})-?s*?(d{4})';
 
   const crossIcon = <GiCrossMark color='red' size={15} />;
   const checkIcon = <TiTick color='green' size={15} />;
@@ -74,6 +79,9 @@ const Register = () => {
     if (!validateEmail(email)) {
       return toast.error('Please enter a valid email');
     }
+    if (!validatePhone(phone)) {
+      return toast.error('Please enter a valid Phone Number');
+    }
     if (password !== confirmPassword) {
       return toast.error('Passwords do not match');
     }
@@ -98,6 +106,14 @@ const Register = () => {
 
     dispatch(RESET());
   }, [isLoggedIn, isSuccess, message, navigate, dispatch]);
+
+  // useEffect(() => {
+  //   if (phone.match(phoneRegex)) {
+  //     return toast.success('Phone Number is Valid');
+  //   } else {
+  //     return toast.error('Please use Valid Phone Number');
+  //   }
+  // }, [phone]);
 
   useEffect(() => {
     // Check Lower and Uppercase

@@ -13,6 +13,11 @@ const Footer = () => {
           All Rights Reserved. &copy; 2023
         </p>
       </div>
+      <div className='--flex-center'>
+        <p style={{ color: `${colors.grey[100]}` }}>
+          Created by : Kushagra Shukla
+        </p>
+      </div>
     </>
   );
 };
