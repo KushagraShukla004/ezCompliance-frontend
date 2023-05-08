@@ -5,21 +5,31 @@ import PeopleIcon from "@mui/icons-material/People";
 import StatBox from "./StatBox";
 import { useDispatch, useSelector } from "react-redux";
 import { getUsers } from "../../../redux/features/auth/authSlice";
-import { selectForms } from "../../../redux/features/form/formSlice";
+import { getAllForms } from "../../../redux/features/form/formSlice";
 
 const EmployeeStats = ({ role }) => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const { users } = useSelector((state) => state.auth);
-  const forms = useSelector(selectForms);
 
   const totalUsers = users?.length;
+
+  const { forms, isError, message } = useSelector((state) => state.form);
   const totalForms = forms?.length;
 
   useEffect(() => {
-    dispatch(getUsers());
-  }, [dispatch]);
+    if (role === "auditor") {
+      dispatch(getAllForms());
+    }
+    if (role === "admin") {
+      dispatch(getUsers());
+    }
+    if (isError) {
+      console.log(message);
+    }
+  }, [dispatch, isError, message, role]);
+
   const stats = (role) => {
     switch (role) {
       case "admin":
