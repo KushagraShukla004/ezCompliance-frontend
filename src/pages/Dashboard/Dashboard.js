@@ -95,7 +95,6 @@ const Dashboard = () => {
         gap="20px"
         wrap="wrap"
         marginTop={3}
-        // sx={{ border: 2 }}
       >
         {/* Row 1*/}
         <Box
@@ -105,7 +104,6 @@ const Dashboard = () => {
           alignItems="center"
           justifyContent="center"
           boxShadow={5}
-          // border={2}
         >
           <FormStats role={user?.role} />
         </Box>
