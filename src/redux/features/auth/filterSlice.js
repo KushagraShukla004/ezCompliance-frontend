@@ -1,15 +1,17 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   filteredUsers: [],
 };
 
 const filterSlice = createSlice({
-  name: 'filter',
+  name: "filter",
   initialState,
   reducers: {
     FILTER_USERS(state, action) {
+      // console.log("action.payload in formFilter: ", action.payload);
       const { users, search } = action.payload;
+
       const tempUsers = users.filter(
         (user) =>
           user.name.toLowerCase().includes(search.toLowerCase()) ||

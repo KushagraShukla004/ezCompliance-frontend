@@ -1,17 +1,18 @@
 .userform {
   display: flex;
-  min-height: 58vh;
+  min-height: 50vh;
   // border: 2px solid orangered;
   flex-wrap: wrap;
+  gap: 2em;
   .userform_card {
     display: flex;
     width: 100%;
     max-width: 18vw;
     padding: 1rem;
-    // border: 1px solid #030b6b;
-    margin-right: 1.5em;
+    flex: auto 160px;
     // border: 1px solid orange;
   }
+
   p {
     font-size: 2rem;
   }
@@ -24,10 +25,8 @@
 @media screen and (max-width: 600px) {
   .userform {
     flex-wrap: wrap;
-    // border: 2px solid green;
     .userform_card {
       flex-wrap: wrap;
-      // border: 2px solid red;
     }
   }
 }

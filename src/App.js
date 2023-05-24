@@ -1,40 +1,40 @@
-import { useEffect } from 'react';
-import 'react-nestable/dist/styles/index.css';
-import axios from 'axios';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Layout from './components/layout/Layout';
-import LoginWithCode from './pages/auth/LoginWithCode';
-import Forgot from './pages/auth/Forgot';
-import Login from './pages/auth/Login';
-import Register from './pages/auth/Register';
-import Reset from './pages/auth/Reset';
-import ChangePassword from './pages/changePassword/ChangePassword';
-import Home from './pages/Home/Home';
-import Profile from './pages/profile/Profile';
-import UserList from './pages/userList/UserList';
-import OpenForm from './pages/openForm/OpenForm';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from "react";
+import "react-nestable/dist/styles/index.css";
+import axios from "axios";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from "./components/layout/Layout";
+import LoginWithCode from "./pages/auth/LoginWithCode";
+import Forgot from "./pages/auth/Forgot";
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
+import Reset from "./pages/auth/Reset";
+import ChangePassword from "./pages/changePassword/ChangePassword";
+import Home from "./pages/Home/Home";
+import Profile from "./pages/profile/Profile";
+import UserList from "./pages/userList/UserList";
+import OpenForm from "./pages/openForm/OpenForm";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getLoginStatus,
   getUser,
   selectIsLoggedIn,
   selectUser,
-} from './redux/features/auth/authSlice';
-import UserForms from './pages/userForms';
-import ResponseTab from './pages/Response/ResponseTab';
-import AllForms from './pages/allForms/AllForms';
-import Dashboard from './pages/Dashboard/Dashboard';
-import UserResponses from './pages/userResponses/UserResponses';
-import { CssBaseline, ThemeProvider } from '@mui/material';
-import { ColorModeContext, useMode } from './theme';
-import ErrorPage from './pages/ErrorPage';
-import Resources from './pages/Resources/Resources';
-import FormBuilder from './pages/FormBuilder';
-import EditForm from './pages/EditForm';
-import FormStepper from './pages/CreatingFormStep/FormStepper';
-import CategoryList from './pages/Category/CategoryList';
+} from "./redux/features/auth/authSlice";
+import UserForms from "./pages/userForms";
+import ResponseTab from "./pages/Response/ResponseTab";
+import AllForms from "./pages/allForms/AllForms";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import UserResponses from "./pages/userResponses/UserResponses";
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import { ColorModeContext, useMode } from "./theme";
+import ErrorPage from "./pages/ErrorPage";
+import Resources from "./pages/Resources/Resources";
+import FormBuilder from "./pages/FormBuilder";
+import EditForm from "./pages/EditForm";
+import CategoryList from "./pages/Category/CategoryList";
+import CreateResponse from "./pages/creatingResponses";
 
 axios.defaults.withCredentials = true;
 
@@ -56,10 +56,10 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <BrowserRouter>
-          <ToastContainer style={{ width: '45rem', fontSize: '1.5rem' }} />
+          <ToastContainer style={{ width: "45rem", fontSize: "1.5rem" }} />
           <Routes>
             <Route
-              path='/'
+              path="/"
               element={
                 <Layout>
                   <Home />
@@ -67,21 +67,21 @@ function App() {
               }
             />
             <Route
-              path='/dashboard'
+              path="/dashboard"
               element={
                 <Layout>
                   <Dashboard />
                 </Layout>
               }
             />
-            <Route path='/login' element={<Login />} />
-            <Route path='/register' element={<Register />} />
-            <Route path='/forgot' element={<Forgot />} />
-            <Route path='/resetPassword/:resetToken' element={<Reset />} />
-            <Route path='/loginWithCode/:email' element={<LoginWithCode />} />
-            <Route path='/error' element={<ErrorPage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/forgot" element={<Forgot />} />
+            <Route path="/resetPassword/:resetToken" element={<Reset />} />
+            <Route path="/loginWithCode/:email" element={<LoginWithCode />} />
+            <Route path="/error" element={<ErrorPage />} />
             <Route
-              path='/profile'
+              path="/profile"
               element={
                 <Layout>
                   <Profile />
@@ -89,7 +89,7 @@ function App() {
               }
             />
             <Route
-              path='/change-password'
+              path="/change-password"
               element={
                 <Layout>
                   <ChangePassword />
@@ -97,7 +97,7 @@ function App() {
               }
             />
             <Route
-              path='/users'
+              path="/users"
               element={
                 <Layout>
                   <UserList />
@@ -105,7 +105,7 @@ function App() {
               }
             />
             <Route
-              path='/categories'
+              path="/categories"
               element={
                 <Layout>
                   <CategoryList />
@@ -113,15 +113,15 @@ function App() {
               }
             />
             <Route
-              path='/creatingForm'
+              path="/creatingResponse"
               element={
                 <Layout>
-                  <FormStepper />
+                  <CreateResponse />
                 </Layout>
               }
             />
             <Route
-              path='/createForm'
+              path="/createForm"
               element={
                 <Layout>
                   <FormBuilder />
@@ -129,7 +129,7 @@ function App() {
               }
             />
             <Route
-              path='/forms'
+              path="/forms"
               element={
                 <Layout>
                   <UserForms />
@@ -137,7 +137,7 @@ function App() {
               }
             />
             <Route
-              path='/allForms'
+              path="/allForms"
               element={
                 <Layout>
                   <AllForms />
@@ -145,7 +145,7 @@ function App() {
               }
             />
             <Route
-              path='/forms/form/:formId'
+              path="/forms/form/:formId"
               element={
                 <Layout>
                   <OpenForm />
@@ -153,7 +153,7 @@ function App() {
               }
             />
             <Route
-              path='/forms/editForm/:formId'
+              path="/forms/editForm/:formId"
               element={
                 <Layout>
                   <EditForm />
@@ -161,7 +161,7 @@ function App() {
               }
             />
             <Route
-              path='/getResponse/:formId'
+              path="/getResponse/:formId"
               element={
                 <Layout>
                   <ResponseTab />
@@ -169,7 +169,7 @@ function App() {
               }
             />
             <Route
-              path='/Responses'
+              path="/Responses"
               element={
                 <Layout>
                   <UserResponses />
@@ -177,7 +177,7 @@ function App() {
               }
             />
             <Route
-              path='/addResource'
+              path="/addResource"
               element={
                 <Layout>
                   <Resources />

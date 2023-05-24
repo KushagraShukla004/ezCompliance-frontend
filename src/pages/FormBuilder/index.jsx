@@ -21,14 +21,11 @@ import {
 import { MdAddCircle } from "react-icons/md";
 //Form Elements
 import { RadioInput } from "./elements";
-// import Layout from './elements/layout';
-// import { formEl } from './constants.js';
 //Components
 import Header from "./Header";
 import { useDispatch, useSelector } from "react-redux";
 import {
   createForm,
-  getAllCategories,
   selectIsLoading,
 } from "../../redux/features/form/formSlice";
 import { useEffect } from "react";
@@ -36,6 +33,7 @@ import { SpinnerImg } from "../../components/loader/Loader";
 import { selectUser } from "../../redux/features/auth/authSlice";
 import { tokens } from "../../theme";
 import useRedirectLoggedOutUser from "../../customHook/useRedirectLoggedOutUser";
+import { getAllCategories } from "../../redux/features/categories/categorySlice";
 // import ExistingQues from '../EditForm/ExistingQues';
 
 export const formEl = [
@@ -65,7 +63,7 @@ const FormBuilder = ({ form }) => {
   const items = data;
 
   // console.log({ data });
-  const { categories } = useSelector((state) => state.form);
+  const { categories } = useSelector((state) => state.category);
 
   // console.log(`category :`, category);
 

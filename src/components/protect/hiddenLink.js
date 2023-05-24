@@ -1,8 +1,8 @@
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 import {
   selectIsLoggedIn,
   selectUser,
-} from '../../redux/features/auth/authSlice';
+} from "../../redux/features/auth/authSlice";
 
 export const ShowOnLogin = ({ children }) => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
@@ -30,7 +30,7 @@ export const AdminLink = ({ children }) => {
   if (
     isLoggedIn &&
     //if want to allow auditor to see users as well ,,, then add '|| userRole?.role === 'auditor' ' after 'admin' below
-    userRole?.role === 'admin'
+    userRole?.role === "admin"
   ) {
     return <> {children}</>;
   }
@@ -44,7 +44,7 @@ export const AuditorLink = ({ children }) => {
   if (
     isLoggedIn &&
     //if want to allow auditor to see users as well ,,, then add '|| userRole?.role === 'auditor' ' after 'admin' below
-    userRole?.role === 'auditor'
+    userRole?.role === "auditor"
   ) {
     return <> {children}</>;
   }
@@ -52,13 +52,13 @@ export const AuditorLink = ({ children }) => {
 };
 
 //Access to Users page only to admin and auditor
-export const AdminAuditorForms = ({ children }) => {
+export const AdminAuditorLink = ({ children }) => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const userRole = useSelector(selectUser);
 
   if (
     isLoggedIn &&
-    (userRole?.role === 'admin' || userRole?.role === 'auditor')
+    (userRole?.role === "admin" || userRole?.role === "auditor")
   ) {
     return <> {children}</>;
   }

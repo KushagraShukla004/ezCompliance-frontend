@@ -24,9 +24,6 @@ const FormCard = ({ forms, responses, user }) => {
   const colors = tokens(theme.palette.mode);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // console.log(`form :`, forms);
-  // console.log(`reponses :`, responses);
-  // console.log(`user :`, user);
 
   const delProduct = async (formId) => {
     await dispatch(deleteForm(formId));
@@ -39,14 +36,14 @@ const FormCard = ({ forms, responses, user }) => {
       .then(() => alert("URL has been copied"))
       .catch((e) => alert(e));
   };
-  const confirmDelete = (formId, formTitle) => {
+  const confirmDelete = (formId, formCategory) => {
     confirmAlert({
       title: "Delete the Form",
       message: (
         <h3>
           Are you sure you want to delete{" "}
           <b>
-            <i>({formTitle})</i>
+            <i>({formCategory})</i>
           </b>{" "}
           form.
         </h3>
@@ -74,7 +71,6 @@ const FormCard = ({ forms, responses, user }) => {
             <>
               {forms.map((form, index) => {
                 const { _id, category, createdBy, createdAt, updatedAt } = form;
-                // console.log(`form :`, form);
 
                 const openForm = () => {
                   navigate(`/forms/form/${_id}`);
@@ -88,7 +84,7 @@ const FormCard = ({ forms, responses, user }) => {
 
                 return (
                   <Card
-                    key={_id}
+                    key={index}
                     className="userform_card"
                     sx={{
                       backgroundColor: `${colors.primary[400]}`,
@@ -99,10 +95,8 @@ const FormCard = ({ forms, responses, user }) => {
                       sx={{
                         display: "flex",
                         flexDirection: "column",
-                        // border: 2,
                         width: "90%",
                       }}
-                      // backgroundColor={colors.primary[400]}
                     >
                       <Typography noWrap variant="h4" color={colors.grey[100]}>
                         {category}
@@ -119,12 +113,14 @@ const FormCard = ({ forms, responses, user }) => {
                     </Box>
                     <div>
                       <Dropdown
-                        id={_id}
+                        id={index}
                         openForm={openForm}
                         editForm={editForm}
                         showResponse={showResponse}
                         copyToClipboard={() => copyToClipboard(_id)}
-                        deleteForm={() => confirmDelete(_id, category)}
+                        deleteForm={() =>
+                          confirmDelete(_id.toString(), category)
+                        }
                       />
                     </div>
                   </Card>
@@ -144,7 +140,7 @@ const FormCard = ({ forms, responses, user }) => {
               <>
                 {responses.map((response, index) => {
                   const { _id, formId, resForm, createdAt } = response;
-                  // console.log(`response :`, response);
+                  // console.log(`response in formCard :`, response);
 
                   const openForm = () => {
                     navigate(`/forms/form/${formId}`);
@@ -155,7 +151,7 @@ const FormCard = ({ forms, responses, user }) => {
 
                   return (
                     <Card
-                      key={_id}
+                      key={index}
                       className="userform_card"
                       sx={{
                         backgroundColor: `${colors.primary[400]}`,
@@ -166,7 +162,6 @@ const FormCard = ({ forms, responses, user }) => {
                         sx={{
                           display: "flex",
                           flexDirection: "column",
-                          // border: 2,
                           width: "90%",
                         }}
                       >
@@ -184,7 +179,7 @@ const FormCard = ({ forms, responses, user }) => {
                           Filled By - <b>{user}</b>
                         </Typography>
                         <Typography noWrap variant="h5" color="text.secondary">
-                          Created At - {createdAt.slice(0, 10)}
+                          Created At - {createdAt?.slice(0, 10)}
                         </Typography>
                       </Box>
                       <div>

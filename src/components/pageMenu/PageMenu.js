@@ -1,34 +1,38 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { AdminLink } from '../protect/hiddenLink';
+import React from "react";
+import { NavLink } from "react-router-dom";
+import {
+  AdminAuditorForms,
+  AdminAuditorLink,
+  AdminLink,
+} from "../protect/hiddenLink";
 
 const PageMenu = () => {
   return (
     <div>
-      <nav className='--btn-primary3 --p --mb'>
-        <ul className='home-links'>
+      <nav className="--btn-primary3 --p --mb">
+        <ul className="home-links">
           <li>
-            <NavLink to='/profile'>Profile</NavLink>
+            <NavLink to="/profile">Profile</NavLink>
           </li>
           <li>
-            <NavLink to='/change-password'>Change Password</NavLink>
+            <NavLink to="/change-password">Change Password</NavLink>
           </li>
           <li>
-            <NavLink to='/addResource'>Add Resource</NavLink>
+            <NavLink to="/addResource">Add Resource</NavLink>
           </li>
           <AdminLink>
             <li>
-              <NavLink to='/users'>Users</NavLink>
+              <NavLink to="/users">Users</NavLink>
             </li>
           </AdminLink>
-          <AdminLink>
+          <AdminAuditorLink>
             <li>
-              <NavLink to='/allForms'>All Forms</NavLink>
+              <NavLink to="/allForms">All Forms</NavLink>
             </li>
-          </AdminLink>
+          </AdminAuditorLink>
           <AdminLink>
             <li>
-              <NavLink to='/categories'>Categories</NavLink>
+              <NavLink to="/categories">Categories</NavLink>
             </li>
           </AdminLink>
         </ul>

@@ -1,9 +1,13 @@
-import { useTheme } from '@mui/system';
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectUser } from '../../redux/features/auth/authSlice';
-import { addCategory, getAllCategories } from '../../redux/features/form/formSlice';
-import { tokens } from '../../theme';
+import { useTheme } from "@mui/system";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUser } from "../../redux/features/auth/authSlice";
+// import { addCategory, getAllCategories } from '../../redux/features/form/formSlice';
+import {
+  addCategory,
+  getAllCategories,
+} from "../../redux/features/categories/categorySlice";
+import { tokens } from "../../theme";
 import {
   Box,
   Button,
@@ -11,14 +15,14 @@ import {
   Grid,
   TextField,
   Typography,
-} from '@mui/material';
+} from "@mui/material";
 
 const AddCategory = () => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const user = useSelector(selectUser);
-  const [newCategory, setNewCategory] = useState('');
+  const [newCategory, setNewCategory] = useState("");
 
   // console.log(`newCategory :`, newCategory);
   const Cat_handleInputChange = (e) => {
@@ -44,44 +48,44 @@ const AddCategory = () => {
 
   return (
     <Box
-      component='form'
-      autoComplete='off'
+      component="form"
+      autoComplete="off"
       sx={{
         p: 1,
         flexGrow: 1,
       }}
     >
-      <Typography variant='h3' color={colors.grey[100]}>
+      <Typography variant="h3" color={colors.grey[100]}>
         Add a Category :
       </Typography>
-      <Grid container spacing={1} direction='row'>
+      <Grid container spacing={1} direction="row">
         <Grid
           item
           lg={7}
           md={8}
           mt={2}
           sx={{
-            display: 'flex',
-            flexWrap: 'wrap',
+            display: "flex",
+            flexWrap: "wrap",
             pt: 1,
           }}
           // border={2}
           // borderColor='red'
         >
           <TextField
-            variant='outlined'
-            name='category'
+            variant="outlined"
+            name="category"
             required
-            placeholder='category'
+            placeholder="category"
             //   defaultValue={resource?.emp_Id}
             sx={{
               mb: 2,
-              '& input': {
+              "& input": {
                 color: colors.grey[50],
               },
-              width: '55%',
+              width: "55%",
             }}
-            size='small'
+            size="small"
             inputProps={{
               style: {
                 height: 20,
@@ -93,15 +97,15 @@ const AddCategory = () => {
           />
           <Button
             onClick={AddCategory}
-            variant='contained'
+            variant="contained"
             sx={{
               ml: 3,
-              color: 'white',
+              color: "white",
               backgroundColor: `${colors.blueAccent[500]}`,
               fontSize: 12,
-              transition: 'all 0.3s',
-              '&:hover': {
-                transform: 'translateY(-2px)',
+              transition: "all 0.3s",
+              "&:hover": {
+                transform: "translateY(-2px)",
                 backgroundColor: `${colors.blueAccent[700]}`,
               },
               // padding: '7px 7px',

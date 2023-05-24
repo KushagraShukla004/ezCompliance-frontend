@@ -34,7 +34,7 @@ const Dashboard = () => {
   useRedirectLoggedOutUser("/login");
 
   const createResponse = () => {
-    navigate("/creatingForm");
+    navigate("/creatingResponse");
   };
   const createForm = () => {
     navigate("/forms");

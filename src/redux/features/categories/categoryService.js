@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 export const API_URL = `${BACKEND_URL}/api/categories/`;
@@ -16,14 +16,13 @@ const getAllCategories = async () => {
 
 // Delete Category
 const deleteCategory = async (cat_id) => {
-  console.log(`cat_Id is categoryServices:`, cat_id);
-  const category = await axios.get(API_URL, cat_id);
+  const category = await axios.delete(API_URL + cat_id);
   return category.data;
 };
 // Get a Category
 const editCategory = async (UpdatedCategoryData) => {
   console.log(`UpdatedCategoryData in Category Service :`, UpdatedCategoryData);
-  const category = await axios.get(API_URL, UpdatedCategoryData);
+  const category = await axios.patch(API_URL, UpdatedCategoryData);
   return category.data;
 };
 

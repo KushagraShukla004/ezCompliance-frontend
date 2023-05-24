@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import formService from "./formService";
-import categoryService from "../categories/categoryService";
 import { toast } from "react-toastify";
 
 const initialState = {
@@ -8,22 +7,17 @@ const initialState = {
   forms: [],
   response: null,
   responses: [],
-  category: null,
-  categories: [],
   isError: false,
   isSuccess: false,
   isLoading: false,
   message: "",
-  TotalForms: 0,
-  TotalUserResponses: 0,
-  TotalCategories: 0,
 };
 
 // Create New Form
 export const createForm = createAsyncThunk(
   "forms/create",
   async (formData, thunkAPI) => {
-    console.log("formData in formSlice: ", formData);
+    // console.log("formData in formSlice: ", formData);
     try {
       return await formService.createForm(formData);
     } catch (error) {
@@ -33,7 +27,6 @@ export const createForm = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      // console.log(message);
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -51,7 +44,6 @@ export const getAllForms = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      // console.log(message);
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -70,7 +62,6 @@ export const getAllFormsofUser = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      // console.log(message);
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -89,7 +80,6 @@ export const getFormById = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      // console.log(message);
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -99,6 +89,7 @@ export const getFormById = createAsyncThunk(
 export const deleteForm = createAsyncThunk(
   "forms/deleteForm",
   async (formId, thunkAPI) => {
+    console.log(`formId in formSlice:`, formId);
     try {
       return await formService.deleteForm(formId);
     } catch (error) {
@@ -108,7 +99,6 @@ export const deleteForm = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      // console.log(message);
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -127,7 +117,6 @@ export const editForm = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      // console.log(message);
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -137,6 +126,7 @@ export const editForm = createAsyncThunk(
 export const submitResponse = createAsyncThunk(
   "responses/submitResponse",
   async (responseData, thunkAPI) => {
+    console.log(`responseData in formSlice:`, responseData);
     try {
       return await formService.submitResponse(responseData);
     } catch (error) {
@@ -146,7 +136,6 @@ export const submitResponse = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      // console.log(message);
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -165,7 +154,6 @@ export const getAllResponseForms = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      // console.log(message);
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -177,76 +165,6 @@ export const getResponse = createAsyncThunk(
   async (formId, thunkAPI) => {
     try {
       return await formService.getResponse(formId);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      // console.log(message);
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
-// Create a Category
-export const addCategory = createAsyncThunk(
-  "categories/add",
-  async (CategoryData, thunkAPI) => {
-    try {
-      return await categoryService.addCategory(CategoryData);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
-// Create a Category
-export const getAllCategories = createAsyncThunk(
-  "categories/getAllCategories",
-  async (_, thunkAPI) => {
-    try {
-      return await categoryService.getAllCategories();
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
-// Create a Category
-export const deleteCategory = createAsyncThunk(
-  "categories/delete",
-  async (cat_id, thunkAPI) => {
-    console.log("cat_Id in FormSlice: ", cat_id);
-    try {
-      return await categoryService.deleteCategory(cat_id);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
-// Create a Category
-export const editCategory = createAsyncThunk(
-  "categories/edit",
-  async (UpdatedCategoryData, thunkAPI) => {
-    try {
-      return await categoryService.editCategory(UpdatedCategoryData);
     } catch (error) {
       const message =
         (error.response &&
@@ -269,21 +187,6 @@ const formSlice = createSlice({
       state.isLoading = false;
       state.message = "";
     },
-    CALC_TOTAL_FORMS(state, action) {
-      const array = [];
-      state.forms.map((form) => {
-        return array.push(form);
-      });
-      let count = 0;
-      array.forEach((item) => {
-        if (item === true) {
-          count += 1;
-        }
-      });
-
-      state.TotalForms = count;
-      console.log("state.TotalForms: ", state.TotalForms);
-    },
   },
   extraReducers: (builder) => {
     builder
@@ -295,15 +198,7 @@ const formSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
-        // console.log(
-        //   'createForm forms (in extraReducers/action.payload)',
-        //   action.payload
-        // );
         state.forms.push(action.payload);
-        // console.log(
-        //   'createForm forms (in extraReducers/state.forms): ',
-        //   state.forms.push(action.payload)
-        // );
         toast.success("Form created successfully");
       })
       .addCase(createForm.rejected, (state, action) => {
@@ -320,7 +215,6 @@ const formSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
-        // console.log('allForms:', action.payload);
         state.forms = action.payload;
       })
       .addCase(getAllForms.rejected, (state, action) => {
@@ -354,9 +248,7 @@ const formSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
-        // console.log('getFormById action.payload(in formSlice)', action.payload);
         state.form = action.payload;
-        // console.log('state.form (in extraReducers/form): ', state.form);
       })
       .addCase(getFormById.rejected, (state, action) => {
         state.isLoading = false;
@@ -404,15 +296,7 @@ const formSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
-        // console.log(
-        //   'Responses action.payload(in state.responses): ',
-        //   action.payload
-        // );
         state.responses.push(action.payload);
-        // console.log(
-        //   'state.responses (in extraReducers/reponses): ',
-        //   state.responses
-        // );
         toast.success("Response submitted successfully");
       })
       .addCase(submitResponse.rejected, (state, action) => {
@@ -430,16 +314,11 @@ const formSlice = createSlice({
         state.isSuccess = true;
         state.isError = false;
         state.responses = action.payload;
-        // console.log(
-        //   `responses action.payload (in getAllResponseForms formSlice) :`,
-        //   action.payload
-        // );
       })
       .addCase(getAllResponseForms.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
-        // console.log(`message (in getAllResponseForms):`, state.message);
         toast.error(action.payload);
       })
       //Get a Form by that form's ID
@@ -450,79 +329,9 @@ const formSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
-        // console.log('response: ', action.payload);
         state.response = action.payload;
-        // console.log(
-        //   'state.response (in extraReducers/response): ',
-        //   state.response
-        // );
       })
       .addCase(getResponse.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload;
-        toast.error(action.payload);
-      })
-      // Create Category
-      .addCase(addCategory.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(addCategory.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = true;
-        state.isLoggedIn = true;
-        state.categories.push(action.payload);
-        toast.success("Category added Successful");
-      })
-      .addCase(addCategory.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload;
-        toast.error(action.payload);
-      })
-      //Get all Categories
-      .addCase(getAllCategories.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(getAllCategories.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = true;
-        state.isError = false;
-        state.categories = action.payload;
-      })
-      .addCase(getAllCategories.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload;
-        toast.error(action.payload);
-      })
-      // Edit Category
-      .addCase(editCategory.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(editCategory.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = true;
-        state.category = action.payload;
-        toast.success("Category Updated");
-      })
-      .addCase(editCategory.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload;
-        toast.error(action.payload);
-      })
-      // Delete Category
-      .addCase(deleteCategory.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(deleteCategory.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = true;
-        state.message = action.payload;
-        toast.success("Category deleted successfully");
-      })
-      .addCase(deleteCategory.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

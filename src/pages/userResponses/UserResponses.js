@@ -1,18 +1,20 @@
-import { useTheme } from '@mui/material';
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { SpinnerImg } from '../../components/loader/Loader';
+import { useTheme } from "@mui/material";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { SpinnerImg } from "../../components/loader/Loader";
 import {
   selectIsLoggedIn,
   selectUser,
-} from '../../redux/features/auth/authSlice';
-import { getAllResponseForms } from '../../redux/features/form/formSlice';
-import { tokens } from '../../theme';
-import FormCard from '../userForms/FormCard';
-import CreateFormDial from '../userForms/utils/CreateFormDial';
+} from "../../redux/features/auth/authSlice";
+import { getAllResponseForms } from "../../redux/features/form/formSlice";
+import { tokens } from "../../theme";
+import FormCard from "../userForms/FormCard";
+import CreateFormDial from "../userForms/utils/CreateFormDial";
+import useRedirectLoggedOutUser from "../../customHook/useRedirectLoggedOutUser";
 
 const UserResponses = () => {
+  useRedirectLoggedOutUser("/login");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const theme = useTheme();
@@ -36,9 +38,9 @@ const UserResponses = () => {
   return (
     <section
       style={{
-        marginLeft: '10vw',
-        maxWidth: '80vw',
-        maxHeight: '40vh',
+        marginLeft: "10vw",
+        maxWidth: "80vw",
+        maxHeight: "40vh",
         // border: '2px solid black',
       }}
     >
@@ -46,8 +48,8 @@ const UserResponses = () => {
       <div>
         <h3 style={{ color: `${colors.grey[100]}` }}>Recently Filled Forms</h3>
       </div>
-      <div className='--flex-center'>
-        {User?.role === 'auditor' ? (
+      <div className="--flex-center">
+        {User?.role === "auditor" ? (
           <FormCard responses={responses} user={User.name} />
         ) : (
           <h1>Not Authorized</h1>
@@ -55,10 +57,10 @@ const UserResponses = () => {
       </div>
       <CreateFormDial
         onClick={() => {
-          if (User?.role === 'admin') {
-            navigate('/createForm');
+          if (User?.role === "admin") {
+            navigate("/createForm");
           } else {
-            navigate('/allForms');
+            navigate("/creatingResponse");
           }
         }}
       />

@@ -1,22 +1,22 @@
 // eslint-disable-next-line
-import React, { useEffect, useState } from 'react';
-import './ResponseTab.scss';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from "react";
+import "./ResponseTab.scss";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getResponse,
   // eslint-disable-next-line
   selectResponse,
-} from '../../redux/features/form/formSlice';
-import { selectIsLoggedIn } from '../../redux/features/auth/authSlice';
-import { useNavigate, useParams } from 'react-router-dom';
-import { SpinnerImg } from '../../components/loader/Loader';
+} from "../../redux/features/form/formSlice";
+import { selectIsLoggedIn } from "../../redux/features/auth/authSlice";
+import { useNavigate, useParams } from "react-router-dom";
+import { SpinnerImg } from "../../components/loader/Loader";
 // eslint-disable-next-line
-import { shortenText } from '../profile/Profile';
+import { shortenText } from "../profile/Profile";
 // import PieChart from './PieChart';
 // eslint-disable-next-line
-import { Box, Grid, Paper, Typography, useTheme } from '@mui/material';
-import ResponseList from './ResponseList';
-import { tokens } from '../../theme';
+import { Box, Grid, Paper, Typography, useTheme } from "@mui/material";
+import ResponseList from "./ResponseList";
+import { tokens } from "../../theme";
 
 const ResponseTab = () => {
   const dispatch = useDispatch();
@@ -30,14 +30,13 @@ const ResponseTab = () => {
 
   const isLoggedIn = useSelector(selectIsLoggedIn);
   // const response = useSelector(selectResponse);
-  // console.log('selectReponse: ', response);
 
   const { response, isLoading, isError, message } = useSelector(
     (state) => state.form
   );
 
   useEffect(() => {
-    if (isLoggedIn && formId !== undefined && formId !== '') {
+    if (isLoggedIn && formId !== undefined && formId !== "") {
       dispatch(getResponse(formId));
     }
 
@@ -48,18 +47,22 @@ const ResponseTab = () => {
 
   return (
     <section>
-      <div className='container'>
-        <Grid container direction='column' alignItems='center'>
+      <div className="container">
+        <Grid container direction="column" alignItems="center">
           {/* style={{ border: '2px solid red' }} */}
-          <div className='--flex-center --mb2'>
-            <span>
-              <Typography variant='h3' color={colors.grey[100]}>
-                Responses
-              </Typography>
-            </span>
+          <div className="--flex-center --mb2">
+            {response?.map((response, index) => {
+              return (
+                <span key={index}>
+                  <Typography variant="h3" color={colors.grey[100]}>
+                    Responses for {response?.category}
+                  </Typography>
+                </span>
+              );
+            })}
           </div>
           {isLoading && <SpinnerImg />}
-          <Grid item xs={12} sm={5} md={12} sx={{ width: '60vw' }}>
+          <Grid item xs={12} sm={5} md={12} sx={{ width: "60vw" }}>
             <ResponseList responses={response} />
           </Grid>
         </Grid>

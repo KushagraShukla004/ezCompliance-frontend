@@ -3,8 +3,8 @@ import PageMenu from "../../components/pageMenu/PageMenu";
 import Search from "../../components/search/Search";
 import UserStats from "../../components/userStats/UserStats";
 import { FaCheck, FaTrashAlt } from "react-icons/fa";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import { GrFormPrevious } from "react-icons/gr";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import "./UserList.scss";
 import ChangeRole from "../../components/changeRole/ChangeRole";
 import { useDispatch, useSelector } from "react-redux";
@@ -48,6 +48,8 @@ const UserList = () => {
   // console.log('users: ', users);
 
   const filteredUsers = useSelector(selectFilteredUsers);
+
+  // console.log(` filteredUsers:`, filteredUsers);
 
   useEffect(() => {
     if (isError) {
@@ -167,6 +169,7 @@ const UserList = () => {
                 style={{
                   backgroundColor: `${colors.primary[400]}`,
                   color: `${colors.grey[100]}`,
+                  marginBottom: "2em",
                 }}
               >
                 <thead>
@@ -229,13 +232,11 @@ const UserList = () => {
           </div>
           <ReactPaginate
             breakLabel="..."
-            nextLabel={<NavigateNextIcon size={30} color="white" />}
+            nextLabel={<ArrowForwardIosIcon />}
             onPageChange={handlePageClick}
             pageRangeDisplayed={3}
             pageCount={pageCount}
-            previousLabel={
-              <GrFormPrevious style={{ color: `${colors.grey[100]}` }} />
-            }
+            previousLabel={<ArrowBackIosNewIcon />}
             renderOnZeroPageCount={null}
             containerClassName="pagination"
             pageLinkClassName="page-num"

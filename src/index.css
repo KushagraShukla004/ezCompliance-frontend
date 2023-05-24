@@ -1,13 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap");
 
 :root {
   --nav-width: 68px;
   --header-height: 45px;
   --color-header: #142cac;
 
-  --font-family: 'Poppins', sans-serif;
-  --font-family2: 'Source Sans Pro', sans-serif;
+  --font-family: "Poppins", sans-serif;
+  --font-family2: "Source Sans Pro", sans-serif;
   --dark-blue: #0a1930;
   --light-blue: #1f93ff;
 
@@ -483,7 +483,7 @@ p {
   position: relative;
 }
 .--line::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 50%;
   bottom: -5px;
@@ -536,8 +536,6 @@ a:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 2rem 0;
-  font-size: 1rem;
 }
 
 .pagination .page-num {
@@ -545,15 +543,15 @@ a:hover {
   cursor: pointer;
   border-radius: 3px;
   font-weight: normal;
-  background-color: #43b497;
-  color: '#fff';
+  background-color: #03a5fc;
+  color: #fff;
   border: 1px solid #333;
   margin: 2px;
 }
 
 .pagination .page-num:hover {
   color: #fff;
-  background-color: #30816b;
+  background-color: #007bff;
 }
 .activePage {
   color: #fff;
@@ -567,7 +565,7 @@ a:hover {
 }
 
 .active::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   bottom: -3px;

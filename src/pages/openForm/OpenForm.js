@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
-import { SpinnerImg } from '../../components/loader/Loader';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { SpinnerImg } from "../../components/loader/Loader";
 import {
   selectIsLoggedIn,
   selectUser,
-} from '../../redux/features/auth/authSlice';
+} from "../../redux/features/auth/authSlice";
 import {
   getFormById,
   submitResponse,
-} from '../../redux/features/form/formSlice';
+} from "../../redux/features/form/formSlice";
+import { selectEmpDetails } from "../../redux/features/form/EmployeeDetailsSlice";
 //MUI
 import {
   Button,
@@ -23,9 +24,9 @@ import {
   AccordionSummary,
   AccordionDetails,
   useTheme,
-} from '@mui/material';
-import { MdExpandMore } from 'react-icons/md';
-import { tokens } from '../../theme';
+} from "@mui/material";
+import { MdExpandMore } from "react-icons/md";
+import { tokens } from "../../theme";
 
 const OpenForm = () => {
   const theme = useTheme();
@@ -34,21 +35,24 @@ const OpenForm = () => {
   const navigate = useNavigate();
   const { formId } = useParams();
   const isLoggedIn = useSelector(selectIsLoggedIn);
+  const userRole = useSelector(selectUser);
+  const EmpDetails = useSelector(selectEmpDetails);
+
   const { form, isLoading, isError, message } = useSelector(
     (state) => state.form
   );
   const user = useSelector(selectUser);
-  const [userId, setUserId] = useState('');
+  const [userId, setUserId] = useState("");
   const [responseData, setResponseData] = useState([]);
   const [createdByData, setCreatedByData] = useState([]);
-
+  const [employeeData, setEmployeeData] = useState({});
   const [questions, setQuestions] = useState([]);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
     if (isSubmitted) {
       setTimeout(() => {
-        navigate('/');
+        navigate("/");
       }, 1000);
     }
   }, [isSubmitted, navigate]);
@@ -57,7 +61,8 @@ const OpenForm = () => {
     setQuestions(form?.questions);
     setUserId(user?._id);
     setCreatedByData(form?.createdBy);
-  }, [form, user]);
+    setEmployeeData(EmpDetails);
+  }, [form, user, EmpDetails]);
 
   useEffect(() => {
     if (isLoggedIn === true) {
@@ -96,6 +101,8 @@ const OpenForm = () => {
       submitResponse({
         formId: formId,
         user: userId,
+        category: form?.category,
+        employee: employeeData,
         response: responseData,
       })
     );
@@ -114,11 +121,11 @@ const OpenForm = () => {
         >
           <Grid
             container
-            direction='column'
-            alignItems='center'
+            direction="column"
+            alignItems="center"
             // sx={{ border: '2px solid yellow' }}
           >
-            <Grid item xs={12} sm={5} md={12} sx={{ width: '60vw' }}>
+            <Grid item xs={12} sm={5} md={12} sx={{ width: "60vw" }}>
               <Grid
                 style={{
                   borderTop: `8px solid ${colors.secondary[500]}`,
@@ -137,27 +144,27 @@ const OpenForm = () => {
                       <Grid
                         container
                         sx={{
-                          flexDirection: 'column',
-                          justifyContent: ' space-between',
+                          flexDirection: "column",
+                          justifyContent: " space-between",
                           // border: '2px solid red',
                         }}
                       >
                         <Grid
                           item
                           style={{
-                            flexDirection: 'column',
-                            alignItems: 'flex-start',
-                            marginLeft: '15px',
-                            paddingTop: '20px',
-                            paddingBottom: '20px',
+                            flexDirection: "column",
+                            alignItems: "flex-start",
+                            marginLeft: "15px",
+                            paddingTop: "20px",
+                            paddingBottom: "20px",
                             // border: '2px solid black',
                           }}
                         >
                           <Typography
-                            variant='h4'
+                            variant="h4"
                             style={{
-                              fontFamily: 'sans-serif Roboto',
-                              marginBottom: '2rem',
+                              fontFamily: "sans-serif Roboto",
+                              marginBottom: "2rem",
                               fontSize: 25,
                               fontWeight: 600,
                               color: `${colors.grey[100]}`,
@@ -187,25 +194,25 @@ const OpenForm = () => {
                           <div>
                             <div
                               style={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'flex-start',
-                                marginLeft: '6px',
-                                paddingTop: '15px',
-                                paddingBottom: '15px',
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "flex-start",
+                                marginLeft: "6px",
+                                paddingTop: "15px",
+                                paddingBottom: "15px",
                               }}
                             >
                               <Typography
                                 color={colors.grey[100]}
-                                variant='h4'
-                                sx={{ ml: '10px' }}
+                                variant="h4"
+                                sx={{ ml: "10px" }}
                               >
                                 {i + 1}. {ques.questionText}
                               </Typography>
                               <br />
                               <div>
                                 <RadioGroup
-                                  name='selectedOption'
+                                  name="selectedOption"
                                   value={ques[i]?.optionId}
                                   onChange={(event) =>
                                     handleOptionChange(event.target.value, i)
@@ -215,8 +222,8 @@ const OpenForm = () => {
                                     <div key={j}>
                                       <div
                                         style={{
-                                          display: 'flex',
-                                          marginLeft: '7px',
+                                          display: "flex",
+                                          marginLeft: "7px",
                                         }}
                                       >
                                         <FormControlLabel
@@ -226,10 +233,10 @@ const OpenForm = () => {
                                             <Radio
                                               sx={{
                                                 color: `${colors.grey[100]}`,
-                                                '& .MuiSvgIcon-root': {
+                                                "& .MuiSvgIcon-root": {
                                                   fontSize: 17,
                                                 },
-                                                '&.Mui-checked': {
+                                                "&.Mui-checked": {
                                                   color: `${colors.grey[100]}`,
                                                 },
                                               }}
@@ -238,12 +245,12 @@ const OpenForm = () => {
                                           label={
                                             <Typography
                                               color={colors.grey[100]}
-                                              variant='h4'
+                                              variant="h4"
                                             >
                                               {opt.optionText}
                                             </Typography>
                                           }
-                                          sx={{ fontSize: '3rem' }}
+                                          sx={{ fontSize: "3rem" }}
                                         />
                                       </div>
                                     </div>
@@ -258,41 +265,43 @@ const OpenForm = () => {
                   </Grid>
                 </div>
               ) : (
-                <div className='container --mt --flex-center --dir-column'>
+                <div className="container --mt --flex-center --dir-column">
                   <h2>Form submitted! </h2>
                   <br />
-                  <h4 style={{ color: '#574bc9' }}>
+                  <h4 style={{ color: "#574bc9" }}>
                     Thanks for submiting form.
                   </h4>
                 </div>
               )}
               <Grid>
                 <br />
-                <div className='--flex-center'>
-                  <Button
-                    onClick={onSubmitResponse}
-                    variant='contained'
-                    sx={{
-                      backgroundColor: `${colors.blueAccent[500]}`,
-                      fontSize: 15,
-                      transition: 'all 0.3s',
-                      '&:hover': {
-                        transform: 'translateY(-2px)',
-                        backgroundColor: `${colors.blueAccent[700]}`,
-                      },
-                      padding: '7px 17px',
-                    }}
-                  >
-                    Submit
-                  </Button>
-                </div>
+                {userRole?.role === "auditor" && (
+                  <div className="--flex-center">
+                    <Button
+                      onClick={onSubmitResponse}
+                      variant="contained"
+                      sx={{
+                        backgroundColor: `${colors.blueAccent[500]}`,
+                        fontSize: 15,
+                        transition: "all 0.3s",
+                        "&:hover": {
+                          transform: "translateY(-2px)",
+                          backgroundColor: `${colors.blueAccent[700]}`,
+                        },
+                        padding: "7px 17px",
+                      }}
+                    >
+                      Submit
+                    </Button>
+                  </div>
+                )}
               </Grid>
             </Grid>
           </Grid>
           <div
-            className='--flex-end'
+            className="--flex-between"
             style={{
-              marginTop: '15px',
+              marginTop: "15px",
             }}
           >
             <Paper elevation={10}>
@@ -300,11 +309,11 @@ const OpenForm = () => {
                 <AccordionSummary
                   expandIcon={<MdExpandMore />}
                   sx={{
-                    fontFamily: 'Poppins',
+                    fontFamily: "Poppins",
                     fontSize: 15,
                     fontWeight: 600,
                     backgroundColor: `${colors.primary[400]}`,
-                    borderRadius: '5px 5px 0 0',
+                    borderRadius: "5px 5px 0 0",
                   }}
                 >
                   Created By:
@@ -312,12 +321,12 @@ const OpenForm = () => {
                 <AccordionDetails
                   sx={{
                     backgroundColor: `${colors.primary[400]}`,
-                    borderRadius: '0 0 5px 5px',
+                    borderRadius: "0 0 5px 5px",
                   }}
                 >
                   <Typography
                     noWrap
-                    marginBottom='2em'
+                    marginBottom="2em"
                     fontSize={15}
                     color={colors.grey[100]}
                   >
@@ -325,7 +334,7 @@ const OpenForm = () => {
                   </Typography>
                   <Typography
                     noWrap
-                    marginBottom='2em'
+                    marginBottom="2em"
                     fontSize={15}
                     color={colors.grey[100]}
                   >
@@ -333,7 +342,7 @@ const OpenForm = () => {
                   </Typography>
                   <Typography
                     noWrap
-                    marginBottom='2em'
+                    marginBottom="2em"
                     fontSize={15}
                     color={colors.grey[100]}
                   >
@@ -342,6 +351,65 @@ const OpenForm = () => {
                 </AccordionDetails>
               </Accordion>
             </Paper>
+            {userRole?.role === "auditor" && employeeData.length === 0 && (
+              <>
+                <Paper elevation={10}>
+                  <Accordion>
+                    <AccordionSummary
+                      expandIcon={<MdExpandMore />}
+                      sx={{
+                        fontFamily: "Poppins",
+                        fontSize: 15,
+                        fontWeight: 600,
+                        backgroundColor: `${colors.primary[400]}`,
+                        borderRadius: "5px 5px 0 0",
+                      }}
+                    >
+                      Created For:
+                    </AccordionSummary>
+                    <AccordionDetails
+                      sx={{
+                        backgroundColor: `${colors.primary[400]}`,
+                        borderRadius: "0 0 5px 5px",
+                      }}
+                    >
+                      <Typography
+                        noWrap
+                        marginBottom="2em"
+                        fontSize={15}
+                        color={colors.grey[100]}
+                      >
+                        ID: <b>{employeeData?.empId}</b>
+                      </Typography>
+                      <Typography
+                        noWrap
+                        marginBottom="2em"
+                        fontSize={15}
+                        color={colors.grey[100]}
+                      >
+                        Name: <b>{employeeData?.name}</b>
+                      </Typography>
+                      <Typography
+                        noWrap
+                        marginBottom="2em"
+                        fontSize={15}
+                        color={colors.grey[100]}
+                      >
+                        Email: <b>{employeeData?.email}</b>
+                      </Typography>
+                      <Typography
+                        noWrap
+                        marginBottom="2em"
+                        fontSize={15}
+                        color={colors.grey[100]}
+                      >
+                        Role: <b>{employeeData?.designation}</b>
+                      </Typography>
+                    </AccordionDetails>
+                  </Accordion>
+                </Paper>
+              </>
+            )}
           </div>
         </div>
       )}
