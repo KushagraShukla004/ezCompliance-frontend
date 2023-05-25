@@ -1,5 +1,5 @@
 // eslint-disable-next-line
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import "./UserForms.scss";
 //MUI
@@ -7,7 +7,7 @@ import { Card, Box, Typography, useTheme } from "@mui/material";
 
 //backend
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // eslint-disable-next-line
 import {
   deleteForm,
@@ -18,12 +18,17 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 import { useNavigate } from "react-router-dom";
 import { Dropdown } from "./utils/Dropdown";
 import { tokens } from "../../theme";
+import { selectEmpDetails } from "../../redux/features/form/EmployeeDetailsSlice";
+import { toast } from "react-toastify";
+import { selectUser } from "../../redux/features/auth/authSlice";
 
 const FormCard = ({ forms, responses, user }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const userRole = useSelector(selectUser);
+  const EmpDetails = useSelector(selectEmpDetails);
 
   const delProduct = async (formId) => {
     await dispatch(deleteForm(formId));
@@ -139,10 +144,15 @@ const FormCard = ({ forms, responses, user }) => {
             ) : (
               <>
                 {responses.map((response, index) => {
-                  const { _id, formId, category, resForm, createdAt } =
-                    response;
+                  const { _id, formId, resForm, createdAt } = response;
 
                   const openForm = () => {
+                    if (
+                      userRole?.role === "auditor" &&
+                      EmpDetails.length === 0
+                    ) {
+                      toast.error("Please Fill the Employee Details First.");
+                    }
                     navigate(`/forms/form/${formId}`);
                   };
                   const showResponse = () => {
@@ -188,9 +198,9 @@ const FormCard = ({ forms, responses, user }) => {
                           openForm={openForm}
                           showResponse={showResponse}
                           copyToClipboard={() => copyToClipboard(_id)}
-                          deleteForm={() =>
-                            confirmDelete(_id.toString(), category)
-                          }
+                          // deleteForm={() =>
+                          //   confirmDelete(_id.toString(), category)
+                          // }
                         />
                       </div>
                     </Card>
