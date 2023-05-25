@@ -10,12 +10,10 @@ import {
   useTheme,
 } from "@mui/material";
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { tokens } from "../../theme";
-import {
-  ADD_EMP_DETAILS,
-  selectEmpDetails,
-} from "../../redux/features/form/EmployeeDetailsSlice";
+import { ADD_EMP_DETAILS } from "../../redux/features/form/EmployeeDetailsSlice";
+import useRedirectLoggedOutUser from "../../customHook/useRedirectLoggedOutUser";
 
 const Emp_initialState = {
   empId: "",
@@ -25,6 +23,7 @@ const Emp_initialState = {
 };
 
 const EmployeeDetails = () => {
+  useRedirectLoggedOutUser("/login");
   const dispatch = useDispatch();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -38,9 +37,6 @@ const EmployeeDetails = () => {
   const handleClose = () => {
     setOpen(false);
   };
-  // const EmpDetails = useSelector(selectEmpDetails);
-
-  // console.log(`EmpDetails in employeeDetails.js from slice:`, EmpDetails);
 
   const Emp_handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -48,7 +44,6 @@ const EmployeeDetails = () => {
   };
 
   const saveAuditorData = async () => {
-    // console.log(`employee in EmployeeDetails:`, employee);
     await dispatch(ADD_EMP_DETAILS(employee));
     setOpen(false);
   };
@@ -95,7 +90,6 @@ const EmployeeDetails = () => {
                   p: 1,
                   flexGrow: 1,
                 }}
-                //   borderBottom={`9px solid ${colors.primary[500]}`}
               >
                 <Box
                   sx={{
@@ -117,7 +111,6 @@ const EmployeeDetails = () => {
                       display: "flex",
                       flexWrap: "wrap",
                       pt: 1,
-                      //   border: '2px solid green',
                     }}
                   >
                     <Typography
@@ -132,7 +125,6 @@ const EmployeeDetails = () => {
                       name="empId"
                       required
                       placeholder="ID"
-                      //   defaultValue={resource?.emp_Id}
                       sx={{
                         mb: 2,
                         "& input": {

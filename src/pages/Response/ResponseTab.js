@@ -17,19 +17,15 @@ import { shortenText } from "../profile/Profile";
 import { Box, Grid, Paper, Typography, useTheme } from "@mui/material";
 import ResponseList from "./ResponseList";
 import { tokens } from "../../theme";
+import useRedirectLoggedOutUser from "../../customHook/useRedirectLoggedOutUser";
 
 const ResponseTab = () => {
+  useRedirectLoggedOutUser("/login");
   const dispatch = useDispatch();
-  // eslint-disable-next-line
-  const navigate = useNavigate();
-
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
   const { formId } = useParams();
-
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  // const response = useSelector(selectResponse);
 
   const { response, isLoading, isError, message } = useSelector(
     (state) => state.form

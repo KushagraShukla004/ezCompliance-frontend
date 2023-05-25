@@ -139,8 +139,8 @@ const FormCard = ({ forms, responses, user }) => {
             ) : (
               <>
                 {responses.map((response, index) => {
-                  const { _id, formId, resForm, createdAt } = response;
-                  // console.log(`response in formCard :`, response);
+                  const { _id, formId, category, resForm, createdAt } =
+                    response;
 
                   const openForm = () => {
                     navigate(`/forms/form/${formId}`);
@@ -189,7 +189,7 @@ const FormCard = ({ forms, responses, user }) => {
                           showResponse={showResponse}
                           copyToClipboard={() => copyToClipboard(_id)}
                           deleteForm={() =>
-                            confirmDelete(_id, resForm?.category)
+                            confirmDelete(_id.toString(), category)
                           }
                         />
                       </div>

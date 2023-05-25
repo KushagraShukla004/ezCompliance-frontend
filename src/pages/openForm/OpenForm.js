@@ -24,6 +24,8 @@ import {
   AccordionSummary,
   AccordionDetails,
   useTheme,
+  Box,
+  Divider,
 } from "@mui/material";
 import { MdExpandMore } from "react-icons/md";
 import { tokens } from "../../theme";
@@ -48,6 +50,7 @@ const OpenForm = () => {
   const [employeeData, setEmployeeData] = useState({});
   const [questions, setQuestions] = useState([]);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if (isSubmitted) {
@@ -93,7 +96,6 @@ const OpenForm = () => {
       optionText,
     });
     setResponseData(updatedResponseData);
-    // console.log('responseData(inside handleOptionChange): ', responseData);
   };
 
   const onSubmitResponse = () => {
@@ -138,7 +140,6 @@ const OpenForm = () => {
                       elevation={5}
                       sx={{
                         backgroundColor: `${colors.primary[400]}`,
-                        // boxShadow: '5',
                       }}
                     >
                       <Grid
@@ -210,55 +211,106 @@ const OpenForm = () => {
                                 {i + 1}. {ques.questionText}
                               </Typography>
                               <br />
-                              <div>
-                                <RadioGroup
-                                  name="selectedOption"
-                                  value={ques[i]?.optionId}
-                                  onChange={(event) =>
-                                    handleOptionChange(event.target.value, i)
-                                  }
-                                >
-                                  {ques?.options.map((opt, j) => (
-                                    <div key={j}>
-                                      <div
-                                        style={{
-                                          display: "flex",
-                                          marginLeft: "7px",
-                                        }}
-                                      >
-                                        <FormControlLabel
-                                          value={j}
-                                          name={opt.optionId}
-                                          control={
-                                            <Radio
-                                              sx={{
-                                                color: `${colors.grey[100]}`,
-                                                "& .MuiSvgIcon-root": {
-                                                  fontSize: 17,
-                                                },
-                                                "&.Mui-checked": {
+                              <Grid container spacing={1}>
+                                <Grid item ml={1} md={4.5}>
+                                  <RadioGroup
+                                    name="selectedOption"
+                                    value={ques[i]?.optionId}
+                                    onChange={(event) =>
+                                      handleOptionChange(event.target.value, i)
+                                    }
+                                  >
+                                    {ques?.options.map((opt, j) => (
+                                      <div key={j}>
+                                        <div
+                                          style={{
+                                            display: "flex",
+                                            marginLeft: "7px",
+                                          }}
+                                        >
+                                          <FormControlLabel
+                                            value={j}
+                                            name={opt.optionId}
+                                            control={
+                                              <Radio
+                                                sx={{
                                                   color: `${colors.grey[100]}`,
-                                                },
-                                              }}
-                                            />
-                                          }
-                                          label={
-                                            <Typography
-                                              color={colors.grey[100]}
-                                              variant="h4"
-                                            >
-                                              {opt.optionText}
-                                            </Typography>
-                                          }
-                                          sx={{ fontSize: "3rem" }}
-                                        />
+                                                  "& .MuiSvgIcon-root": {
+                                                    fontSize: 17,
+                                                  },
+                                                  "&.Mui-checked": {
+                                                    color: `${colors.grey[100]}`,
+                                                  },
+                                                }}
+                                              />
+                                            }
+                                            label={
+                                              <Typography
+                                                color={colors.grey[100]}
+                                                variant="h4"
+                                              >
+                                                {opt.optionText}
+                                              </Typography>
+                                            }
+                                            sx={{ fontSize: "3rem" }}
+                                          />
+                                        </div>
                                       </div>
-                                    </div>
-                                  ))}
-                                </RadioGroup>
-                              </div>
+                                    ))}
+                                  </RadioGroup>
+                                </Grid>
+                                {open && (
+                                  <Grid item ml={2} md={6.5}>
+                                    <Box display="grid">
+                                      <label htmlFor="remark">
+                                        <Typography
+                                          color={colors.grey[100]}
+                                          variant="h5"
+                                        >
+                                          Remark :
+                                        </Typography>
+                                      </label>
+                                      <textarea
+                                        name="remark"
+                                        id={i}
+                                        cols="30"
+                                        rows="5"
+                                        style={{
+                                          color: `${colors.grey[100]}`,
+                                          backgroundColor: `${colors.primary[500]}`,
+                                          fontFamily: "sans-serif Roboto",
+                                          fontSize: 15,
+                                          fontWeight: 600,
+                                        }}
+                                      />
+                                    </Box>
+                                  </Grid>
+                                )}
+                              </Grid>
                             </div>
                           </div>
+                          <Divider light />
+                          <Button
+                            onClick={() => {
+                              open === false ? setOpen(true) : setOpen(false);
+                            }}
+                            key={i}
+                            variant="contained"
+                            sx={{
+                              color: "white",
+                              backgroundColor: `${colors.blueAccent[500]}`,
+                              fontSize: 10,
+                              margin: "1em 2em",
+                              transition: "all 0.3s",
+                              "&:hover": {
+                                transform: "translateY(-2px)",
+                                backgroundColor: `${colors.blueAccent[700]}`,
+                              },
+                              padding: "7px 12px",
+                            }}
+                          >
+                            Remark
+                          </Button>
                         </Paper>
                       </div>
                     ))}

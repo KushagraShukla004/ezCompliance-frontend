@@ -281,27 +281,13 @@ const FormBuilder = ({ form }) => {
               justifyContent="center"
               alignItems="center"
             >
-              {/* <Grid item>
-                <Typography
-                  variant="h4"
-                  style={{
-                    fontFamily: "sans-serif Roboto",
-                    marginBottom: "2rem",
-                    fontSize: 25,
-                    fontWeight: 600,
-                    color: `${colors.grey[100]}`,
-                  }}
-                >
-                  Select Category
-                </Typography>
-              </Grid> */}
               <Typography
                 variant="h4"
                 mt={2}
                 mr={2}
                 style={{
-                  fontFamily: "sans-serif Roboto",
                   marginBottom: "2rem",
+                  fontFamily: "sans-serif Roboto",
                   fontSize: 25,
                   fontWeight: 600,
                   color: `${colors.grey[100]}`,
