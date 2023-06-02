@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Box,
   Button,
@@ -9,12 +9,13 @@ import {
   Paper,
   TextField,
   Tooltip,
-} from '@mui/material';
+} from "@mui/material";
 // import uuid from 'react-uuid';
-import DeleteIcon from '@mui/icons-material/Delete';
-import FileCopyIcon from '@mui/icons-material/FileCopy';
-import { useTheme } from '@mui/system';
-import { tokens } from '../../theme';
+import DeleteIcon from "@mui/icons-material/Delete";
+import FileCopyIcon from "@mui/icons-material/FileCopy";
+import { useTheme } from "@mui/system";
+import { tokens } from "../../theme";
+import uuid from "react-uuid";
 
 const ExistingQues = ({
   questions,
@@ -26,41 +27,27 @@ const ExistingQues = ({
   deleteOption,
   duplicateElement,
 }) => {
-  const createNewOption = (id) => {
-    console.log(id, typeof id, 'this is id');
+  const createNewOptInExistingQues = (id) => {
     const data = {
-      id: id,
-      optionText: '',
+      id: uuid(),
+      optionText: "",
     };
     addOption(id, data);
   };
 
-  // const deleteOption = (elId, optionId) => {
-  //   let newArr = questions.map((el) => {
-  //     if (el.id === elId) {
-  //       let newOptions =
-  //         el?.options && el?.options.filter((opt) => opt.id !== optionId);
-  //       return { ...el, options: newOptions };
-  //     } else {
-  //       return el;
-  //     }
-  //   });
-  //   setData(newArr);
-  // };
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
-  // console.log('questions: ', questions);
 
   return (
     <>
       {questions &&
         questions.length > 0 &&
         questions.map((ques, index) => {
-          const { _id, questionText, options } = ques;
+          const { _id, id, questionText, options } = ques;
+
           return (
             <Paper
-              key={_id}
+              key={index}
               elevation={2}
               sx={{ backgroundColor: colors.primary[400] }}
             >
@@ -69,18 +56,17 @@ const ExistingQues = ({
                   <Grid item xs={8.5}>
                     <TextField
                       defaultValue={questionText}
-                      variant='filled'
-                      onBlur={(e) => handleValue(_id, e)}
+                      variant="filled"
+                      onBlur={(e) => handleValue(_id || id, e)}
                       fullWidth
-                      // required={item.required}
-                      placeholder='Questionasdasd'
+                      placeholder="Questions in Existing Ques"
                       sx={{
                         mb: 2,
-                        '& input': {
+                        "& input": {
                           color: colors.grey[50],
                         },
                       }}
-                      size='small'
+                      size="small"
                       inputProps={{
                         style: {
                           fontSize: 16,
@@ -91,23 +77,23 @@ const ExistingQues = ({
                     {options &&
                       options.length > 0 &&
                       options.map((opt, key) => (
-                        <Box key={key} sx={{ display: 'flex' }}>
+                        <Box key={key} sx={{ display: "flex" }}>
                           <TextField
-                            variant='outlined'
+                            variant="outlined"
                             fullWidth
                             placeholder={`Option ${key + 1}`}
                             defaultValue={opt?.optionText}
-                            key={opt?.id}
+                            key={opt?._id || opt?.id}
                             sx={{
                               mb: 1,
-                              '& input': {
+                              "& input": {
                                 color: colors.grey[50],
                               },
                             }}
                             onBlur={(e) =>
                               handleOptionValues(
-                                item?.id,
-                                opt?.id,
+                                _id,
+                                opt._id || opt.id,
                                 e.target.value
                               )
                             }
@@ -120,29 +106,29 @@ const ExistingQues = ({
                           />
                           <Tooltip
                             title={
-                              <p style={{ color: 'white', fontSize: '1rem' }}>
+                              <p style={{ color: "white", fontSize: "1rem" }}>
                                 Delete Option
                               </p>
                             }
-                            aria-label='delete-option'
+                            aria-label="delete-option"
                           >
                             <IconButton
-                              aria-label='delete-option'
-                              onClick={() => deleteOption(_id, opt?.id)}
+                              aria-label="delete-option"
+                              onClick={() => deleteOption(_id, opt?._id)}
                               sx={{ ml: 2 }}
                             >
                               <DeleteIcon
-                                sx={{ fontSize: '2em' }}
-                                color='secondary'
+                                sx={{ fontSize: "2em" }}
+                                color="secondary"
                               />
                             </IconButton>
                           </Tooltip>
                         </Box>
                       ))}
                     <Button
-                      variant='text'
-                      sx={{ fontSize: '1.2rem', color: colors.grey[100] }}
-                      onClick={() => createNewOption(_id)}
+                      variant="text"
+                      sx={{ fontSize: "1.2rem", color: colors.grey[100] }}
+                      onClick={() => createNewOptInExistingQues(_id || id)}
                     >
                       Add Option
                     </Button>
@@ -150,39 +136,39 @@ const ExistingQues = ({
                 </Grid>
               </Box>
               <Divider light />
-              <FormGroup row sx={{ alignItems: 'center' }}>
+              <FormGroup row sx={{ alignItems: "center" }}>
                 <Tooltip
                   title={
-                    <p style={{ color: 'white', fontSize: '1rem' }}>
+                    <p style={{ color: "white", fontSize: "1rem" }}>
                       Delete Element
                     </p>
                   }
-                  aria-label='delete-element'
+                  aria-label="delete-element"
                 >
                   <IconButton
-                    aria-label='delete-element'
-                    onClick={() => deleteEl(ques?.id)}
+                    aria-label="delete-element"
+                    onClick={() => deleteEl(ques?._id)}
                     sx={{ ml: 2 }}
                   >
-                    <DeleteIcon sx={{ fontSize: '2em' }} color='secondary' />
+                    <DeleteIcon sx={{ fontSize: "2em" }} color="secondary" />
                   </IconButton>
                 </Tooltip>
                 <Tooltip
                   title={
-                    <p style={{ color: 'white', fontSize: '1rem' }}>
+                    <p style={{ color: "white", fontSize: "1rem" }}>
                       Duplicate Element
                     </p>
                   }
-                  aria-label='duplicate-element'
+                  aria-label="duplicate-element"
                 >
                   <IconButton
-                    aria-label='duplicate-element'
-                    onClick={() => duplicateElement(item.id, item.type)}
+                    aria-label="duplicate-element"
+                    onClick={() => duplicateElement(item._id)}
                     sx={{ ml: 2 }}
                   >
                     <FileCopyIcon
-                      sx={{ fontSize: '1.5em' }}
-                      color='secondary'
+                      sx={{ fontSize: "1.5em" }}
+                      color="secondary"
                     />
                   </IconButton>
                 </Tooltip>

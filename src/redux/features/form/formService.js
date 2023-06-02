@@ -26,8 +26,7 @@ const getFormById = async (formId) => {
   return response.data;
 };
 // Edit Form
-const editForm = async (formId, formData) => {
-  console.log("editForm formData (in formService): ", formData);
+const editForm = async ({ formId, formData }) => {
   const response = await axios.patch(`${API_URL}editForm/${formId}`, formData);
   return response.data;
 };

@@ -109,7 +109,7 @@ export const editForm = createAsyncThunk(
   "forms/editForm",
   async ({ formId, formData }, thunkAPI) => {
     try {
-      return await formService.editForm(formId, formData);
+      return await formService.editForm({ formId, formData });
     } catch (error) {
       const message =
         (error.response &&

@@ -31,7 +31,8 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import Search from "../../components/search/Search";
 import { SpinnerImg } from "../../components/loader/Loader";
-// import { selectEmpDetails } from "../../redux/features/form/EmployeeDetailsSlice";
+import { selectEmpDetails } from "../../redux/features/form/EmployeeDetailsSlice";
+// import { toast } from "react-toastify";
 
 const CreateResponse = () => {
   useRedirectLoggedOutUser("/login");
@@ -40,6 +41,7 @@ const CreateResponse = () => {
   const colors = tokens(theme.palette.mode);
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const userRole = useSelector(selectUser);
+  const EmpDetails = useSelector(selectEmpDetails);
 
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
@@ -74,10 +76,14 @@ const CreateResponse = () => {
     if (search !== "") {
       dispatch(FILTER_FORMS_CATEGORY({ forms, category, search }));
     }
-  }, [dispatch, forms, search, category]);
+  }, [dispatch, forms, search, category, userRole, EmpDetails]);
 
   const handleCategory = (e) => {
-    setCategory(e.target.value);
+    if (userRole?.role === "auditor" && EmpDetails.length === 0) {
+      alert("Please Fill the Employee Details First.");
+    } else {
+      setCategory(e.target.value);
+    }
   };
 
   //   Begin Pagination

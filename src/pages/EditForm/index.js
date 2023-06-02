@@ -1,46 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import {
-  Box,
-  Button,
-  Grid,
-  IconButton,
-  Tooltip,
-  //     Box,
-  //   Paper,
-  //   TextField,
-  //   Typography,
-} from '@mui/material';
-import uuid from 'react-uuid';
-import Nestable from 'react-nestable';
-import { useTheme } from '@mui/system';
-import { tokens } from '../../theme';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import {
-  selectIsLoggedIn,
-  //   selectUser,
-} from '../../redux/features/auth/authSlice';
-import { getFormById } from '../../redux/features/form/formSlice';
-// import FormBuilder from '../FormBuilder';
-import { SpinnerImg } from '../../components/loader/Loader';
-import Header from './Header';
-// import RadioInput from './elements/RadioInput';
-import { MdAddCircle } from 'react-icons/md';
-import ExistingQues from './ExistingQues';
-import { RadioInput } from '../FormBuilder/elements';
-
-export const formEl = [
-  {
-    label: 'Options',
-    value: 'radio',
-  },
-];
+import React, { useEffect, useState } from "react";
+import { Box, Button, Grid, IconButton, Tooltip } from "@mui/material";
+import uuid from "react-uuid";
+import { useTheme } from "@mui/system";
+import { tokens } from "../../theme";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { selectIsLoggedIn } from "../../redux/features/auth/authSlice";
+import { editForm, getFormById } from "../../redux/features/form/formSlice";
+import { SpinnerImg } from "../../components/loader/Loader";
+import Header from "./Header";
+import { MdAddCircle } from "react-icons/md";
+import ExistingQues from "./ExistingQues";
+import ErrorPage from "../ErrorPage";
 
 const EditForm = () => {
-  const initVal = formEl[0]?.value;
   const dispatch = useDispatch();
-  //   const navigate = useNavigate();
-  //   const user = useSelector(selectUser);
+  const navigate = useNavigate();
   const { formId } = useParams();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -50,14 +25,11 @@ const EditForm = () => {
     (state) => state.form
   );
 
-  // console.log(`form :`, form);
   //State
   const [data, setData] = useState([]);
-  const [category, setCategory] = useState('');
-  const [option, setOption] = useState('radio');
-  const [optionText, setOptionText] = useState('');
-
-  const items = data;
+  const [formData, setFormData] = useState({});
+  const [category, setCategory] = useState("");
+  const [optionText, setOptionText] = useState("");
 
   useEffect(() => {
     if (form !== undefined) {
@@ -82,12 +54,9 @@ const EditForm = () => {
   const addElement = () => {
     const data = {
       id: uuid(),
-      questionText: null,
-      type: option,
-      required: false,
+      questionText: "",
     };
     setData((prevState) => [...prevState, data]);
-    setOption(initVal);
   };
 
   //Function to delete element
@@ -101,30 +70,20 @@ const EditForm = () => {
   };
 
   //Function to duplicate element
-  const duplicateElement = (elId, elType) => {
-    let elIdx = data.findIndex((el) => el.id === elId);
+  const duplicateElement = (elId) => {
+    let elIdx = data.findIndex((el) => el.id === elId || el._id === elId);
     let newEl = {
-      id: uuid(),
-      questionText: null,
-      type: elType,
-      required: false,
+      _id: uuid(),
+      questionText: "",
     };
     let newArr = addAfter(data, elIdx, newEl);
     setData(newArr);
   };
 
-  //Function to handle sorting of elements
-  const handleOnChangeSort = ({ items }) => {
-    setData(items);
-  };
-
   //Function to Handle Input Values
   const handleValue = (id, e) => {
-    console.log('id in handleValue', id);
     let newArr = data.map((el) => {
-      console.log('el in handleValue', el);
-      console.log('el._id in handleValue', el?._id);
-      if (el?._id === id) {
+      if (el?._id === id || el.id === id) {
         return { ...el, questionText: e.target.value };
       } else {
         return el;
@@ -133,22 +92,10 @@ const EditForm = () => {
     setData(newArr);
   };
 
-  //   //Function to Handle Required
-  //   const handleRequired = (id) => {
-  //     let newArr = data.map((el) => {
-  //       if (el.id === id) {
-  //         return { ...el, required: !el.required };
-  //       } else {
-  //         return el;
-  //       }
-  //     });
-  //     setData(newArr);
-  //   };
-
   //Function to Handle Element Type
   const handleElType = (id, type) => {
     let newArr = data.map((el) => {
-      if (el.id === id) {
+      if (el._id === id || el.id === id) {
         return { ...el, type: type };
       } else {
         return el;
@@ -158,12 +105,10 @@ const EditForm = () => {
   };
 
   //Function to Handle Options
-  const addOption = (id, newOption) => {
-    console.log({ newOption });
+  const addOption = (ques_id, newOption) => {
     let newArr = data.map((el) => {
-      console.log({ el });
-      if (el.id === id) {
-        const objVal = 'options' in el ? el?.options : [];
+      if (el._id === ques_id || el.id === ques_id) {
+        const objVal = "options" in el ? el?.options : [];
         return { ...el, options: [...objVal, newOption] };
       } else {
         return el;
@@ -175,15 +120,15 @@ const EditForm = () => {
   //Function to Change Option Values
   const handleOptionValues = (elId, optionId, optionVal) => {
     let newArr = data.map((el) => {
-      if (el.id === elId) {
-        el?.options &&
-          // eslint-disable-next-line
-          el?.options.map((opt) => {
-            if (opt.id === optionId) {
-              opt.optionText = optionVal;
-            }
-          });
-        return el;
+      if (el._id === elId) {
+        const updatedOptions = el.options.map((opt) => {
+          if (opt._id === optionId || opt.id === optionId) {
+            return { ...opt, optionText: optionVal };
+          }
+          return opt;
+        });
+
+        return { ...el, options: updatedOptions };
       } else {
         return el;
       }
@@ -203,12 +148,21 @@ const EditForm = () => {
     });
   }, [data, optionText]);
 
+  useEffect(() => {
+    setFormData({ category: category, questions: data });
+  }, [category, data]);
+
   //Function to Delete Option
   const deleteOption = (elId, optionId) => {
+    console.log(`elId in deleteOption in index:`, elId);
+    console.log(`optionId in deleteOption in index:`, optionId);
     let newArr = data.map((el) => {
-      if (el.id === elId) {
+      if (el._id === elId || el.id === elId) {
         let newOptions =
-          el?.options && el?.options.filter((opt) => opt.id !== optionId);
+          el?.options &&
+          el?.options.filter((opt) => opt.id || opt._id !== optionId);
+
+        console.log(`newOptions in deleteOption in index.js :`, newOptions);
         return { ...el, options: newOptions };
       } else {
         return el;
@@ -217,46 +171,16 @@ const EditForm = () => {
     setData(newArr);
   };
 
-  //   //Function to append values to the backend
-  //   const saveForm = () => {
-  //     dispatch(
-  //       createForm({
-  //         createdBy: {
-  //           userId: user?._id,
-  //           name: user?.name,
-  //           email: user?.email,
-  //           role: user?.role,
-  //         },
-  //         category: category,
-  //         questions: data,
-  //       })
-  //     );
+  //Function to append values to the backend
+  const saveForm = () => {
+    dispatch(
+      editForm({
+        formId: form?._id,
+        formData: formData,
+      })
+    );
 
-  //     navigate('/forms');
-  //   };
-  //Render items
-  const renderElements = ({ item }) => {
-    // console.log('item.id (in renderElements): ', item.id);
-    switch (item.type) {
-      case 'radio':
-        return (
-          <RadioInput
-            item={item}
-            questions={data}
-            handleValue={handleValue}
-            deleteEl={deleteEl}
-            // handleRequired={handleRequired}
-            handleElType={handleElType}
-            addOption={addOption}
-            handleOptionValues={handleOptionValues}
-            deleteOption={deleteOption}
-            duplicateElement={duplicateElement}
-          />
-        );
-
-      default:
-        return <></>;
-    }
+    navigate("/forms");
   };
 
   return (
@@ -266,9 +190,9 @@ const EditForm = () => {
       <Grid
         container
         spacing={1}
-        direction='row'
-        justifyContent='center'
-        sx={{ fontSize: '4em' }}
+        direction="row"
+        justifyContent="center"
+        sx={{ fontSize: "4em" }}
       >
         <Grid item lg={4.5} md={10} sx={{ ml: 7 }}>
           <Header category={category} />
@@ -284,36 +208,31 @@ const EditForm = () => {
               duplicateElement={duplicateElement}
             />
           ) : (
-            <Nestable
-              items={items}
-              renderItem={renderElements}
-              maxDepth={1}
-              onChange={handleOnChangeSort}
-            />
+            <ErrorPage />
           )}
 
           <Grid>
             <Box
               mt={2}
               sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
               <Button
-                // onClick={saveForm}
-                variant='contained'
+                onClick={saveForm}
+                variant="contained"
                 sx={{
-                  color: 'white',
+                  color: "white",
                   backgroundColor: `${colors.blueAccent[500]}`,
                   fontSize: 15,
-                  transition: 'all 0.3s',
-                  '&:hover': {
-                    transform: 'translateY(-2px)',
+                  transition: "all 0.3s",
+                  "&:hover": {
+                    transform: "translateY(-2px)",
                     backgroundColor: `${colors.blueAccent[700]}`,
                   },
-                  padding: '7.5px 17px',
+                  padding: "7.5px 17px",
                 }}
               >
                 Save
@@ -324,54 +243,22 @@ const EditForm = () => {
         <Grid item md={1}>
           <Tooltip
             title={
-              <p style={{ color: 'white', fontSize: '1rem' }}>Add Element</p>
+              <p style={{ color: "white", fontSize: "1rem" }}>Add Element</p>
             }
-            aria-label='add-element'
+            aria-label="add-element"
           >
             <IconButton
-              aria-label='add-element'
+              aria-label="add-element"
               onClick={addElement}
-              sx={{ position: 'sticky', top: 40 }}
+              sx={{ position: "sticky", top: 40 }}
             >
               <MdAddCircle size={35} color={colors.blueAccent[500]} />
             </IconButton>
           </Tooltip>
         </Grid>
       </Grid>
-      {/* <FormBuilder form={form} /> */}
     </section>
   );
 };
 
 export default EditForm;
-
-// const EditForm = () => {
-//   const { formId } = useParams();
-//   const dispatch = useDispatch();
-//   const theme = useTheme();
-//   const colors = tokens(theme.palette.mode);
-//   const isLoggedIn = useSelector(selectIsLoggedIn);
-//   const { form, isError, message } = useSelector((state) => state.form);
-
-//   // console.log(`form :`, form);
-
-//   useEffect(() => {
-//     if (isLoggedIn === true) {
-//       dispatch(getFormById(formId));
-//     }
-
-//     if (isError) {
-//       console.log(message);
-//     }
-//     //eslint-disable-next-line
-//   }, [isLoggedIn, isError, message, dispatch]);
-
-//   return (
-//     <div>
-//       <h1 style={{ color: `${colors.grey[100]}` }}>Edit Form</h1>
-//       <FormBuilder form={form} />
-//     </div>
-//   );
-// };
-
-// export default EditForm;
