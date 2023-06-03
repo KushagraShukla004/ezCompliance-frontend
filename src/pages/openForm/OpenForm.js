@@ -25,7 +25,6 @@ import {
   AccordionDetails,
   useTheme,
   Box,
-  Divider,
 } from "@mui/material";
 import { MdExpandMore } from "react-icons/md";
 import { tokens } from "../../theme";
@@ -50,7 +49,6 @@ const OpenForm = () => {
   const [employeeData, setEmployeeData] = useState({});
   const [questions, setQuestions] = useState([]);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if (isSubmitted) {
@@ -116,17 +114,8 @@ const OpenForm = () => {
       <br />
       {isLoading && <SpinnerImg />}
       {form && (
-        <div
-        // style={{
-        //   border: '2px solid black',
-        // }}
-        >
-          <Grid
-            container
-            direction="column"
-            alignItems="center"
-            // sx={{ border: '2px solid yellow' }}
-          >
+        <div>
+          <Grid container direction="column" alignItems="center">
             <Grid item xs={12} sm={5} md={12} sx={{ width: "60vw" }}>
               <Grid
                 style={{
@@ -147,7 +136,6 @@ const OpenForm = () => {
                         sx={{
                           flexDirection: "column",
                           justifyContent: " space-between",
-                          // border: '2px solid red',
                         }}
                       >
                         <Grid
@@ -158,7 +146,6 @@ const OpenForm = () => {
                             marginLeft: "15px",
                             paddingTop: "20px",
                             paddingBottom: "20px",
-                            // border: '2px solid black',
                           }}
                         >
                           <Typography
@@ -189,7 +176,6 @@ const OpenForm = () => {
                           elevation={5}
                           sx={{
                             backgroundColor: `${colors.primary[400]}`,
-                            // boxShadow: '5',
                           }}
                         >
                           <div>
@@ -212,7 +198,7 @@ const OpenForm = () => {
                               </Typography>
                               <br />
                               <Grid container spacing={1}>
-                                <Grid item ml={1} md={4.5}>
+                                <Grid item ml={2} md={5}>
                                   <RadioGroup
                                     name="selectedOption"
                                     value={ques[i]?.optionId}
@@ -259,58 +245,34 @@ const OpenForm = () => {
                                     ))}
                                   </RadioGroup>
                                 </Grid>
-                                {open && (
-                                  <Grid item ml={2} md={6.5}>
-                                    <Box display="grid">
-                                      <label htmlFor="remark">
-                                        <Typography
-                                          color={colors.grey[100]}
-                                          variant="h5"
-                                        >
-                                          Remark :
-                                        </Typography>
-                                      </label>
-                                      <textarea
-                                        name="remark"
-                                        id={i}
-                                        cols="30"
-                                        rows="5"
-                                        style={{
-                                          color: `${colors.grey[100]}`,
-                                          backgroundColor: `${colors.primary[500]}`,
-                                          fontFamily: "sans-serif Roboto",
-                                          fontSize: 15,
-                                          fontWeight: 600,
-                                        }}
-                                      />
-                                    </Box>
-                                  </Grid>
-                                )}
+                                <Grid item ml={2} md={6}>
+                                  <Box display="grid" gap={2}>
+                                    <label htmlFor="remark">
+                                      <Typography
+                                        color={colors.grey[100]}
+                                        variant="h5"
+                                      >
+                                        Remark :
+                                      </Typography>
+                                    </label>
+                                    <textarea
+                                      name="remark"
+                                      id={i}
+                                      rows="5"
+                                      style={{
+                                        color: `${colors.grey[100]}`,
+                                        backgroundColor: `${colors.primary[500]}`,
+                                        fontFamily: "sans-serif Roboto",
+                                        fontSize: 15,
+                                        fontWeight: 600,
+                                        padding: "5px",
+                                      }}
+                                    />
+                                  </Box>
+                                </Grid>
                               </Grid>
                             </div>
                           </div>
-                          <Divider light />
-                          <Button
-                            onClick={() => {
-                              open === false ? setOpen(true) : setOpen(false);
-                            }}
-                            key={i}
-                            variant="contained"
-                            sx={{
-                              color: "white",
-                              backgroundColor: `${colors.blueAccent[500]}`,
-                              fontSize: 10,
-                              margin: "1em 2em",
-                              transition: "all 0.3s",
-                              "&:hover": {
-                                transform: "translateY(-2px)",
-                                backgroundColor: `${colors.blueAccent[700]}`,
-                              },
-                              padding: "7px 12px",
-                            }}
-                          >
-                            Remark
-                          </Button>
                         </Paper>
                       </div>
                     ))}
