@@ -31,6 +31,8 @@ const EditForm = () => {
   const [category, setCategory] = useState("");
   const [optionText, setOptionText] = useState("");
 
+  // console.log(`data in index.js EditForm:`, data);
+
   useEffect(() => {
     if (form !== undefined) {
       if (form?.questions.length !== 0) {
@@ -61,7 +63,9 @@ const EditForm = () => {
 
   //Function to delete element
   const deleteEl = (id) => {
-    setData((prevState) => prevState.filter((val) => val.id !== id));
+    setData((prevState) => {
+      return prevState.filter((val) => (val._id || val.id) !== id);
+    });
   };
 
   //Function to add element at specific pos and return arr
@@ -154,15 +158,11 @@ const EditForm = () => {
 
   //Function to Delete Option
   const deleteOption = (elId, optionId) => {
-    console.log(`elId in deleteOption in index:`, elId);
-    console.log(`optionId in deleteOption in index:`, optionId);
     let newArr = data.map((el) => {
       if (el._id === elId || el.id === elId) {
         let newOptions =
           el?.options &&
           el?.options.filter((opt) => opt.id || opt._id !== optionId);
-
-        console.log(`newOptions in deleteOption in index.js :`, newOptions);
         return { ...el, options: newOptions };
       } else {
         return el;

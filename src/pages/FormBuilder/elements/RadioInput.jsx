@@ -21,9 +21,6 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 import { tokens } from "../../../theme";
-
-//Form Elements
-// import { formEl } from '../constants';
 export const formEl = [
   {
     label: "Options",
@@ -35,7 +32,6 @@ const RadioInput = ({
   questions,
   handleValue,
   deleteEl,
-  // handleRequired,
   handleElType,
   addOption,
   handleOptionValues,
@@ -46,16 +42,12 @@ const RadioInput = ({
   const colors = tokens(theme.palette.mode);
   //Create new option
   const createNewOption = (id) => {
-    // console.log(id, typeof id, 'this is id');
     const data = {
       id: uuid(),
       optionText: "",
     };
     addOption(id, data);
   };
-
-  // console.log({ questions });
-  // console.log("item.id (in RadioInput): ", item.id);
 
   return (
     <Fragment>
@@ -68,7 +60,6 @@ const RadioInput = ({
                 variant="filled"
                 onBlur={(e) => handleValue(item.id, e)}
                 fullWidth
-                // required={item.required}
                 placeholder="Question"
                 sx={{
                   mb: 2,

@@ -62,7 +62,7 @@ const FormBuilder = ({ form }) => {
 
   const items = data;
 
-  // console.log({ data });
+  console.log("data in index.js FormBuilder", data);
   const { categories } = useSelector((state) => state.category);
 
   // console.log(`category :`, category);
@@ -149,18 +149,6 @@ const FormBuilder = ({ form }) => {
     setData(newArr);
   };
 
-  // //Function to Handle Required
-  // const handleRequired = (id) => {
-  //   let newArr = data.map((el) => {
-  //     if (el.id === id) {
-  //       return { ...el, required: !el.required };
-  //     } else {
-  //       return el;
-  //     }
-  //   });
-  //   setData(newArr);
-  // };
-
   //Function to Handle Element Type
   const handleElType = (id, type) => {
     let newArr = data.map((el) => {
@@ -188,7 +176,6 @@ const FormBuilder = ({ form }) => {
 
   //Function to Change Option Values
   const handleOptionValues = (elId, optionId, optionVal) => {
-    // console.log({ optionId });
     let newArr = data.map((el) => {
       if (el.id === elId) {
         el?.options &&
@@ -240,7 +227,6 @@ const FormBuilder = ({ form }) => {
 
   //Render items
   const renderElements = ({ item }) => {
-    // console.log("item.id (in renderElements): ", item.id);
     switch (item.type) {
       case "radio":
         return (
@@ -249,7 +235,6 @@ const FormBuilder = ({ form }) => {
             questions={data}
             handleValue={handleValue}
             deleteEl={deleteEl}
-            // handleRequired={handleRequired}
             handleElType={handleElType}
             addOption={addOption}
             handleOptionValues={handleOptionValues}
@@ -277,7 +262,6 @@ const FormBuilder = ({ form }) => {
             <Grid
               container
               spacing={1}
-              // direction="column"
               justifyContent="center"
               alignItems="center"
             >

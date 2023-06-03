@@ -10,7 +10,6 @@ import {
   TextField,
   Tooltip,
 } from "@mui/material";
-// import uuid from 'react-uuid';
 import DeleteIcon from "@mui/icons-material/Delete";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 import { useTheme } from "@mui/system";
@@ -114,7 +113,7 @@ const ExistingQues = ({
                           >
                             <IconButton
                               aria-label="delete-option"
-                              onClick={() => deleteOption(_id, opt?._id)}
+                              onClick={() => deleteOption(_id, opt._id)}
                               sx={{ ml: 2 }}
                             >
                               <DeleteIcon
@@ -147,7 +146,7 @@ const ExistingQues = ({
                 >
                   <IconButton
                     aria-label="delete-element"
-                    onClick={() => deleteEl(ques?._id)}
+                    onClick={() => deleteEl(_id || id)}
                     sx={{ ml: 2 }}
                   >
                     <DeleteIcon sx={{ fontSize: "2em" }} color="secondary" />
