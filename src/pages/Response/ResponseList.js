@@ -10,15 +10,12 @@ import {
   useTheme,
 } from "@mui/material";
 import { MdExpandMore } from "react-icons/md";
-//eslint-disable-next-line
-import PieChart from "./PieChart";
 import { tokens } from "../../theme";
 
 const ResponseList = ({ responses }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
-    // sx={{ border: '2px solid red' }}
     <Grid item>
       {responses?.map((response, index) => (
         <Paper key={index} elevation={5} sx={{ marginBottom: "10px" }}>
@@ -60,11 +57,7 @@ const ResponseList = ({ responses }) => {
                 </Grid>
               </Grid>
             </AccordionSummary>
-            <Box
-              mb={2}
-              ml={2}
-              // sx={{ borderTop: `1px solid ${colors.primary[300]}` }}
-            >
+            <Box mb={2} ml={2}>
               <Typography
                 mb={2}
                 variant="h4"

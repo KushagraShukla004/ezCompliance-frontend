@@ -38,18 +38,10 @@ const UserList = () => {
   const colors = tokens(theme.palette.mode);
   const [search, setSearch] = useState("");
 
-  // const user = useSelector(selectUser);
-
-  // console.log('user: ', user);
-
   const { users, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
-  // console.log('users: ', users);
-
   const filteredUsers = useSelector(selectFilteredUsers);
-
-  // console.log(` filteredUsers:`, filteredUsers);
 
   useEffect(() => {
     if (isError) {
@@ -64,7 +56,6 @@ const UserList = () => {
   };
 
   const verifytheUser = async (id) => {
-    // console.log(`id (verifyAccount button) :`, id);
     await dispatch(verifyUser({ verificationToken: id }));
     await dispatch(RESET());
     dispatch(getUsers());
@@ -81,7 +72,6 @@ const UserList = () => {
         },
         {
           label: "Cancel",
-          // onClick: () => alert('Click No')
         },
       ],
     });
@@ -98,7 +88,6 @@ const UserList = () => {
         },
         {
           label: "Cancel",
-          // onClick: () => alert('Click No')
         },
       ],
     });
@@ -111,11 +100,6 @@ const UserList = () => {
   useEffect(() => {
     if (isError) {
       toast.error(message);
-    }
-
-    if (isSuccess) {
-      // toast.success("User Profile Fetched");
-      // console.log(users);
     }
 
     dispatch(RESET());

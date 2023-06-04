@@ -21,7 +21,6 @@ const deleteCategory = async (cat_id) => {
 };
 // Get a Category
 const editCategory = async (UpdatedCategoryData) => {
-  console.log(`UpdatedCategoryData in Category Service :`, UpdatedCategoryData);
   const category = await axios.patch(API_URL, UpdatedCategoryData);
   return category.data;
 };

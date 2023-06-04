@@ -77,7 +77,6 @@ const UserForms = () => {
       style={{
         marginLeft: "10vw",
         maxWidth: "80vw",
-        // border: "2px solid yellow",
       }}
     >
       <div className="--flex-between">

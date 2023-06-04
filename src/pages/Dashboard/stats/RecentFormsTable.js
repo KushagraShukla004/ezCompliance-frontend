@@ -1,33 +1,34 @@
-import { Box, IconButton, Tooltip, Typography, useTheme } from '@mui/material';
-import React, { useCallback, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Box, IconButton, Tooltip, Typography, useTheme } from "@mui/material";
+import React, { useCallback, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   getAllFormsofUser,
   getAllResponseForms,
-} from '../../../redux/features/form/formSlice';
-import { tokens } from '../../../theme';
+} from "../../../redux/features/form/formSlice";
+import { tokens } from "../../../theme";
 //icons
-import FileOpenIcon from '@mui/icons-material/FileOpen';
-import DescriptionIcon from '@mui/icons-material/Description';
-import { SpinnerImg } from '../../../components/loader/Loader';
+import FileOpenIcon from "@mui/icons-material/FileOpen";
+import DescriptionIcon from "@mui/icons-material/Description";
+import { SpinnerImg } from "../../../components/loader/Loader";
+import { selectUser } from "../../../redux/features/auth/authSlice";
 
 const RecentFormsTable = ({ isRole }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const user = useSelector(selectUser);
 
-  //eslint-disable-next-line
   const { forms, responses, isError, message, isLoading } = useSelector(
     (state) => state.form
   );
 
   useEffect(() => {
-    if (isRole === 'auditor') {
+    if (isRole === "auditor") {
       dispatch(getAllResponseForms());
     }
-    if (isRole === 'admin') {
+    if (isRole === "admin") {
       dispatch(getAllFormsofUser());
     }
     if (isError) {
@@ -37,7 +38,7 @@ const RecentFormsTable = ({ isRole }) => {
 
   const FormTable = useCallback(() => {
     switch (isRole) {
-      case 'auditor':
+      case "auditor":
         return (
           <>
             {responses?.length === 0 ? (
@@ -59,67 +60,70 @@ const RecentFormsTable = ({ isRole }) => {
                   return (
                     <Box
                       key={index}
-                      display='flex'
-                      justifyContent='space-between'
-                      alignItems='center'
+                      display="flex"
+                      justifyContent="space-between"
+                      alignItems="center"
                       borderBottom={`4px solid ${colors.primary[500]}`}
-                      p='20px'
+                      p="20px"
                     >
                       <Box>
                         <Typography
-                          variant='h4'
-                          fontWeight='600'
-                          color='secondary'
+                          variant="h4"
+                          fontWeight="600"
+                          color="secondary"
                         >
                           {resForm?.category}
                         </Typography>
-                        <Typography variant='h6' color={colors.grey[100]}>
+                        <Typography variant="h6" color={colors.grey[100]}>
                           Created By - <b>{resForm?.createdBy.name}</b>
+                        </Typography>
+                        <Typography variant="h6" color={colors.grey[100]}>
+                          Audited By - <b>{user?.name}</b>
                         </Typography>
                       </Box>
                       <Box>
-                        <Typography variant='h6' color={colors.grey[100]}>
+                        <Typography variant="h6" color={colors.grey[100]}>
                           D: {createdAt.slice(0, 10)}
                         </Typography>
-                        <Typography variant='h6' color={colors.grey[100]}>
+                        <Typography variant="h6" color={colors.grey[100]}>
                           T: {createdAt.slice(11, 19)}
                         </Typography>
                       </Box>
                       <Box
-                        display='flex'
-                        justifyContent='space-evenly'
-                        alignItems='center'
+                        display="flex"
+                        justifyContent="space-evenly"
+                        alignItems="center"
                       >
                         <Tooltip
                           title={
-                            <p style={{ color: 'white', fontSize: '1.5em' }}>
+                            <p style={{ color: "white", fontSize: "1.5em" }}>
                               Open Form
                             </p>
                           }
-                          aria-label='open-Form'
+                          aria-label="open-Form"
                         >
-                          <IconButton aria-label='open-Form' onClick={openForm}>
+                          <IconButton aria-label="open-Form" onClick={openForm}>
                             <FileOpenIcon
-                              sx={{ fontSize: '2em' }}
-                              color='secondary'
+                              sx={{ fontSize: "2em" }}
+                              color="secondary"
                             />
                           </IconButton>
                         </Tooltip>
                         <Tooltip
                           title={
-                            <p style={{ color: 'white', fontSize: '1.5em' }}>
+                            <p style={{ color: "white", fontSize: "1.5em" }}>
                               Open Response
                             </p>
                           }
-                          aria-label='open-Response'
+                          aria-label="open-Response"
                         >
                           <IconButton
-                            aria-label='open-Response'
+                            aria-label="open-Response"
                             onClick={showResponse}
                           >
                             <DescriptionIcon
-                              sx={{ fontSize: '2em' }}
-                              color='secondary'
+                              sx={{ fontSize: "2em" }}
+                              color="secondary"
                             />
                           </IconButton>
                         </Tooltip>
@@ -131,7 +135,7 @@ const RecentFormsTable = ({ isRole }) => {
             )}
           </>
         );
-      case 'admin':
+      case "admin":
         return (
           <>
             {forms?.length === 0 ? (
@@ -149,52 +153,52 @@ const RecentFormsTable = ({ isRole }) => {
                   return (
                     <Box
                       key={index}
-                      display='flex'
-                      justifyContent='space-between'
-                      alignItems='center'
+                      display="flex"
+                      justifyContent="space-between"
+                      alignItems="center"
                       borderBottom={`4px solid ${colors.primary[500]}`}
-                      p='20px'
+                      p="20px"
                     >
                       <Box>
                         <Typography
-                          variant='h4'
-                          fontWeight='600'
-                          color='secondary'
+                          variant="h4"
+                          fontWeight="600"
+                          color="secondary"
                         >
                           {category}
                         </Typography>
-                        <Typography variant='h6' color={colors.grey[100]}>
+                        <Typography variant="h6" color={colors.grey[100]}>
                           Created By - <b>{createdBy?.name}</b>
                         </Typography>
                       </Box>
                       <Box>
-                        <Typography variant='h6' color={colors.grey[100]}>
+                        <Typography variant="h6" color={colors.grey[100]}>
                           D: {createdAt.slice(0, 10)}
                         </Typography>
-                        <Typography variant='h6' color={colors.grey[100]}>
+                        <Typography variant="h6" color={colors.grey[100]}>
                           T: {createdAt.slice(11, 19)}
                         </Typography>
                       </Box>
                       <Box
-                        display='flex'
-                        justifyContent='space-evenly'
-                        alignItems='center'
+                        display="flex"
+                        justifyContent="space-evenly"
+                        alignItems="center"
                       >
                         <Tooltip
                           title={
-                            <p style={{ color: 'white', fontSize: '1.5em' }}>
+                            <p style={{ color: "white", fontSize: "1.5em" }}>
                               Open Form
                             </p>
                           }
-                          aria-label='open-Form'
+                          aria-label="open-Form"
                         >
                           <IconButton
-                            aria-label='open-Form'
+                            aria-label="open-Form"
                             onClick={showResponse}
                           >
                             <FileOpenIcon
-                              sx={{ fontSize: '2em' }}
-                              color='secondary'
+                              sx={{ fontSize: "2em" }}
+                              color="secondary"
                             />
                           </IconButton>
                         </Tooltip>

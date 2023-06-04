@@ -9,7 +9,6 @@ const filterSlice = createSlice({
   initialState,
   reducers: {
     FILTER_USERS(state, action) {
-      // console.log("action.payload in formFilter: ", action.payload);
       const { users, search } = action.payload;
 
       const tempUsers = users.filter(

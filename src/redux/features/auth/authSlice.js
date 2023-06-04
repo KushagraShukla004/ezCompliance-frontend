@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { toast } from 'react-toastify';
-import authService from './authService';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
+import authService from "./authService";
 
 const initialState = {
   isLoggedIn: false,
@@ -10,14 +10,14 @@ const initialState = {
   isError: false,
   isSuccess: false,
   isLoading: false,
-  message: '',
+  message: "",
   verifiedUsers: 0,
   suspendedUsers: 0,
 };
 
 // Register user
 export const register = createAsyncThunk(
-  'auth/register',
+  "auth/register",
   async (userData, thunkAPI) => {
     try {
       return await authService.register(userData);
@@ -35,7 +35,7 @@ export const register = createAsyncThunk(
 
 // Login user
 export const login = createAsyncThunk(
-  'auth/login',
+  "auth/login",
   async (userData, thunkAPI) => {
     try {
       return await authService.login(userData);
@@ -52,7 +52,7 @@ export const login = createAsyncThunk(
 );
 
 // Logout user
-export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
+export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   try {
     return await authService.logout();
   } catch (error) {
@@ -66,7 +66,7 @@ export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
 
 // Get Login Status
 export const getLoginStatus = createAsyncThunk(
-  'auth/loginStatus',
+  "auth/loginStatus",
   async (_, thunkAPI) => {
     try {
       return await authService.getLoginStatus();
@@ -83,7 +83,7 @@ export const getLoginStatus = createAsyncThunk(
 );
 
 // Get User
-export const getUser = createAsyncThunk('auth/getUser', async (_, thunkAPI) => {
+export const getUser = createAsyncThunk("auth/getUser", async (_, thunkAPI) => {
   try {
     return await authService.getUser();
   } catch (error) {
@@ -97,7 +97,7 @@ export const getUser = createAsyncThunk('auth/getUser', async (_, thunkAPI) => {
 
 // Update User
 export const updateUser = createAsyncThunk(
-  'auth/updateUser',
+  "auth/updateUser",
   async (userData, thunkAPI) => {
     try {
       return await authService.updateUser(userData);
@@ -115,7 +115,7 @@ export const updateUser = createAsyncThunk(
 
 // Send Verification Email
 export const sendVerificationEmail = createAsyncThunk(
-  'auth/sendVerificationEmail',
+  "auth/sendVerificationEmail",
   async (_, thunkAPI) => {
     try {
       return await authService.sendVerificationEmail();
@@ -133,7 +133,7 @@ export const sendVerificationEmail = createAsyncThunk(
 
 // Verify User
 export const verifyUser = createAsyncThunk(
-  'auth/verifyUser',
+  "auth/verifyUser",
   async (verificationToken, thunkAPI) => {
     try {
       return await authService.verifyUser(verificationToken);
@@ -151,7 +151,7 @@ export const verifyUser = createAsyncThunk(
 
 // Change Password
 export const changePassword = createAsyncThunk(
-  'auth/changePassword',
+  "auth/changePassword",
   async (userData, thunkAPI) => {
     try {
       return await authService.changePassword(userData);
@@ -169,7 +169,7 @@ export const changePassword = createAsyncThunk(
 
 // Forgot Password
 export const forgotPassword = createAsyncThunk(
-  'auth/forgot',
+  "auth/forgot",
   async (userData, thunkAPI) => {
     try {
       return await authService.forgotPassword(userData);
@@ -187,7 +187,7 @@ export const forgotPassword = createAsyncThunk(
 
 // Get Users
 export const getUsers = createAsyncThunk(
-  'auth/getUsers',
+  "auth/getUsers",
   async (_, thunkAPI) => {
     try {
       return await authService.getUsers();
@@ -205,7 +205,7 @@ export const getUsers = createAsyncThunk(
 
 // Reset Password
 export const resetPassword = createAsyncThunk(
-  'auth/reset',
+  "auth/reset",
   async ({ userData, resetToken }, thunkAPI) => {
     try {
       return await authService.resetPassword(userData, resetToken);
@@ -223,7 +223,7 @@ export const resetPassword = createAsyncThunk(
 
 // Delete User
 export const deleteUser = createAsyncThunk(
-  'auth/deleteUser',
+  "auth/deleteUser",
   async (id, thunkAPI) => {
     try {
       return await authService.deleteUser(id);
@@ -241,7 +241,7 @@ export const deleteUser = createAsyncThunk(
 
 // Upgrade user
 export const upgradeUser = createAsyncThunk(
-  'auth/upgradeUser',
+  "auth/upgradeUser",
   async (userData, thunkAPI) => {
     try {
       return await authService.upgradeUser(userData);
@@ -259,7 +259,7 @@ export const upgradeUser = createAsyncThunk(
 
 // Send Login Code
 export const sendLoginCode = createAsyncThunk(
-  'auth/sendLoginCode',
+  "auth/sendLoginCode",
   async (email, thunkAPI) => {
     try {
       return await authService.sendLoginCode(email);
@@ -277,7 +277,7 @@ export const sendLoginCode = createAsyncThunk(
 
 // Login With Code
 export const loginWithCode = createAsyncThunk(
-  'auth/loginWithCode',
+  "auth/loginWithCode",
   async ({ code, email }, thunkAPI) => {
     try {
       return await authService.loginWithCode(code, email);
@@ -294,7 +294,7 @@ export const loginWithCode = createAsyncThunk(
 );
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     RESET(state) {
@@ -302,7 +302,7 @@ const authSlice = createSlice({
       state.isError = false;
       state.isSuccess = false;
       state.isLoading = false;
-      state.message = '';
+      state.message = "";
     },
     CALC_VERIFIED_USER(state, action) {
       const array = [];
@@ -327,7 +327,7 @@ const authSlice = createSlice({
       });
       let count = 0;
       array.forEach((item) => {
-        if (item === 'suspended') {
+        if (item === "suspended") {
           count += 1;
         }
       });
@@ -346,8 +346,7 @@ const authSlice = createSlice({
         state.isSuccess = true;
         state.isLoggedIn = true;
         state.user = action.payload;
-        toast.success('Registration Successful');
-        // console.log('Registration payload', action.payload);
+        toast.success("Registration Successful");
       })
       .addCase(register.rejected, (state, action) => {
         state.isLoading = false;
@@ -365,7 +364,7 @@ const authSlice = createSlice({
         state.isSuccess = true;
         state.isLoggedIn = true;
         state.user = action.payload;
-        toast.success('Login successfully');
+        toast.success("Login successfully");
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
@@ -373,8 +372,7 @@ const authSlice = createSlice({
         state.message = action.payload;
         state.user = null;
         toast.error(action.payload);
-        // console.log(action.payload);
-        if (action.payload.includes('New browser')) {
+        if (action.payload.includes("New browser")) {
           state.twoFactor = true;
         }
       })
@@ -432,7 +430,7 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.user = action.payload;
-        toast.success('User Updated');
+        toast.success("User Updated");
       })
       .addCase(updateUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -594,7 +592,7 @@ const authSlice = createSlice({
         state.isLoggedIn = true;
         state.twoFactor = false;
         state.user = action.payload;
-        toast.success('Login successfully');
+        toast.success("Login successfully");
       })
       .addCase(loginWithCode.rejected, (state, action) => {
         state.isLoading = false;

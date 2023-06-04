@@ -17,7 +17,6 @@ const initialState = {
 export const createForm = createAsyncThunk(
   "forms/create",
   async (formData, thunkAPI) => {
-    // console.log("formData in formSlice: ", formData);
     try {
       return await formService.createForm(formData);
     } catch (error) {
@@ -89,7 +88,6 @@ export const getFormById = createAsyncThunk(
 export const deleteForm = createAsyncThunk(
   "forms/deleteForm",
   async (formId, thunkAPI) => {
-    console.log(`formId in formSlice:`, formId);
     try {
       return await formService.deleteForm(formId);
     } catch (error) {
@@ -126,7 +124,6 @@ export const editForm = createAsyncThunk(
 export const submitResponse = createAsyncThunk(
   "responses/submitResponse",
   async (responseData, thunkAPI) => {
-    console.log(`responseData in formSlice:`, responseData);
     try {
       return await formService.submitResponse(responseData);
     } catch (error) {
@@ -231,7 +228,6 @@ const formSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
-        // console.log('forms:', action.payload);
         state.forms = action.payload;
       })
       .addCase(getAllFormsofUser.rejected, (state, action) => {

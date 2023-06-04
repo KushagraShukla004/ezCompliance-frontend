@@ -25,7 +25,6 @@ const UserResponses = () => {
     (state) => state.form
   );
 
-  // console.log(`responses :`, responses);
   useEffect(() => {
     if (isLoggedIn === true) {
       dispatch(getAllResponseForms());
@@ -41,7 +40,6 @@ const UserResponses = () => {
         marginLeft: "10vw",
         maxWidth: "80vw",
         maxHeight: "40vh",
-        // border: '2px solid black',
       }}
     >
       {isLoading && <SpinnerImg />}

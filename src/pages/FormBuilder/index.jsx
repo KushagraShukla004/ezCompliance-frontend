@@ -62,10 +62,7 @@ const FormBuilder = ({ form }) => {
 
   const items = data;
 
-  console.log("data in index.js FormBuilder", data);
   const { categories } = useSelector((state) => state.category);
-
-  // console.log(`category :`, category);
 
   useEffect(() => {
     dispatch(getAllCategories());
@@ -75,7 +72,6 @@ const FormBuilder = ({ form }) => {
     setCategory(e.target.value);
   };
 
-  // console.log('data: ', data);
   useEffect(() => {
     if (form !== undefined) {
       if (form?.questions.length !== 0) {

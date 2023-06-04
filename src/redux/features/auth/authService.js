@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 export const API_URL = `${BACKEND_URL}/api/users/`;
@@ -15,40 +15,44 @@ export const validatePhone = (phone) => {
   );
 };
 
+export const validateID = (empId) => {
+  return empId.match(/^[0-9]{0,4}$/);
+};
+
 // Register User
 const register = async (userData) => {
-  const response = await axios.post(API_URL + 'register', userData);
+  const response = await axios.post(API_URL + "register", userData);
   return response.data;
 };
 
 // Login user
 const login = async (userData) => {
-  const response = await axios.post(API_URL + 'login', userData);
+  const response = await axios.post(API_URL + "login", userData);
 
   return response.data;
 };
 
 // Logout user
 const logout = async () => {
-  const response = await axios.get(API_URL + 'logout');
+  const response = await axios.get(API_URL + "logout");
   return response.data.message;
 };
 
 // Get Login Status
 const getLoginStatus = async () => {
-  const response = await axios.get(API_URL + 'loginStatus');
+  const response = await axios.get(API_URL + "loginStatus");
   return response.data;
 };
 
 // // Get User Profile
 const getUser = async () => {
-  const response = await axios.get(API_URL + 'getUser');
+  const response = await axios.get(API_URL + "getUser");
   return response.data;
 };
 
 // Forgot Password
 const forgotPassword = async (userData) => {
-  const response = await axios.post(API_URL + 'forgotPassword', userData);
+  const response = await axios.post(API_URL + "forgotPassword", userData);
   return response.data.message;
 };
 
@@ -63,31 +67,31 @@ const resetPassword = async (userData, resetToken) => {
 
 // Send Verification Email
 const sendVerificationEmail = async () => {
-  const response = await axios.post(API_URL + 'sendVerificationEmail');
+  const response = await axios.post(API_URL + "sendVerificationEmail");
   return response.data.message;
 };
 
 // Verify User
 const verifyUser = async (verificationToken) => {
   const response = await axios.patch(API_URL, verificationToken);
-  console.log(`response(in verifyUser authService) :`, response);
   return response.data.message;
 };
+
 // Update User
 const updateUser = async (userData) => {
-  const response = await axios.patch(API_URL + 'updateUser', userData);
+  const response = await axios.patch(API_URL + "updateUser", userData);
   return response.data;
 };
 
 // Change Password
 const changePassword = async (userData) => {
-  const response = await axios.patch(API_URL + 'changePassword', userData);
+  const response = await axios.patch(API_URL + "changePassword", userData);
   return response.data.message;
 };
 
 // Get Users
 const getUsers = async () => {
-  const response = await axios.get(API_URL + 'getUsers');
+  const response = await axios.get(API_URL + "getUsers");
   return response.data;
 };
 
@@ -99,13 +103,13 @@ const deleteUser = async (id) => {
 
 // upgrade user
 const upgradeUser = async (userData) => {
-  const response = await axios.post(API_URL + 'upgrade', userData);
+  const response = await axios.post(API_URL + "upgrade", userData);
   return response.data;
 };
 
 // sendAutomatedEmail
 const sendAutomatedEmail = async (userData) => {
-  const response = await axios.post(API_URL + 'sendAutomatedEmail', userData);
+  const response = await axios.post(API_URL + "sendAutomatedEmail", userData);
   return response.data.message;
 };
 

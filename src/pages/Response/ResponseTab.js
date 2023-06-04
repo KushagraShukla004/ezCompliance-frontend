@@ -1,20 +1,11 @@
-// eslint-disable-next-line
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./ResponseTab.scss";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getResponse,
-  // eslint-disable-next-line
-  selectResponse,
-} from "../../redux/features/form/formSlice";
+import { getResponse } from "../../redux/features/form/formSlice";
 import { selectIsLoggedIn } from "../../redux/features/auth/authSlice";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { SpinnerImg } from "../../components/loader/Loader";
-// eslint-disable-next-line
-import { shortenText } from "../profile/Profile";
-// import PieChart from './PieChart';
-// eslint-disable-next-line
-import { Box, Grid, Paper, Typography, useTheme } from "@mui/material";
+import { Grid, Typography, useTheme } from "@mui/material";
 import ResponseList from "./ResponseList";
 import { tokens } from "../../theme";
 import useRedirectLoggedOutUser from "../../customHook/useRedirectLoggedOutUser";
@@ -45,7 +36,6 @@ const ResponseTab = () => {
     <section>
       <div className="container">
         <Grid container direction="column" alignItems="center">
-          {/* style={{ border: '2px solid red' }} */}
           <div className="--flex-center --mb2">
             {response?.map((response, index) => {
               return (

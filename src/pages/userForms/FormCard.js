@@ -30,8 +30,6 @@ const FormCard = ({ forms, responses, user }) => {
   const EmpDetails = useSelector(selectEmpDetails);
   const [employeeData, setEmployeeData] = useState({});
 
-  // console.log(`EmpDetails in FormCard:`, employeeData);
-
   useEffect(() => {
     setEmployeeData(EmpDetails);
   }, [EmpDetails]);
@@ -84,13 +82,13 @@ const FormCard = ({ forms, responses, user }) => {
                 const { _id, category, createdBy, createdAt, updatedAt } = form;
 
                 const openForm = () => {
-                  if (
-                    userRole?.role !== "auditor" &&
-                    employeeData.length !== 0
-                  ) {
-                    navigate(`/forms/form/${_id}`);
+                  if (userRole?.role === "auditor") {
+                    if (Object.keys(employeeData).length !== 0) {
+                      navigate(`/forms/form/${_id}`);
+                    } else {
+                      toast.error("Please Fill the Employee Details First.");
+                    }
                   } else {
-                    toast.error("Please Fill the Employee Details First.");
                     navigate("/creatingResponse");
                   }
                 };
@@ -206,9 +204,6 @@ const FormCard = ({ forms, responses, user }) => {
                           openForm={openForm}
                           showResponse={showResponse}
                           copyToClipboard={() => copyToClipboard(_id)}
-                          // deleteForm={() =>
-                          //   confirmDelete(_id.toString(), category)
-                          // }
                         />
                       </div>
                     </Card>

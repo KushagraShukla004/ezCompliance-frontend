@@ -40,11 +40,9 @@ const AllForms = () => {
     if (isLoggedIn === true) {
       dispatch(getAllForms());
     }
-    // setAlltheForms(forms);
     if (isError) {
       console.log(message);
     }
-    //eslint-disable-next-line
   }, [isLoggedIn, isError, message, dispatch]);
 
   useEffect(() => {

@@ -1,23 +1,21 @@
-import React, { useLayoutEffect, useState } from 'react';
-import './Profile.scss';
-import Card from '../../components/card/Card';
-import PageMenu from '../../components/pageMenu/PageMenu';
-import useRedirectLoggedOutUser from '../../customHook/useRedirectLoggedOutUser';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useLayoutEffect, useState } from "react";
+import "./Profile.scss";
+import Card from "../../components/card/Card";
+import PageMenu from "../../components/pageMenu/PageMenu";
+import useRedirectLoggedOutUser from "../../customHook/useRedirectLoggedOutUser";
+import { useDispatch, useSelector } from "react-redux";
 // import { useNavigate } from 'react-router-dom';
-import { getUser, updateUser } from '../../redux/features/auth/authSlice';
-import { toast } from 'react-toastify';
-import Loader from '../../components/loader/Loader';
-import Notification from '../../components/notification/Notification';
-import { useTheme } from '@mui/material';
-import { tokens } from '../../theme';
-import { validatePhone } from '../../redux/features/auth/authService';
+import { getUser, updateUser } from "../../redux/features/auth/authSlice";
+import { toast } from "react-toastify";
+import Loader from "../../components/loader/Loader";
+import Notification from "../../components/notification/Notification";
+import { useTheme } from "@mui/material";
+import { tokens } from "../../theme";
+import { validatePhone } from "../../redux/features/auth/authService";
 
 export const shortenText = (text, n) => {
-  // console.log('text: ', text);
-  // console.log('n: ', n);
   if (text?.length > n) {
-    const shortenedText = text.substring(0, n).concat('...');
+    const shortenedText = text.substring(0, n).concat("...");
     return shortenedText;
   }
   return text;
@@ -26,7 +24,7 @@ export const shortenText = (text, n) => {
 const Profile = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  useRedirectLoggedOutUser('/login');
+  useRedirectLoggedOutUser("/login");
   const dispatch = useDispatch();
   // const navigate = useNavigate();
 
@@ -48,7 +46,7 @@ const Profile = () => {
   const [imagePreview, setImagePreview] = useState(null);
 
   const cloud_name = process.env.REACT_APP_CLOUD_NAME;
-  const upload_preset = 'ecompliance_upload';
+  const upload_preset = "ecompliance_upload";
 
   const handleInputChange = (e) => {
     //this is to target data we putting in name and value attribute in input field
@@ -68,26 +66,26 @@ const Profile = () => {
     try {
       if (
         profileImage !== null &&
-        (profileImage.type === 'image/jpeg' ||
-          profileImage.type === 'image/jpg' ||
-          profileImage.type === 'image/png')
+        (profileImage.type === "image/jpeg" ||
+          profileImage.type === "image/jpg" ||
+          profileImage.type === "image/png")
       ) {
         const image = new FormData();
-        image.append('file', profileImage);
-        image.append('cloud_name', cloud_name);
-        image.append('upload_preset', upload_preset);
+        image.append("file", profileImage);
+        image.append("cloud_name", cloud_name);
+        image.append("upload_preset", upload_preset);
 
         // Save the image to Cloudinary
         const response = await fetch(
           `https://api.cloudinary.com/v1_1/ecompliance/image/upload`,
-          { method: 'post', body: image }
+          { method: "post", body: image }
         );
         const imgData = await response.json();
-        console.log('Img Data: ', imgData);
+        console.log("Img Data: ", imgData);
         imageURL = imgData.url;
       }
       if (!validatePhone(profile?.phone)) {
-        return toast.error('Please enter a valid Phone Number');
+        return toast.error("Please enter a valid Phone Number");
       }
       // Save Profile To DB
       const userData = {
@@ -128,24 +126,24 @@ const Profile = () => {
     <>
       {!profile.isVerified && <Notification />}
       <section>
-        <div className='container'>
+        <div className="container">
           <PageMenu />
           <h2
-            className='--flex-center'
+            className="--flex-center"
             style={{ color: `${colors.grey[100]}` }}
           >
             Profile
           </h2>
-          <div className='--flex-center profile'>
-            <Card cardClass={'card'}>
+          <div className="--flex-center profile">
+            <Card cardClass={"card"}>
               {isLoading && <Loader />}
               {!isLoading && user && (
                 <>
-                  <div className='profile-photo'>
+                  <div className="profile-photo">
                     <div>
                       <img
                         src={imagePreview === null ? user?.photo : imagePreview}
-                        alt='Profileimg'
+                        alt="Profileimg"
                       />
                       <h3>Role : {profile.role}</h3>
                     </div>
@@ -155,17 +153,17 @@ const Profile = () => {
                     <p>
                       <label>Change Photo:</label>
                       <input
-                        type='file'
-                        accept='image/*'
-                        name='image'
+                        type="file"
+                        accept="image/*"
+                        name="image"
                         onChange={handleImageChange}
                       />
                     </p>
                     <p>
                       <label>Name:</label>
                       <input
-                        type='text'
-                        name='name'
+                        type="text"
+                        name="name"
                         value={profile?.name}
                         onChange={handleInputChange}
                       />
@@ -173,8 +171,8 @@ const Profile = () => {
                     <p>
                       <label>Designation:</label>
                       <input
-                        type='text'
-                        name='designation'
+                        type="text"
+                        name="designation"
                         value={profile?.designation}
                         onChange={handleInputChange}
                       />
@@ -182,8 +180,8 @@ const Profile = () => {
                     <p>
                       <label>Email:</label>
                       <input
-                        type='text'
-                        name='name'
+                        type="text"
+                        name="name"
                         value={profile?.email}
                         onChange={handleInputChange}
                         disabled
@@ -192,8 +190,8 @@ const Profile = () => {
                     <p>
                       <label>Phone:</label>
                       <input
-                        type='text'
-                        name='phone'
+                        type="text"
+                        name="phone"
                         value={profile?.phone}
                         onChange={handleInputChange}
                       />
@@ -201,14 +199,14 @@ const Profile = () => {
                     <p>
                       <label>Bio:</label>
                       <textarea
-                        name='bio'
+                        name="bio"
                         value={profile?.bio}
                         onChange={handleInputChange}
-                        cols='30'
-                        rows='10'
+                        cols="30"
+                        rows="10"
                       ></textarea>
                     </p>
-                    <button className='--btn --btn-block --btn-primary'>
+                    <button className="--btn --btn-block --btn-primary">
                       Update Profile
                     </button>
                   </form>
@@ -225,8 +223,8 @@ const Profile = () => {
 export const UserName = () => {
   const { user } = useSelector((state) => state.auth);
 
-  const username = user?.name || '...';
-  return <p className='--color-white'>Hi, {shortenText(username, 10)} |</p>;
+  const username = user?.name || "...";
+  return <p className="--color-white">Hi, {shortenText(username, 10)} |</p>;
 };
 
 export default Profile;

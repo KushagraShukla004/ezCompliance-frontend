@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import resourceService from './resourceService';
-import { toast } from 'react-toastify';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import resourceService from "./resourceService";
+import { toast } from "react-toastify";
 
 const initialState = {
   resource: null,
@@ -8,13 +8,13 @@ const initialState = {
   isError: false,
   isSuccess: false,
   isLoading: false,
-  message: '',
+  message: "",
   // category: [],
 };
 
 // Create New Resource
 export const createResource = createAsyncThunk(
-  'resources/create',
+  "resources/create",
   async (ResourceData, thunkAPI) => {
     try {
       return await resourceService.createResource(ResourceData);
@@ -32,7 +32,7 @@ export const createResource = createAsyncThunk(
 
 //get all Resources
 export const getAllResources = createAsyncThunk(
-  'resources/getAllResources',
+  "resources/getAllResources",
   async (_, thunkAPI) => {
     try {
       return await resourceService.getAllResources();
@@ -50,7 +50,7 @@ export const getAllResources = createAsyncThunk(
 
 //get all Resources of User
 export const getAllUserResources = createAsyncThunk(
-  'resources/getAllUserResources',
+  "resources/getAllUserResources",
   async (_, thunkAPI) => {
     try {
       return await resourceService.getAllUserResources();
@@ -67,7 +67,7 @@ export const getAllUserResources = createAsyncThunk(
 );
 
 export const getResourceById = createAsyncThunk(
-  'resources/getResourceById',
+  "resources/getResourceById",
   async (res_id, thunkAPI) => {
     try {
       return await resourceService.getResourceById(res_id);
@@ -84,14 +84,14 @@ export const getResourceById = createAsyncThunk(
 );
 
 const resourceSlice = createSlice({
-  name: 'resource',
+  name: "resource",
   initialState,
   reducers: {
     RESET(state) {
       state.isError = false;
       state.isSuccess = false;
       state.isLoading = false;
-      state.message = '';
+      state.message = "";
     },
   },
   extraReducers: (builder) => {
@@ -104,11 +104,8 @@ const resourceSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.isLoggedIn = true;
-        // console.log(`action.payload :`, action.payload);
         state.resources.push(action.payload);
-        // console.log(`resource resourceSlice :`, state.resource);
-        toast.success('Reasource added Successful');
-        // console.log('Registration payload', action.payload);
+        toast.success("Reasource added Successful");
       })
       .addCase(createResource.rejected, (state, action) => {
         state.isLoading = false;
@@ -141,10 +138,6 @@ const resourceSlice = createSlice({
         state.isSuccess = true;
         state.isError = false;
         state.resources = action.payload;
-        // console.log(
-        //   'getAllUserResources Resource (in extraReducers/state.Resources): ',
-        //   state.resources.push(action.payload)
-        // );
       })
       .addCase(getAllUserResources.rejected, (state, action) => {
         state.isLoading = false;
@@ -161,10 +154,6 @@ const resourceSlice = createSlice({
         state.isSuccess = true;
         state.isError = false;
         state.resource = action.payload;
-        // console.log(
-        //   'getResourceById Resource (in extraReducers/state.Resources): ',
-        //   state.resource.push(action.payload)
-        // );
       })
       .addCase(getResourceById.rejected, (state, action) => {
         state.isLoading = false;

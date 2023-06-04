@@ -9,7 +9,6 @@ const EmployeeDetailsSlice = createSlice({
   initialState,
   reducers: {
     ADD_EMP_DETAILS: (state, action) => {
-      console.log(`action.payload in ADD_EMP_DETAILS:`, action.payload);
       state.emp_Details = action.payload;
     },
   },

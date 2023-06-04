@@ -12,8 +12,10 @@ import Header from "./Header";
 import { MdAddCircle } from "react-icons/md";
 import ExistingQues from "./ExistingQues";
 import ErrorPage from "../ErrorPage";
+import useRedirectLoggedOutUser from "../../customHook/useRedirectLoggedOutUser";
 
 const EditForm = () => {
+  useRedirectLoggedOutUser("/login");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { formId } = useParams();
@@ -30,8 +32,6 @@ const EditForm = () => {
   const [formData, setFormData] = useState({});
   const [category, setCategory] = useState("");
   const [optionText, setOptionText] = useState("");
-
-  // console.log(`data in index.js EditForm:`, data);
 
   useEffect(() => {
     if (form !== undefined) {

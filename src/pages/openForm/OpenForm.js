@@ -73,8 +73,7 @@ const OpenForm = () => {
     if (isError) {
       console.log(message);
     }
-    //eslint-disable-next-line
-  }, [isLoggedIn, isError, message, dispatch]);
+  }, [isLoggedIn, isError, message, formId, dispatch]);
 
   const handleOptionChange = (event, i) => {
     const questionId = questions[i]._id;
@@ -365,65 +364,66 @@ const OpenForm = () => {
                 </AccordionDetails>
               </Accordion>
             </Paper>
-            {userRole?.role === "auditor" && employeeData.length === 0 && (
-              <>
-                <Paper elevation={10}>
-                  <Accordion>
-                    <AccordionSummary
-                      expandIcon={<MdExpandMore />}
-                      sx={{
-                        fontFamily: "Poppins",
-                        fontSize: 15,
-                        fontWeight: 600,
-                        backgroundColor: `${colors.primary[400]}`,
-                        borderRadius: "5px 5px 0 0",
-                      }}
-                    >
-                      Created For:
-                    </AccordionSummary>
-                    <AccordionDetails
-                      sx={{
-                        backgroundColor: `${colors.primary[400]}`,
-                        borderRadius: "0 0 5px 5px",
-                      }}
-                    >
-                      <Typography
-                        noWrap
-                        marginBottom="2em"
-                        fontSize={15}
-                        color={colors.grey[100]}
+            {userRole?.role === "auditor" &&
+              Object.keys(employeeData).length !== 0 && (
+                <>
+                  <Paper elevation={10}>
+                    <Accordion>
+                      <AccordionSummary
+                        expandIcon={<MdExpandMore />}
+                        sx={{
+                          fontFamily: "Poppins",
+                          fontSize: 15,
+                          fontWeight: 600,
+                          backgroundColor: `${colors.primary[400]}`,
+                          borderRadius: "5px 5px 0 0",
+                        }}
                       >
-                        ID: <b>{employeeData?.empId}</b>
-                      </Typography>
-                      <Typography
-                        noWrap
-                        marginBottom="2em"
-                        fontSize={15}
-                        color={colors.grey[100]}
+                        Created For:
+                      </AccordionSummary>
+                      <AccordionDetails
+                        sx={{
+                          backgroundColor: `${colors.primary[400]}`,
+                          borderRadius: "0 0 5px 5px",
+                        }}
                       >
-                        Name: <b>{employeeData?.name}</b>
-                      </Typography>
-                      <Typography
-                        noWrap
-                        marginBottom="2em"
-                        fontSize={15}
-                        color={colors.grey[100]}
-                      >
-                        Email: <b>{employeeData?.email}</b>
-                      </Typography>
-                      <Typography
-                        noWrap
-                        marginBottom="2em"
-                        fontSize={15}
-                        color={colors.grey[100]}
-                      >
-                        Role: <b>{employeeData?.designation}</b>
-                      </Typography>
-                    </AccordionDetails>
-                  </Accordion>
-                </Paper>
-              </>
-            )}
+                        <Typography
+                          noWrap
+                          marginBottom="2em"
+                          fontSize={15}
+                          color={colors.grey[100]}
+                        >
+                          ID: <b>{employeeData?.empId}</b>
+                        </Typography>
+                        <Typography
+                          noWrap
+                          marginBottom="2em"
+                          fontSize={15}
+                          color={colors.grey[100]}
+                        >
+                          Name: <b>{employeeData?.name}</b>
+                        </Typography>
+                        <Typography
+                          noWrap
+                          marginBottom="2em"
+                          fontSize={15}
+                          color={colors.grey[100]}
+                        >
+                          Email: <b>{employeeData?.email}</b>
+                        </Typography>
+                        <Typography
+                          noWrap
+                          marginBottom="2em"
+                          fontSize={15}
+                          color={colors.grey[100]}
+                        >
+                          Role: <b>{employeeData?.designation}</b>
+                        </Typography>
+                      </AccordionDetails>
+                    </Accordion>
+                  </Paper>
+                </>
+              )}
           </div>
         </div>
       )}

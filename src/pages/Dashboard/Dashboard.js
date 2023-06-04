@@ -9,10 +9,7 @@ import {
 } from "@mui/material";
 import { tokens } from "../../theme";
 import "./Dashboard.scss";
-//eslint-disable-next-line
-import UserResponses from "../userResponses/UserResponses";
 import DownloadIcon from "@mui/icons-material/Download";
-// import Search from '../../components/search/Search';
 import { BiSearch } from "react-icons/bi";
 import TrafficIcon from "@mui/icons-material/Traffic";
 import RecentFormsTable from "./stats/RecentFormsTable";
@@ -27,11 +24,11 @@ import EmployeeStats from "./stats/EmployeeStats";
 import StatBox from "./stats/StatBox";
 
 const Dashboard = () => {
+  useRedirectLoggedOutUser("/login");
   const navigate = useNavigate();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const user = useSelector(selectUser);
-  useRedirectLoggedOutUser("/login");
 
   const createResponse = () => {
     navigate("/creatingResponse");
@@ -219,16 +216,6 @@ const Dashboard = () => {
                 </Typography>
               </Box>
             )}
-            {/* <Box component={NavLink} to='/responses'>
-              <Typography
-                noWrap
-                variant='h6'
-                fontWeight='600'
-                color={colors.grey[100]}
-              >
-                All
-              </Typography>
-            </Box> */}
             {/* SEARCH BAR */}
             <Box
               display="flex"

@@ -32,8 +32,6 @@ const CategoryList = () => {
 
   const { categories, isLoading } = useSelector((state) => state.category);
 
-  // console.log(`categories :`, categories);
-
   useEffect(() => {
     dispatch(getAllCategories());
   }, [dispatch]);

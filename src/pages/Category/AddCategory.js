@@ -24,7 +24,6 @@ const AddCategory = () => {
   const user = useSelector(selectUser);
   const [newCategory, setNewCategory] = useState("");
 
-  // console.log(`newCategory :`, newCategory);
   const Cat_handleInputChange = (e) => {
     e.preventDefault();
     const categoryValue = e.target.value;

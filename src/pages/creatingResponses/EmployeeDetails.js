@@ -14,6 +14,11 @@ import { useDispatch } from "react-redux";
 import { tokens } from "../../theme";
 import { ADD_EMP_DETAILS } from "../../redux/features/form/EmployeeDetailsSlice";
 import useRedirectLoggedOutUser from "../../customHook/useRedirectLoggedOutUser";
+import {
+  validateEmail,
+  validateID,
+} from "../../redux/features/auth/authService";
+import { toast } from "react-toastify";
 
 const Emp_initialState = {
   empId: "",
@@ -44,6 +49,19 @@ const EmployeeDetails = () => {
   };
 
   const saveAuditorData = async () => {
+    if (
+      !(
+        employee?.empId &&
+        employee?.name &&
+        employee?.email &&
+        employee?.designation
+      )
+    ) {
+      return toast.error("All fields are required");
+    }
+    if (!validateEmail(employee?.email) || !validateID(employee?.empId)) {
+      return toast.error("Please enter a valid email employee ID");
+    }
     await dispatch(ADD_EMP_DETAILS(employee));
     setOpen(false);
   };

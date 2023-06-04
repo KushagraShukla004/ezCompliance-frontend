@@ -48,7 +48,6 @@ const CreateResponse = () => {
 
   const { categories } = useSelector((state) => state.category);
 
-  // console.log(`categories :`, categories);
   useEffect(() => {
     dispatch(getAllCategories());
   }, [dispatch]);
@@ -57,14 +56,12 @@ const CreateResponse = () => {
     (state) => state.form
   );
 
-  // console.log(`forms in creatingResponse:`, forms);
   const filteredForms = useSelector(selectFilteredForms);
 
   useEffect(() => {
     if (isLoggedIn === true) {
       dispatch(getAllForms());
     }
-    // setAlltheForms(forms);
     if (isError) {
       console.log(message);
     }
