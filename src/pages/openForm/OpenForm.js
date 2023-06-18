@@ -75,11 +75,67 @@ const OpenForm = () => {
     }
   }, [isLoggedIn, isError, message, formId, dispatch]);
 
+  const handleRemarkValue = (id, e) => {
+    const updatedQuestions = questions.map((ques) => {
+      if (ques._id === id) {
+        return { ...ques, remarkText: e.target.value };
+      }
+      return ques;
+    });
+
+    setQuestions(updatedQuestions);
+
+    const updatedData = responseData.map((response) => {
+      const question = updatedQuestions.find(
+        (ques) => ques._id === response.questionId
+      );
+
+      const { _id: questionId, questionText, options, remarkText } = question;
+      const selectedOption = options.find(
+        (opt) => opt.optionId === question.optionId
+      );
+      const { optionId, optionText } = selectedOption || {};
+
+      if (optionId && remarkText) {
+        return {
+          questionId,
+          questionText,
+          optionId,
+          optionText,
+          remarkText,
+        };
+      } else if (optionId) {
+        return {
+          questionId,
+          questionText,
+          optionId,
+          optionText,
+        };
+      } else if (remarkText) {
+        return {
+          questionId,
+          questionText,
+          remarkText,
+        };
+      } else {
+        return {
+          questionId,
+          questionText,
+        };
+      }
+    });
+
+    setResponseData(updatedData);
+  };
+
   const handleOptionChange = (event, i) => {
     const questionId = questions[i]._id;
     const questionText = questions?.find(
       (question) => question._id === questionId
     )?.questionText;
+    const remarkText = questions?.find(
+      (question) => question._id === questionId
+    )?.remarkText;
     const optionText = questions[i].options[event].optionText;
     const optionId = questions[i].options[event]._id;
 
@@ -91,6 +147,7 @@ const OpenForm = () => {
       questionText,
       optionId,
       optionText,
+      remarkText,
     });
     setResponseData(updatedResponseData);
   };
@@ -258,6 +315,10 @@ const OpenForm = () => {
                                       name="remark"
                                       id={i}
                                       rows="5"
+                                      defaultValue={ques?.remarkText}
+                                      onBlur={(e) =>
+                                        handleRemarkValue(ques?._id, e)
+                                      }
                                       style={{
                                         color: `${colors.grey[100]}`,
                                         backgroundColor: `${colors.primary[500]}`,
@@ -294,6 +355,7 @@ const OpenForm = () => {
                       onClick={onSubmitResponse}
                       variant="contained"
                       sx={{
+                        color: "white",
                         backgroundColor: `${colors.blueAccent[500]}`,
                         fontSize: 15,
                         transition: "all 0.3s",
@@ -337,6 +399,14 @@ const OpenForm = () => {
                     borderRadius: "0 0 5px 5px",
                   }}
                 >
+                  <Typography
+                    noWrap
+                    marginBottom="2em"
+                    fontSize={15}
+                    color={colors.grey[100]}
+                  >
+                    ID: <b>{createdByData?.emp_Id}</b>
+                  </Typography>
                   <Typography
                     noWrap
                     marginBottom="2em"

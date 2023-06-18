@@ -209,6 +209,7 @@ const FormBuilder = ({ form }) => {
       createForm({
         createdBy: {
           userId: user?._id,
+          emp_Id: user?.emp_Id,
           name: user?.name,
           email: user?.email,
           role: user?.role,
@@ -228,7 +229,6 @@ const FormBuilder = ({ form }) => {
         return (
           <RadioInput
             item={item}
-            questions={data}
             handleValue={handleValue}
             deleteEl={deleteEl}
             handleElType={handleElType}

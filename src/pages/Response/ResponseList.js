@@ -98,12 +98,19 @@ const ResponseList = ({ responses }) => {
             </Typography>
             {response?.response.map((answer) => (
               <AccordionDetails key={answer._id}>
-                <Typography variant="h4" color={colors.grey[100]}>
+                <Typography variant="h3" color={colors.grey[100]}>
                   {answer.questionText}
                 </Typography>
-                <Typography variant="h6" color={colors.grey[100]}>
+                <br />
+                <Typography variant="h4" color={colors.grey[100]}>
                   Answer: {answer.optionText}
                 </Typography>
+                <br />
+                {answer?.remarkText && (
+                  <Typography variant="h4" color={colors.grey[100]}>
+                    Remark: {answer.remarkText}
+                  </Typography>
+                )}
               </AccordionDetails>
             ))}
           </Accordion>

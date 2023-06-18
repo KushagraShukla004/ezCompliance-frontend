@@ -37,15 +37,11 @@ const ResponseTab = () => {
       <div className="container">
         <Grid container direction="column" alignItems="center">
           <div className="--flex-center --mb2">
-            {response?.map((response, index) => {
-              return (
-                <span key={index}>
-                  <Typography variant="h3" color={colors.grey[100]}>
-                    Responses for {response?.category}
-                  </Typography>
-                </span>
-              );
-            })}
+            <span>
+              <Typography variant="h3" color={colors.grey[100]}>
+                Responses for {response[0].category}
+              </Typography>
+            </span>
           </div>
           {isLoading && <SpinnerImg />}
           <Grid item xs={12} sm={5} md={12} sx={{ width: "60vw" }}>

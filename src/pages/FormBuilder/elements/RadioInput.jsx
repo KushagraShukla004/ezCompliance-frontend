@@ -29,7 +29,6 @@ export const formEl = [
 ];
 const RadioInput = ({
   item,
-  questions,
   handleValue,
   deleteEl,
   handleElType,

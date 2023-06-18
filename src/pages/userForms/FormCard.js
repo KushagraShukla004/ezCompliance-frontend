@@ -88,6 +88,8 @@ const FormCard = ({ forms, responses, user }) => {
                     } else {
                       toast.error("Please Fill the Employee Details First.");
                     }
+                  } else if (userRole?.role === "admin") {
+                    navigate(`/forms/form/${_id}`);
                   } else {
                     navigate("/creatingResponse");
                   }
