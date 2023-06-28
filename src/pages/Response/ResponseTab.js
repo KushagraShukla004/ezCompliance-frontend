@@ -39,7 +39,7 @@ const ResponseTab = () => {
           <div className="--flex-center --mb2">
             <span>
               <Typography variant="h3" color={colors.grey[100]}>
-                Responses for {response[0].category}
+                Responses for {response?.[0]?.category}
               </Typography>
             </span>
           </div>
