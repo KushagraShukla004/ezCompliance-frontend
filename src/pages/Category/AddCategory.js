@@ -2,20 +2,12 @@ import { useTheme } from "@mui/system";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/auth/authSlice";
-// import { addCategory, getAllCategories } from '../../redux/features/form/formSlice';
 import {
   addCategory,
   getAllCategories,
 } from "../../redux/features/categories/categorySlice";
 import { tokens } from "../../theme";
-import {
-  Box,
-  Button,
-  Divider,
-  Grid,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Divider, Grid, TextField, Typography } from "@mui/material";
 
 const AddCategory = () => {
   const dispatch = useDispatch();
