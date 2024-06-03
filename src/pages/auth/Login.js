@@ -8,11 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { validateEmail } from "../../redux/features/auth/authService";
 import { toast } from "react-toastify";
 import Loader from "../../components/loader/Loader";
-import {
-  login,
-  RESET,
-  sendLoginCode,
-} from "../../redux/features/auth/authSlice";
+import { login, RESET, sendLoginCode } from "../../redux/features/auth/authSlice";
 
 const initialState = {
   email: "",
@@ -75,12 +71,6 @@ const Login = () => {
             <RiLoginCircleFill size={35} />
           </div>
           <h2>Login</h2>
-          {/* <div className='--flex-center'>
-            <button className='--btn --btn-google'>Login with Google</button>
-          </div>
-          <br /> */}
-          <p className="--text-center --fw-bold">or</p>
-
           <form onSubmit={loginUser}>
             <input
               type="email"
